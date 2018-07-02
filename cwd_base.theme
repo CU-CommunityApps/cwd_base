@@ -1,0 +1,20 @@
+<?php
+
+function cwd_base_preprocess_html(&$variables) {
+
+  // Make 'is_front' available to the html.html template
+  $variables['base_path'] = base_path();
+  try {
+    $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  }
+  catch (Exception $e) {
+    $variables['is_front'] = FALSE;
+  }
+
+  // If the node object is present, make node data available to the html.html template
+  if (($node = \Drupal::routeMatch()->getParameter('node')) && $node instanceof \Drupal\node\NodeInterface) {
+    $variables['node'] = $node;
+  }
+
+
+}

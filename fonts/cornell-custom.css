@@ -1,0 +1,175 @@
+@font-face {
+	font-family: "cornell-custom";
+	src: url("cornell-custom.eot");
+	src: url("cornell-custom.eot?#iefix") format("embedded-opentype"), url("cornell-custom.woff") format("woff"), url("cornell-custom.ttf") format("truetype"), url("cornell-custom.svg#fontcustom") format("svg");
+	font-weight: normal;
+	font-style: normal
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+	@font-face {
+		font-family: "cornell-custom";
+		src: url("cornell-custom.svg#fontcustom") format("svg")
+	}
+}
+
+[data-icon]:before {
+	content: attr(data-icon)
+}
+
+[data-icon]:before, .icon-arrow-down:before, a.hc-filter-trigger:before, .cu-select:before, .icon-arrow-left:before, .icon-arrow-right:before, .link-blocks a:before, .icon-arrow-thin-right:before, .link-caret:before, .media-cta:before, .grid-cta:before, .link-list a:before, .icon-arrow-up:before, .icon-check:before, .cu-checkbox label.checked:before, .icon-clear-day:before, .icon-clear-night:before, .icon-clocktower:before, .icon-clocktower-bold:before, .icon-close:before, .mobile-menu-visible #mobile-trigger:before, a.hc-filter-trigger.close:before, .icon-email:before, .icon-facebook:before, .icon-fog:before, .icon-info-alert:before, .icon-info-heart:before, .icon-info-news:before, .icon-info-pawprint:before, .icon-instagram:before, .icon-logo:before, .icon-menu:before, .icon-overcast:before, .icon-partly-cloudy-day:before, .icon-partly-cloudy-night:before, .icon-plus:before, .icon-rain:before, .icon-reset:before, .icon-search:before, .icon-search-big:before, form.search-form:before, .icon-sleet:before, .icon-snow:before, .icon-submenu:before, a.submenu-trigger:before, a.tertiary-dropdown:before, a.tab-selected:before, .icon-thunderstorm:before, .icon-twitter:before, .icon-windy:before, .icon-youtube:before {
+	display: inline-block;
+	font-family: "cornell-custom";
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	line-height: 1;
+	text-decoration: inherit;
+	text-transform: none;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased
+}
+
+.icon-arrow-down:before, a.hc-filter-trigger:before, .cu-select:before {
+	content: "\f100"
+}
+
+.icon-arrow-left:before {
+	content: "\f101"
+}
+
+.icon-arrow-right:before, .link-blocks a:before {
+	content: "\f102"
+}
+
+.icon-arrow-thin-right:before, .link-caret:before, .media-cta:before, .grid-cta:before, .link-list a:before {
+	content: "\f103"
+}
+
+.icon-arrow-up:before {
+	content: "\f123"
+}
+
+.icon-check:before, .cu-checkbox label.checked:before {
+	content: "\f104"
+}
+
+.icon-clear-day:before {
+	content: "\f105"
+}
+
+.icon-clear-night:before {
+	content: "\f106"
+}
+
+.icon-clocktower:before {
+	content: "\f107"
+}
+
+.icon-clocktower-bold:before {
+	content: "\f121"
+}
+
+.icon-close:before, .mobile-menu-visible #mobile-trigger:before, a.hc-filter-trigger.close:before {
+	content: "\f108"
+}
+
+.icon-email:before {
+	content: "\f109"
+}
+
+.icon-facebook:before {
+	content: "\f10a"
+}
+
+.icon-fog:before {
+	content: "\f10b"
+}
+
+.icon-info-alert:before {
+	content: "\f11d"
+}
+
+.icon-info-heart:before {
+	content: "\f11e"
+}
+
+.icon-info-news:before {
+	content: "\f11f"
+}
+
+.icon-info-pawprint:before {
+	content: "\f120"
+}
+
+.icon-instagram:before {
+	content: "\f10c"
+}
+
+.icon-logo:before {
+	content: "\f122"
+}
+
+.icon-menu:before {
+	content: "\f10d"
+}
+
+.icon-overcast:before {
+	content: "\f10e"
+}
+
+.icon-partly-cloudy-day:before {
+	content: "\f10f"
+}
+
+.icon-partly-cloudy-night:before {
+	content: "\f110"
+}
+
+.icon-plus:before {
+	content: "\f111"
+}
+
+.icon-rain:before {
+	content: "\f112"
+}
+
+.icon-reset:before {
+	content: "\f113"
+}
+
+.icon-search:before {
+	content: "\f114"
+}
+
+.icon-search-big:before, form.search-form:before {
+	content: "\f115"
+}
+
+.icon-sleet:before {
+	content: "\f116"
+}
+
+.icon-snow:before {
+	content: "\f117"
+}
+
+.icon-submenu:before, a.submenu-trigger:before, a.tertiary-dropdown:before, a.tab-selected:before {
+	content: "\f118"
+}
+
+.icon-thunderstorm:before {
+	content: "\f119"
+}
+
+.icon-twitter:before {
+	content: "\f11a"
+}
+
+.icon-windy:before {
+	content: "\f11b"
+}
+
+.icon-youtube:before {
+	content: "\f11c"
+}

@@ -1,0 +1,24 @@
+core: 8.x
+type: theme
+
+name: 'CWD Cornell Base'
+description: 'A lightweight theme, implementing Cornell Branding and standard CWD components.'
+package: 'Cornell CWD'
+
+regions:
+  content: 'Content'
+  content_header: 'Content Header'
+  content_footer: 'Content Footer'
+  supplementary: 'Supplementary Region'
+  sidebar_primary: 'Primary Sidebar (Top)'
+  sidebar_secondary: 'Secondary Sidebar (Bottom)'
+  nav_main: 'Main Navigation'
+  nav_utility: 'Utility Navigation'
+  nav_breadcrumb: 'Breadcrumb Navigation'
+  footer_primary: 'Primary Footer Region'
+  footer_secondary: 'Secondary Footer Region'
+  subfooter: 'Subfooter'
+
+libraries:
+  - 'cwd_base/global-styling'
+  - 'cwd_base/header-scripts'

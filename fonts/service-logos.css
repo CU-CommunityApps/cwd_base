@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'ServiceLogos';
+  src: url('service-logos.eot?43752758');
+  src: url('service-logos.eot?43752758#iefix') format('embedded-opentype'),
+       url('service-logos.woff?43752758') format('woff'),
+       url('service-logos.ttf?43752758') format('truetype'),
+       url('service-logos.svg?43752758#service-logos') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+ 
+.service-logo:before {
+  font-family: "ServiceLogos";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.service-logo.icon-yammer:before { content: '\e800'; } /* '' */
+.service-logo.icon-box-com:before { content: '\e801'; } /* '' */
+.service-logo.icon-blackboard:before { content: '\e802'; } /* '' */
+.service-logo.icon-android:before { content: '\e803'; } /* '' */
+.service-logo.icon-gmail:before { content: '\e804'; } /* '' */
+.service-logo.icon-os-apple-dark:before { content: '\e805'; } /* '' */
+.service-logo.icon-os-apple:before { content: '\e806'; } /* '' */
+.service-logo.icon-os-ios-dark:before { content: '\e807'; } /* '' */
+.service-logo.icon-os-ios:before { content: '\e808'; } /* '' */
+.service-logo.icon-os-linux_1_:before { content: '\e809'; } /* '' */
+.service-logo.icon-os-linux:before { content: '\e80a'; } /* '' */
+.service-logo.icon-os-osx_1_:before { content: '\e80b'; } /* '' */
+.service-logo.icon-os-osx-dark:before { content: '\e80c'; } /* '' */
+.service-logo.icon-os-win-03-dark:before { content: '\e80d'; } /* '' */
+.service-logo.icon-os-win-03:before { content: '\e80e'; } /* '' */
+.service-logo.icon-os-win-04-dark:before { content: '\e80f'; } /* '' */
+.service-logo.icon-os-win-04:before { content: '\e810'; } /* '' */
+.service-logo.icon-webex:before { content: '\e811'; } /* '' */
+.service-logo.icon-box:before { content: '\e812'; } /* '' */
+.service-logo.icon-outlook:before { content: '\e813'; } /* '' */
+.service-logo.icon-wyse:before { content: '\e814'; } /* '' */
+.service-logo.icon-blog:before { content: '\e815'; } /* '' */

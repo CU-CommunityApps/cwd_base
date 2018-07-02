@@ -1,0 +1,123 @@
+{#
+/**
+ * @file
+ * Theme override to display a single page.
+ *
+ * The doctype, html, head and body tags are not in this template. Instead they
+ * can be found in the html.html.twig template in this directory.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ *
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - messages: Status and error messages. Should be displayed prominently.
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - page.content: Content
+ * - page.content_header: Content Header
+ * - page.content_footer: Content Footer
+ * - page.supplementary: Supplementary Region
+ * - page.sidebar_primary: Primary Sidebar (Top)
+ * - page.sidebar_secondary: Secondary Sidebar (Bottom)
+ * - page.nav_main: Main Navigation
+ * - page.nav_utility: Utility Navigation
+ * - page.footer_primary: Primary Footer Region
+ * - page.footer_secondary: Secondary Footer Region
+ * - page.subfooter: Subfooter
+ *
+ * @see template_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+  <div id="main-content" class="band">
+		<main id="main" class="container-fluid aria-target" tabindex="-1">
+
+			<div class="row">
+			  {% if page.sidebar_primary %}
+				<div id="sidebar-top" class="secondary">
+					{{ page.sidebar_primary }}
+				</div>
+			  {% endif %}
+				<article id="main-article" class="primary">
+
+				  {{ page.nav_breadcrumb }}
+
+				{% if page.content_header %}
+					<header>
+						{{ page.content_header }}
+					</header>
+				{% endif %}
+
+					<section>
+						{{ page.content }}
+					</section>
+
+				{% if page.content_footer %}
+					<footer>
+						{{ page.content_footer }}
+					</footer>
+				{% endif %}
+
+				</article>
+			  {% if page.sidebar_secondary %}
+				<div id="sidebar-bottom" class="secondary" role="complementary">
+					{{ page.sidebar_secondary }}
+				</div>
+			  {% endif %}
+			</div>
+
+		</main>
+	</div>
+{% if page.supplementary %}
+	<div class="band accent1 padded" role="complementary">
+		<div class="container-fluid">
+			<div class="row">
+				{{ page.supplementary }}
+			</div>
+		</div>
+	</div>
+{% endif %}
+
+	<footer>
+		<div class="main-footer">
+			<div class="container-fluid sidebar-left">
+				<div class="row">
+					<div class="primary">
+					  {{ page.footer_primary }}
+					</div>
+					<div class="secondary">
+						{{ page.footer_secondary }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sub-footer">
+			<div class="container-fluid sidebar-left">
+				<div class="row">
+					<div class="primary">
+						<ul class="list-menu">
+							<li><a href="mailto:web-accessibility@cornell.edu">Web Accessibility Help</a></li>
+						</ul>
+					</div>
+					<div class="secondary">
+						<a href="https://www.cornell.edu">Cornell University</a> &copy;{{ "now"|date("Y") }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>

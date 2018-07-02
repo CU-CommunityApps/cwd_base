@@ -1,0 +1,59 @@
+// Optional Bootstrap 3 Include and Overrides
+// Note: Be sure to also include bootstrap.min.js on your page!
+
+
+// Import custom Bootstrap variables
+@import "bootstrap-variables";
+
+// Import Bootstrap for Sass
+@import "../bootstrap/stylesheets/bootstrap";
+
+
+// Overrides & Customization ----
+
+/* Bootstrap overrides */
+
+a {
+	text-decoration: underline;
+}
+nav a, .navbar a, a[role='button'] {
+	text-decoration: none;
+}
+.nav li {
+	margin-bottom: 0;
+}
+.page-header {
+	border: 0;
+	margin-top: 0;
+}
+.page-header:last-child {
+	margin-bottom: 10px;
+}
+blockquote {
+	font-size: inherit;
+}
+blockquote footer, blockquote small, blockquote .small {
+	font-size: 85.714285714286%; // 12px base
+}
+label, .btn, .navbar {
+	font-family: $font-family-sans-serif;
+}
+
+/* Bootstrap grid .demo mode (for testing/debugging) */
+
+.row.demo > *:nth-child(5n+1), .row.demo .row > *:nth-child(5n+5),
+.row.demo > *:nth-child(5n+1), .row.demo .row > *:nth-child(5n+5) {
+	background: rgba(255,210,210,0.9);
+}
+.row.demo > *:nth-child(5n+2), .row.demo .row > *:nth-child(5n+4) {
+	background: rgba(210,255,210,0.9);
+}
+.row.demo > *:nth-child(5n+3) {
+	background: rgba(210,210,255,0.9);
+}
+.row.demo > *:nth-child(5n+4), .row.demo .row > *:nth-child(5n+2) {
+	background: rgba(255,255,210,0.9);
+}
+.row.demo > *:nth-child(5n+5), .row.demo .row > *:nth-child(5n+1) {
+	background: rgba(210,255,255,0.9);
+}

@@ -1,0 +1,15 @@
+{
+    "name": "cubear/cwd_base",
+    "description": "A lightweight Drupal 8 theme, implementing Cornell Branding and standard CWD components; from Cornell University CIT-CD.",
+    "type": "drupal-custom-theme",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Anthony Adinolfi (ama39)",
+            "homepage": "https://github.com/ama39",
+            "role": "Maintainer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

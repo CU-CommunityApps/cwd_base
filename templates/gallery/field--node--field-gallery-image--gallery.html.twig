@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a field.
+ *
+ * To override output, copy the "field.html.twig" from the templates directory
+ * to your theme's directory and customize it, just like customizing other
+ * Drupal templates such as page.html.twig or node.html.twig.
+ *
+ * Instead of overriding the theming for all fields, you can also just override
+ * theming for a subset of fields using
+ * @link themeable Theme hook suggestions. @endlink For example,
+ * here are some theme hook suggestions that can be used for a field_foo field
+ * on an article node type:
+ * - field--node--field-foo--article.html.twig
+ * - field--node--field-foo.html.twig
+ * - field--node--article.html.twig
+ * - field--field-foo.html.twig
+ * - field--text-with-summary.html.twig
+ * - field.html.twig
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the containing element.
+ * - label_hidden: Whether to show the field label or not.
+ * - title_attributes: HTML attributes for the title.
+ * - label: The label for the field.
+ * - multiple: TRUE if a field can contain multiple items.
+ * - items: List of all the field items. Each item contains:
+ *   - attributes: List of HTML attributes for each item.
+ *   - content: The field item's content.
+ * - entity_type: The entity type to which the field belongs.
+ * - field_name: The name of the field.
+ * - field_type: The type of the field.
+ * - label_display: The display settings for the label.
+ *
+ * @see template_preprocess_field()
+ *
+ * @ingroup themeable
+
+ TODO:
+ - sanitize title and alt to bar doublequotes (need to check if Drupal already does this for image fields - probably does)
+ */
+#}
+{% for item in items %}
+  {% set title_aria_bridge = '' %}
+  {% if item.content['#item'].title %}
+    {% set title_aria_bridge = ', Caption: ' %}
+  {% endif %}
+  <div class="col">
+    <a role="img" href="{{ file_url(item.content['#item'].entity.uri.value) }}" data-title="{{ item.content['#item'].title }}" data-alt="{{ item.content['#item'].alt }}" aria-label="{{ item.content['#item'].alt }}{{ title_aria_bridge }}{{ item.content['#item'].title }}">
+    {% if item.content['#item'].title %}
+      <h3 class="sr-only">{{ item.content['#item'].title }}</h3>
+    {% endif %}
+      <img src="{{ item.content['#item'].entity.uri.value | image_style('gallery_thumbnail') }}" alt="{{ item.content['#item'].alt }}">
+    </a>
+  </div>
+{% endfor %}
