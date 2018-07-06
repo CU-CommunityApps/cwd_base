@@ -57,9 +57,9 @@
 </head>
 <body{{ attributes.addClass(body_classes) }}>
 
-	  <div id="skipnav"><a href="#main">{{ 'Skip to main content'|t }}</a></div>
+    <div id="skipnav"><a href="#main">{{ 'Skip to main content'|t }}</a></div>
 
-	  <div id="cu-search" class="cu-search">
+    <div id="cu-search" class="cu-search">
       <div class="container-fluid">
         <form id="cu-search-form" role="search" action="http://www.cornell.edu/search/">
           <label for="cu-search-query" class="sr-only">Search:</label>
@@ -75,30 +75,30 @@
           </div>
         </form>
       </div>
-	</div>
+  </div>
 
-	<div id="brand" class="band">
-		<header id="cu-header">
-			<div class="cu45-helper"></div>
-			<div class="container-fluid cu-brand">
-				<h1 class="cu-logo"><a href="http://www.cornell.edu"><img class="sr-only" src="/{{ directory }}/images/cornell/bold_cornell_logo_simple_b31b1b.svg" alt="Cornell University" width="245" height="62"></a></h1>
-				<div class="cu-unit">
-					<h2>Cornell Base Theme</h2>
-				</div>
-				<div class="buttons">
-					<button class="mobile-button" id="mobile-nav">Main Menu</button>
-					<button class="mobile-button" id="cu-search-button">Search</button>
-					{{ page.nav_utility }}
-				</div>
-			</div>
-		</header>
+  <div id="brand" class="band">
+    <header id="cu-header">
+      <div class="cu45-helper"></div>
+      <div class="container-fluid cu-brand">
+        <h1 class="cu-logo"><a href="http://www.cornell.edu"><img class="sr-only" src="/{{ directory }}/images/cornell/bold_cornell_logo_simple_b31b1b.svg" alt="Cornell University" width="245" height="62"></a></h1>
+        <div class="cu-unit">
+          <h2>Cornell Base Theme</h2>
+        </div>
+        <div class="buttons">
+          <button class="mobile-button" id="mobile-nav">Main Menu</button>
+          <button class="mobile-button" id="cu-search-button">Search</button>
+          {{ page.nav_utility }}
+        </div>
+      </div>
+    </header>
 
-		<header id="site-header">
+    <header id="site-header">
       {{ page.nav_main }}
-		</header>
-	</div>
+    </header>
+  </div>
 
-	{{ page_top }}
+  {{ page_top }}
   {{ page }}
   {{ page_bottom }}
 

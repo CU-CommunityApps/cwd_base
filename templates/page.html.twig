@@ -45,79 +45,79 @@
  */
 #}
   <div id="main-content" class="band">
-		<main id="main" class="container-fluid aria-target" tabindex="-1">
+    <main id="main" class="container-fluid aria-target" tabindex="-1">
 
-			<div class="row">
-			  {% if page.sidebar_primary %}
-				<div id="sidebar-top" class="secondary">
-					{{ page.sidebar_primary }}
-				</div>
-			  {% endif %}
-				<article id="main-article" class="primary">
+      <div class="row">
+        {% if page.sidebar_primary %}
+        <div id="sidebar-top" class="secondary">
+          {{ page.sidebar_primary }}
+        </div>
+        {% endif %}
+        <article id="main-article" class="primary">
 
-				  {{ page.nav_breadcrumb }}
+          {{ page.nav_breadcrumb }}
 
-				{% if page.content_header %}
-					<header>
-						{{ page.content_header }}
-					</header>
-				{% endif %}
+        {% if page.content_header %}
+          <header>
+            {{ page.content_header }}
+          </header>
+        {% endif %}
 
-					<section>
-						{{ page.content }}
-					</section>
+          <section>
+            {{ page.content }}
+          </section>
 
-				{% if page.content_footer %}
-					<footer>
-						{{ page.content_footer }}
-					</footer>
-				{% endif %}
+        {% if page.content_footer %}
+          <footer>
+            {{ page.content_footer }}
+          </footer>
+        {% endif %}
 
-				</article>
-			  {% if page.sidebar_secondary %}
-				<div id="sidebar-bottom" class="secondary" role="complementary">
-					{{ page.sidebar_secondary }}
-				</div>
-			  {% endif %}
-			</div>
+        </article>
+        {% if page.sidebar_secondary %}
+        <div id="sidebar-bottom" class="secondary" role="complementary">
+          {{ page.sidebar_secondary }}
+        </div>
+        {% endif %}
+      </div>
 
-		</main>
-	</div>
+    </main>
+  </div>
 {% if page.supplementary %}
-	<div class="band accent1 padded" role="complementary">
-		<div class="container-fluid">
-			<div class="row">
-				{{ page.supplementary }}
-			</div>
-		</div>
-	</div>
+  <div class="band accent1 padded" role="complementary">
+    <div class="container-fluid">
+      <div class="row">
+        {{ page.supplementary }}
+      </div>
+    </div>
+  </div>
 {% endif %}
 
-	<footer>
-		<div class="main-footer">
-			<div class="container-fluid sidebar-left">
-				<div class="row">
-					<div class="primary">
-					  {{ page.footer_primary }}
-					</div>
-					<div class="secondary">
-						{{ page.footer_secondary }}
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="sub-footer">
-			<div class="container-fluid sidebar-left">
-				<div class="row">
-					<div class="primary">
-						<ul class="list-menu">
-							<li><a href="mailto:web-accessibility@cornell.edu">Web Accessibility Help</a></li>
-						</ul>
-					</div>
-					<div class="secondary">
-						<a href="https://www.cornell.edu">Cornell University</a> &copy;{{ "now"|date("Y") }}
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+  <footer>
+    <div class="main-footer">
+      <div class="container-fluid sidebar-left">
+        <div class="row">
+          <div class="primary">
+            {{ page.footer_primary }}
+          </div>
+          <div class="secondary">
+            {{ page.footer_secondary }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-footer">
+      <div class="container-fluid sidebar-left">
+        <div class="row">
+          <div class="primary">
+            <ul class="list-menu">
+              <li><a href="mailto:web-accessibility@cornell.edu">Web Accessibility Help</a></li>
+            </ul>
+          </div>
+          <div class="secondary">
+            <a href="https://www.cornell.edu">Cornell University</a> &copy;{{ "now"|date("Y") }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
