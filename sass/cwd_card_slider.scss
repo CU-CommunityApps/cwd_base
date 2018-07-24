@@ -1,0 +1,145 @@
+// Import CWD Cornell Framework variables
+@import "cwd-variables";
+
+/* "All-Purpose" Card Slider
+   ************************************ */
+	// Note: default behavior is "max 3" so the "max-3" class is not explicitly specified below
+
+
+.card-slider {
+	overflow: hidden;
+}
+.card-slider .cards {
+	display: -webkit-flex;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin-left: -$grid-gutter-width/2;
+	margin-right: -$grid-gutter-width/2;
+}
+.card-slider.slide-mobile .cards { // At mobile sizes, content is expanded and the slider is inactive unless ".slide-mobile" is included
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	-webkit-flex-wrap: nowrap;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+}
+.card-slider .card {
+	width: 100%;
+	padding-left: $grid-gutter-width/2;
+	padding-right: $grid-gutter-width/2;
+	border: 0;
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
+	margin-bottom: 1.5em;
+}
+.card-slider.min-2 .card {
+	width: 50%;
+}
+
+
+
+
+// ************************************************************************ //
+@media (min-width: $screen-xs-min) { // EXTRA SMALL GRID ****************** //
+
+.card-slider.max-5 .card {
+	width: 50%;
+}
+.card-slider.max-6 .card {
+	width: 50%;
+}
+
+
+} // ************** //
+// ************************************************************************ //
+@media (min-width: $screen-ks-min) { // KINDA SMALL GRID ****************** //
+
+.card-slider.max-4 .card {
+	width: 50%;
+}
+.card-slider.max-6 .card {
+	width: 33.333333333333333%;
+}
+
+
+
+} // ************** //
+// ************************************************************************ //
+@media (min-width: $screen-sm-min) { // SMALL GRID ************************ //
+
+ 
+.card-slider .cards { // The slider activates at tablet size, for any sliders that didn't have ".slide-mobile" included
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	-webkit-flex-wrap: nowrap;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	margin-left: -$grid-gutter-width;
+	margin-right: -$grid-gutter-width;
+}
+.card-slider .card { // max-3 (default)
+	width: 50%;
+	padding-left: $grid-gutter-width;
+	padding-right: $grid-gutter-width;
+}
+.card-slider.max-1 .card, .card-slider.max-2 .card {
+	width: 100%;
+}
+
+.card-slider.max-5 .card {
+	width: 33.333333333333333%;
+}
+.card-slider.max-6 .card {
+	width: 25%;
+}
+
+
+} // ************** //
+// ************************************************************************ //
+@media (min-width: $screen-md-min) { // MEDIUM GRID *********************** //
+
+.card-slider.max-2 .card {
+	width: 50%;
+}
+.card-slider.max-4 .card {
+	width: 33.333333333333333%;
+}
+.card-slider.max-5 .card {
+	width: 25%;
+}
+.card-slider.max-6 .card {
+	width: 20%;
+}
+
+
+} // ************** //
+// ************************************************************************ //
+@media (min-width: $screen-ml-min) { // MEDIUM-LARGE GRID ***************** //
+
+.card-slider .card { // max-3 (default)
+	width: 33.333333333333333%;
+}
+
+
+
+} // ************** //
+// ************************************************************************ //
+@media (min-width: $screen-lg-min) { // LARGE GRID ************************ //
+
+.card-slider.max-4 .card {
+	width: 25%;
+}
+.card-slider.max-5 .card {
+	width: 20%;
+}
+.card-slider.max-6 .card {
+	width: 16.666666666666667%;
+}
+
+} // ************** //

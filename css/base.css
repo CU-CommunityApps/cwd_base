@@ -1109,7 +1109,7 @@ blockquote {
 }
 
 blockquote.offset {
-  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+  font-family: Iowan Old Style, Lusitana, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
   font-size: 20px;
   line-height: 1.45;
   color: #444;
@@ -1224,6 +1224,10 @@ main .row > .primary:last-child:after, main .row > .secondary:last-child:after {
 
 .band.padded {
   padding: 2.5em 0;
+}
+
+.band.fullwidth > .container-fluid {
+  max-width: none;
 }
 
 .band.accent1 {
@@ -2397,7 +2401,7 @@ figure.three-col > img {
 }
 
 .cwd-card-grid .card:nth-child(1n+2) {
-  border-top: 3px solid #dedede;
+  border-top: 3px solid #e7e7e7;
   padding-top: 30px;
 }
 
@@ -2859,7 +2863,7 @@ figure.three-col > img {
 }
 
 .cwd-component .events day {
-  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+  font-family: Iowan Old Style, Lusitana, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
   font-size: 27px;
   line-height: 0.65;
   display: block;
@@ -3105,7 +3109,7 @@ figure.three-col > img {
 #main .secondary .spotlight figure h3 {
   color: #b31b1b;
   font-size: 15px;
-  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+  font-family: Iowan Old Style, Lusitana, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
   text-transform: uppercase;
   margin: 0.75em 0 0.55em;
 }
@@ -3179,7 +3183,7 @@ figure.three-col > img {
   }
 
   .cwd-card-grid .card:nth-child(1n+3) {
-    border-top: 3px solid #dedede;
+    border-top: 3px solid #e7e7e7;
     padding-top: 30px;
   }
 
@@ -3192,6 +3196,30 @@ figure.three-col > img {
 
   .cwd-card-grid.singles .card:first-child {
     padding-top: 0 !important;
+  }
+
+  .cwd-card-grid.max-two .card {
+    width: 48% !important;
+    margin: 0 4% 30px 0 !important;
+    clear: none !important;
+  }
+
+  .cwd-card-grid.max-two .card:nth-child(1n+2) {
+    border: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cwd-card-grid.max-two .card:nth-child(2n+2) {
+    margin-right: 0 !important;
+  }
+
+  .cwd-card-grid.max-two .card:nth-child(2n+1) {
+    clear: left !important;
+  }
+
+  .cwd-card-grid.max-two .card:nth-child(1n+3) {
+    border-top: 3px solid #e7e7e7 !important;
+    padding-top: 30px !important;
   }
 }
 @media (min-width: 768px) {
@@ -3425,6 +3453,11 @@ figure.three-col > img {
     padding-left: 0;
   }
 
+  .cwd-component-rows .group-more {
+    width: 100%;
+    clear: both;
+  }
+
   .cwd-component-rows .group-image, .cwd-component-rows .group-image + .field-group,
   .cwd-card-grid .group-image, .cwd-card-grid .group-image + .field-group {
     max-width: none;
@@ -3607,7 +3640,7 @@ figure.three-col > img {
   }
 
   .cwd-card-grid.three-card .card:nth-child(1n+4) {
-    border-top: 3px solid #dedede;
+    border-top: 3px solid #e7e7e7;
     padding-top: 30px;
   }
 
@@ -3735,7 +3768,7 @@ figure.three-col > img {
   }
 
   .cwd-card-grid .card:nth-child(1n+4) {
-    border-top: 3px solid #dedede;
+    border-top: 3px solid #e7e7e7;
     padding-top: 30px;
   }
 

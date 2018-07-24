@@ -5,6 +5,7 @@ global-styling:
       css/cornell.css: {}
       css/cwd_slider.css: {}
       css/cwd_gallery.css: {}
+      css/cwd_card_slider.css: {}
       css/cwd_utilities.css: {}
       fonts/font-awesome.min.css: {}
       fonts/material-design-iconic-font.min.css: {}
