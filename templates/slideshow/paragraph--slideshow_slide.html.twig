@@ -38,10 +38,49 @@
  * @ingroup themeable
  */
 #}
+
+{####### varrrriabllllles #######}
+
+{# Note: May not need all these bools with how cwd_slider() handles empty vars, but, keepin'm for now. #}
+{% set has_alt, has_cap, has_img, has_link, has_title = false, false, false, false, false %}
+{% set slalt = '' %}
+{% set slap = '' %}
+{% set slimage = '' %}
+{% set slink = '' %}
+{% set slitle = '' %}
+
+{% if paragraph.field_media_image is defined and paragraph.field_media_image is not empty %}
+  {% set has_img = true %}
+  {% set slimage = file_url(paragraph.field_media_image[0].entity.field_media_image.entity.uri.value) %}
+{% endif %}
+
+{% if paragraph.field_slide_title is defined and paragraph.field_slide_title is not empty %}
+  {% set has_title = true %}
+  {% set slitle = paragraph.field_slide_title[0].value %}
+{% endif %}
+
+{% if paragraph.field_slide_caption is defined and paragraph.field_slide_caption is not empty %}
+  {% set has_cap = true %}
+  {% set slap = paragraph.field_slide_caption[0].value %}
+{% endif %}
+
+{% if paragraph.field_slide_link is defined and paragraph.field_slide_link is not empty %}
+  {% set has_link = true %}
+  {% set slink = paragraph.field_slide_link.0.url %}
+{% endif %}
+
+{% if paragraph.field_image_alt_text is defined and paragraph.field_image_alt_text is not empty %}
+  {% set has_alt = true %}
+  {% set slalt = paragraph.field_image_alt_text[0].value %}
+{% endif %}
+
+
+{####### outpuuuuuut #######}
+
 {% block paragraph %}
   {% block content %}
     <script>
-      var slide_array = ['{{ content.field_image }}', '{{ content.field_slide_title }}', '{{ content.field_slide_caption }}', '{{ content.field_slide_link }}', '{{ content.field_image_alt_text }}'];
+      var slide_array = ['{{ slimage }}', '{{ slitle }}', '{{ slap }}', '{{ slink }}', '{{ slalt }}'];
       if (window['image_array' + global_slider_count] != undefined) {
         window['image_array' + global_slider_count].push(slide_array);
       }
