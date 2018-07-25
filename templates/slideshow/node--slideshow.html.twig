@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a node.
+ * Theme override for a slideshow node.
  *
  * Available variables:
  * - node: The node entity with limited access to object properties and methods.
@@ -73,14 +73,6 @@
  */
 #}
 <article{{ attributes }}>
-
-  {{ title_prefix }}
-  {% if not page %}
-    <h2{{ title_attributes }}>
-      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-    </h2>
-  {% endif %}
-  {{ title_suffix }}
 
   <div class="slider-container" id="slider{{ node.id }}"><div class="slider-caption" id="slider-headline{{ node.id }}"></div></div>
   <script>
