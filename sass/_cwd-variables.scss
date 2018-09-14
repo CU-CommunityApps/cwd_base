@@ -9,7 +9,6 @@ $cwd-font-family-base: $cwd-font-family-sans-serif;
 $cwd-font-family-monospace: Courier, monospace;
 $cwd-font-family-sans-alt: Avenir Next, -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica Neue, sans-serif;
 $cwd-font-family-sans-ui: -apple-system, system-ui, BlinkMacSystemFont, Avenir Next, 'Segoe UI', Roboto, Helvetica Neue, sans-serif;
-//$cwd-font-family-serif-alt: Iowan Old Style, '-FONTSPRING DEMO - Iowan Old Style BT','FONTSPRING DEMO - Erato', '-FONTSPRING DEMO - Argos-Regular', 'garvis-pro', 'ltc-goudy-oldstyle-pro', 'kings-caslon-display', 'bressay-display', 'adobe-text-pro', 'cardea', Iowan Old Style, Georgia, 'ten-oldstyle', Athelas, Baskerville, Sitka Display, Constansia, serif;
 $cwd-font-family-serif-alt: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
 $cwd-font-family-serif-unit: Iowan Old Style, Georgia, serif;
 // Different Windows browsers handle Segoe UI weights differently. When more precision and reliability is needed, these alternate declarations can help (paired with the appropriate font-weight):
@@ -30,6 +29,7 @@ $cwd-color-button: #2d668e; // default button link color
 $cwd-color-button-hover: #2471a7; // text button :hover color (also used for :focus)
 $cwd-color-button-active: #185076; // text button :active color
 $cwd-color-min-contrast: #767676; // The minimum darkness of gray text over white background to meet accessibility guidelines
+$cwd-color-min-contrast-large: #949494; // The minimum darkness of gray text over white background to meet accessibility guidelines for large, bolder text
 $cwd-color-accent-heading-h2: #b31b1b; // Applies an accent color to basic heading level 2, informed by your custom design (use #000 to pass on this option)
 $cwd-color-accent-heading-h3: #000; // Applies an accent color to basic heading level 3, informed by your custom design (use #000 to pass on this option)
 $cwd-color-accent-text: #7ab034; // Accent color to call extra attention to text, borders, or other visual trim (e.g., names of buttons described in tutorial, or perhaps an active element among a set)

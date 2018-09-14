@@ -22,3 +22,5 @@ regions:
 libraries:
   - 'cwd_base/global-styling'
   - 'cwd_base/header-scripts'
+ckeditor_stylesheets:
+  - 'css/ckeditor/ckeditor.css'

@@ -1,6 +1,9 @@
-/* CWD Utilities (ama39, last update: 1/23/18)
+/* CWD Utilities (ama39, last update: 8/15/18)
    - 1. Main Navigation (script support for dropdown menus and mobile)
-   - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
+   - 2. Mobile Expander
+   - 3. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
+   - 4. Read More Expander
+   - 5. Mobile Table Helper
    ------------------------------------------------------------------------- */
 
 var mobile_breakpoint = 991; // viewport pixel width at which mobile nav appears (should match the media query in the project's css)
@@ -9,11 +12,11 @@ if (!Date.now){Date.now = function now(){return new Date().getTime();};} // lega
 var msie = document.documentMode;
 
 (function ($, root, undefined) { $(function () { 'use strict';
-		
-	
+
+
 	// Window Size Tracking
 	function resizeChecks() {
-		
+
 		// Mobile Nav
 		if ($(window).width() <= mobile_breakpoint) {
 			$('body').addClass('mobile'); // mobile nav breakpoint
@@ -38,14 +41,14 @@ var msie = document.documentMode;
 	}
 	$(window).resize(resizeChecks);
 	resizeChecks();
-	
-	
-	
-	
+
+
+
+
 	// 1. Main Navigation -----------------------------------------------------
-	
-	var mousedown = false; // extra control variable for precise click and focus event interaction 
-	
+
+	var mousedown = false; // extra control variable for precise click and focus event interaction
+
 	// Utility Navigation (appended for mobile)
 	if ($('#utility-navigation li').length > 0) {
 		$('#main-navigation ul').first().append('<li class="parent mobile-nav-only"><a class="more-links-button" href="#">More...</a><ul class="list-menu links vertical children more-links"></ul>');
@@ -59,7 +62,7 @@ var msie = document.documentMode;
 			$(this).find('.fa').trigger('mousedown');
 		});
 	}
-	
+
 	// Dropdown Menus
 	$('li.menu-item-has-children').addClass('parent'); // WordPress Support
 	$('li.menu-item--expanded').addClass('parent'); // Drupal 8 Support
@@ -105,7 +108,7 @@ var msie = document.documentMode;
 			$(this).closest('.mobile-expander').children('.mobile-expander-heading').removeClass('open');
 		}
 	});
-	
+
 	// Mobile Navigation
 	$('.dropdown-menu li.parent > a .fa').click(function(e) {
 		e.preventDefault();
@@ -137,107 +140,16 @@ var msie = document.documentMode;
 	$('#mobile-nav-dimmer').click(function(e) {
 		$('#mobile-close').trigger('click');
 	});
-	
-	// 2. Empty Sidebar Helper ------------------------------------------------
-	$('.secondary').each(function() {
-		if (msie != 8 && msie != 7) {
-			if ( !$(this).html().trim() ) {
-				$(this).empty();
-			}
-		}
-	});
-	
-	
-	
-	
-/*	
-	// 3. Content Tabs --------------------------------------------------------
-	$('.content-tabs').each(function(){
-		// prepare class options to share with tab navigation 
-		var tab_classes = 'tabs-nav';
-		if ( $(this).hasClass('tabs-classic') ) {
-			tab_classes += ' tabs-classic';
-		}
-		if ( $(this).hasClass('tabs-mobile-expand') ) {
-			tab_classes += ' tabs-mobile-expand';
-		}
-		if ( $(this).hasClass('tabs-mobile-accordion') ) {
-			tab_classes += ' tabs-mobile-accordion';
-		}
-		if ( $(this).hasClass('tabs-numbered') ) {
-			tab_classes += ' tabs-numbered';
-		}
-		if ( $(this).hasClass('tabs-numbers-only') ) {
-			tab_classes += ' tabs-numbers-only';
-		}
-		// generate navigation
-		$(this).before('<nav class="'+tab_classes+'"></nav>').addClass('scripted').children('li').each(function(i){
-			var tab_title = $(this).find('h1,h2,h3,h4,h5,h6').first().text();
-			var tab_id = 'tab-' + Math.floor(Math.random()*26) + Date.now(); // generate unique ID to allow links to target their tabs for better screen reader accessibility
-			var tab_number = '';
-			var tab_labelbefore = '';
-			var tab_labelafter = '';
-			if ( $(this).parent().hasClass('tabs-numbers-only') ) {
-				tab_number = (i+1) + ' ';
-				tab_labelbefore = '<span class="hidden">(';
-				tab_labelafter = ')</span>';
-			}
-			else if ( $(this).parent().hasClass('tabs-numbered') ) {
-				tab_number = (i+1) + '. ';
-			}
-			$(this).parent().prev('nav').append('<a href="#'+tab_id+'">'+ tab_number + tab_labelbefore + tab_title + tab_labelafter + '</a>');
-			$(this).attr('id',tab_id).attr('tabindex','-1').hide();
-		});
-		$(this).children('li').first().show();
-	});
-	// tab navigation button events
-	$('.tabs-nav').each(function(){
-		var tabs = $(this).next('.content-tabs');
-		$(this).children('a').first().addClass('active');
-		$(this).children('a').click(function(e) {
-			e.preventDefault();
-			$(tabs).find('li').hide();
-			$(tabs).find('li').eq( $(this).index() ).show();
-			$(tabs).prev('nav').find('a').removeClass('active');
-			$(this).addClass('active');
-			$($(this).attr('href')).focus();
-		});
-	});
-*/	
-/*	// 4. Expander ------------------------------------------------------------
-	$('.expander').addClass('scripted').find('h2, h3, h4, h5, h6').each(function(i) {
-		if ($(this).next('div').length > 0) {
-			$(this).addClass('sans expander-heading').prepend('<span class="fa fa-plus-square-o"></span>');
-			$(this).attr('tabindex',0).click(function(e) {
-				$(this).toggleClass('open');
-			});
-		}
-	});
-	$('.expander').each(function() {
-		if ($(this).find('.expander-heading').length > 2) {
-			var all_expanded = false;
-			$(this).prepend('<a href="#" class="expand-all">Expand all</a>');
-			$(this).children('.expand-all').click(function(e) {
-				e.preventDefault();
-				if (!all_expanded) {
-					$(this).parent().find('.expander-heading').addClass('open');
-					$(this).addClass('open');
-					all_expanded = true;
-					$(this).text('Close all');
-				}
-				else {
-					$(this).parent().find('.expander-heading').removeClass('open');
-					$(this).removeClass('open');
-					all_expanded = false;
-					$(this).text('Expand all');
-				}
-			});
-		}
-	});
-*/	
-	
-	
-	// 5. Mobile Expander -----------------------------------------------------
+
+
+
+
+
+
+
+
+
+	// 2. Mobile Expander -----------------------------------------------------
 	//$('.drupal #sidebar-top nav, nav.nav-body').addClass('mobile-expander').prepend('<h1 class="sans nav-heading">In this section<span class="punc">:</span></h1>');
 	//$('.drupal.page-search-site #sidebar-top nav .nav-heading').addClass('hidden').html('Filter results<span class="punc">:</span>');
 	$('.mobile-expander').each(function() {
@@ -254,6 +166,17 @@ var msie = document.documentMode;
 			$(expand_header).next('.mobile').find('a').focus(function() {
 				$(this).parents('.mobile').prev('.mobile-expander-heading').addClass('open');
 			}); // TODO: focus and mouse event reconciliation for full keyboard support
+
+			// hide empty menus
+			if ( $(this).is('nav') ) {
+			  var has_items = false;
+			  if ( $(this).find('li:visible').length > 1) {
+			    has_items = true;
+			  }
+			  if (!has_items) {
+			    $(this).remove();
+			  }
+			}
 		//}
 	});
 	// Activate Mobile Expander for Unit Navigation at 959 instead of 767
@@ -263,8 +186,18 @@ var msie = document.documentMode;
 			//$(this).toggleClass('open');
 		//}
 	//});
-	
-	// 6. Read More Expander --------------------------------------------------
+
+	// 3. Empty Sidebar Helper ------------------------------------------------
+	$('.secondary').each(function() {
+		if (msie != 8 && msie != 7) {
+			if ( !$(this).html().trim() ) {
+				$(this).empty();
+			}
+		}
+	});
+
+
+	// 4. Read More Expander --------------------------------------------------
 	var excerpt_length = 310;
 	var button_label_expand = 'Read More';
 	var button_label_collapse = 'Close';
@@ -302,10 +235,10 @@ var msie = document.documentMode;
 			$(this).parents('.readmore-expander').first().next('.readmore-excerpt-container').find('.readmore-expander-button').trigger('click');
 		}
 	});
-	
-	
-	
-	// 7. Mobile Table Helper -------------------------------------------------
+
+
+
+	// 5. Mobile Table Helper -------------------------------------------------
 	$('.mobile-scroll').each(function() {
 			$(this).wrap('<div class="table-scroller" />');
 			if ( $(this).hasClass('large') ) {
@@ -315,15 +248,15 @@ var msie = document.documentMode;
 	$('.table-scroller').append('<div class="table-fader" />').bind('scroll touchmove', function() {
 		$(this).find('.table-fader').remove(); // hide fader DIV on user interaction
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
+
+
+
+
+
+
+
+
+
+
+
 });})(jQuery, this);

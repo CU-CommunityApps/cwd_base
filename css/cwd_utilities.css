@@ -327,7 +327,7 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
   transition: opacity .25s;
 }
 
-#popup:hover #popup-close, #popup.fullscreen #popup-close, .touch #popup #popup-close {
+#popup:hover #popup-close, #popup.fullscreen #popup-close, .touch #popup #popup-close, #popup.video #popup-close {
   opacity: 0.6;
 }
 
@@ -341,6 +341,47 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
 
 #popup-anchor:focus, .popup-close:focus {
   outline: 0;
+}
+
+#popup.video {
+  background: #000 !important;
+  max-width: 100%;
+}
+
+#popup .popup-video {
+  width: 720px;
+  max-width: calc(100% - 20px);
+  padding-bottom: 56.25%;
+  padding-bottom: calc(56.25% - 11px);
+  margin: 50px 10px 10px;
+}
+
+#popup.image-gallery .popup-video {
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 18px;
+  max-width: calc(100% - 80px);
+  padding-bottom: calc(56.25% - 45px);
+}
+
+#popup.image-gallery.video .prev {
+  left: -40px;
+  min-width: 36px;
+}
+
+#popup.image-gallery.video .next {
+  right: -40px;
+  min-width: 36px;
+}
+
+#popup.video .caption {
+  position: absolute;
+  top: 5px;
+  color: #bbb;
+  max-width: calc(100% - 80px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Popup Link Icons */
@@ -361,8 +402,8 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
   position: absolute;
   color: #fff;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  min-width: 80px;
-  min-height: 35px;
+  min-width: 60px;
+  min-height: 52px;
   top: 0;
   bottom: 0;
   opacity: 0;
@@ -372,10 +413,14 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
   -o-transition: opacity .25s;
   -ms-transition: opacity .25s;
   transition: opacity .25s;
-  background: url("../images/cwd_utilities/caret-left-circle.svg") 35% 50% no-repeat, -webkit-radial-gradient(left center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-  background: url("../images/cwd_utilities/caret-left-circle.svg") 35% 50% no-repeat, -moz-radial-gradient(left center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-  background: url("../images/cwd_utilities/caret-left-circle.svg") 35% 50% no-repeat, -o-radial-gradient(left center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-  background: url("../images/cwd_utilities/caret-left-circle.svg") 35% 50% no-repeat, radial-gradient(ellipse at left center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+  background: url("../images/cwd_utilities/chevron-left-rect.svg") 25% 50% no-repeat, -webkit-radial-gradient(left center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+  background: url("../images/cwd_utilities/chevron-left-rect.svg") 25% 50% no-repeat, -moz-radial-gradient(left center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+  background: url("../images/cwd_utilities/chevron-left-rect.svg") 25% 50% no-repeat, -o-radial-gradient(left center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+  background: url("../images/cwd_utilities/chevron-left-rect.svg") 25% 50% no-repeat, radial-gradient(ellipse at left center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+}
+
+#popup.video .gallery-nav .next-prev a {
+  background: url("../images/cwd_utilities/chevron-left-rect.svg") 40% 50% no-repeat, radial-gradient(ellipse at left center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 50%);
 }
 
 .gallery-nav .next-prev .prev {
@@ -384,13 +429,17 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
 
 .gallery-nav .next-prev .next {
   right: 0;
-  background: url("../images/cwd_utilities/caret-right-circle.svg") 65% 50% no-repeat, -webkit-radial-gradient(right center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-  background: url("../images/cwd_utilities/caret-right-circle.svg") 65% 50% no-repeat, -moz-radial-gradient(right center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-  background: url("../images/cwd_utilities/caret-right-circle.svg") 65% 50% no-repeat, -o-radial-gradient(right center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
-  background: url("../images/cwd_utilities/caret-right-circle.svg") 65% 50% no-repeat, radial-gradient(ellipse at right center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+  background: url("../images/cwd_utilities/chevron-right-rect.svg") 75% 50% no-repeat, -webkit-radial-gradient(right center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+  background: url("../images/cwd_utilities/chevron-right-rect.svg") 75% 50% no-repeat, -moz-radial-gradient(right center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+  background: url("../images/cwd_utilities/chevron-right-rect.svg") 75% 50% no-repeat, -o-radial-gradient(right center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+  background: url("../images/cwd_utilities/chevron-right-rect.svg") 75% 50% no-repeat, radial-gradient(ellipse at right center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
 }
 
-#popup:hover .gallery-nav .next-prev a, .cwd-gallery.viewer .slide:hover .gallery-nav .next-prev a {
+#popup.video .gallery-nav .next-prev .next {
+  background: url("../images/cwd_utilities/chevron-right-rect.svg") 65% 50% no-repeat, radial-gradient(ellipse at right center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 50%);
+}
+
+#popup:hover .gallery-nav .next-prev a, .cwd-gallery.viewer .slide:hover .gallery-nav .next-prev a, #popup.video .next-prev a {
   opacity: 0.7;
 }
 
@@ -400,11 +449,11 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
 }
 
 #popup.error .gallery-nav .next-prev .prev {
-  background-position: 13% 50%;
+  background-position: 13% 100%;
 }
 
 #popup.error .gallery-nav .next-prev .next {
-  background-position: 87% 50%;
+  background-position: 87% 100%;
 }
 
 #popup.error:hover .gallery-nav .next-prev a {

@@ -1,4 +1,4 @@
-/* CWD Experimental Functionality (ama39, last update: 7/20/17)
+/* CWD Experimental Functionality (ama39, last update: 8/24/18)
 	Experimental/non-production scripting to help with demonstration and documentation. Some of this may eventually graduate to CWD Utilities.
    - 1. Automated Table of Contents
    ------------------------------------------------------------------------- */
@@ -17,7 +17,7 @@ function autoTOC(origin_target,toc_target) {
 		var origin = origin_target || default_origin_target;
 		var toc = toc_target || default_toc_target;
 		
-		var headings = $(origin + ' > h2, ' + origin + ' > h3, ' + origin + ' > h4, ' + origin + ' > section > h2, ' + origin + ' > section > h3, ' + origin + ' > section > h4');
+		var headings = $(origin + ' > h2, ' + origin + ' > h3, ' + origin + ' > h4, ' + origin + ' > section > h2, ' + origin + ' > section > h3, ' + origin + ' > section > h4').not('.no-toc');
 		var nest_level = 1;
 		
 		if ( headings.length > 1 ) {

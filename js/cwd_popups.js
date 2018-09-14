@@ -1,4 +1,4 @@
-/* CWD Modal Popups (ama39, last update: 8/10/17)
+/* CWD Modal Popups (ama39, last update: 9/6/18)
 	- Displays content as a "popup" overlay, rather than leaving the current page or opening a new window.
 	- Activate on any link by applying a "popup" class (e.g., <a class="popup" href="bigredbear.jpg">Behold the Big Red Bear!</a>).
 	- Supports images, DOM elements by ID, and Iframes (auto-detected from the href attribute).
@@ -8,6 +8,8 @@
    - Image Gallery mode:
    - -- Gallery behavior (next/prev) is available for sets of images that share a "data-gallery" attribute.
    - -- When running in Image Gallery mode, a loading animation is provided when transitioning between images.
+   - -- Detects and corrects for oversized images (added 8/16/18)
+   - -- Video Support (added 9/2/18)
    
    - Accessibility Notes:
    - -- Popups have a "dialog" role along with visually-hidden titling, focus control, and tab indexing to smoothly transition to and from the dialog. The titling provides hints on key shortcuts and changes based on the type of content and whether it is the first time the user has launched the popup. See the popupControls() function below for more details.
@@ -51,7 +53,7 @@ jQuery(document).ready(function($) {
 
 	function popups() {
 		// Create #popup node and background dimmer 
-		$('body').append('<div id="popup-background" class="aria-target" tabindex="-1" aria-label="Loading..." role="progressbar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"><span class="spinner"></span></div><div id="popup-wrapper"><div class="vertical-align"><div id="popup" role="dialog" aria-labelledby="popup-anchor"></div></div></div>');
+		$('body').append('<div id="popup-background" class="aria-target" tabindex="-1" aria-label="Loading..." role="progressbar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"><span class="spinner"></span></div><div id="popup-wrapper"><div class="vertical-align"><div id="popup" role="dialog"></div></div></div>');
 		// Background space is clickable to close the popup
 		$('#popup-wrapper').click(function(e) {
 			$('#popup-close').trigger('click');
@@ -102,13 +104,39 @@ jQuery(document).ready(function($) {
 			popup_count++;
 			$(this).data('popupID',popup_count);
 		
-			var popup_content = $(this).attr('href');
+			var popup_content = target_href = $(this).attr('href');
+			var filetype = popup_content.substr(popup_content.lastIndexOf('.')).toLowerCase();
 			var popup_caption = $(this).attr('data-title');
 			var popup_alt = $(this).attr('data-alt');
 			var popup_custom_width = $(this).attr('data-popup-width');
 			var popup_custom_height = $(this).attr('data-popup-height');
 			var popup_gallery = $(this).attr('data-gallery');
 			var popup_fullscreen = $(this).hasClass('popup-fullscreen');
+			
+			// Detect video data if present
+			if (filetype == '.mp4' || target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0 || target_href.indexOf('cornell.edu/video') >= 0) { 
+				// Video Content
+				var videotype = false;
+				var vid = 0;
+				if (target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0) {
+					videotype = 'youtube';
+					var url_process = target_href.replace(/\/$/,'').replace('watch?v=','').split('/');
+					vid = url_process[url_process.length-1];
+				}
+				else if (target_href.indexOf('cornell.edu/video') >= 0) {
+					videotype = 'cornellcast';
+					var url_process = target_href.replace(/\/$/,'').replace('/embed','').split('/');
+					vid = url_process[url_process.length-1];
+				}
+				else if (filetype == '.mp4') {
+					videotype = 'html5';
+					vid = target_href;
+				}
+				//console.log(videotype + ' --> ' + vid)
+				if (videotype != false && vid != 0) {
+					$(this).addClass('video').addClass(videotype).attr('data-video-id',vid);
+				}
+			}
 		
 			$(this).click(function(e) {
 			
@@ -117,8 +145,10 @@ jQuery(document).ready(function($) {
 				$('.popup-active').removeClass('popup-active');
 				$(this).addClass('popup-active');
 				popup_source = $(this);
+				$('#popup').attr('aria-labelledby','popup-anchor');
 				$('#popup, #popup-background').removeClass('image image-gallery');
 				$('#popup-background .spinner').removeClass('off');
+				$('#popup .video-container').remove();
 			
 				if (popup_content != '' && popup_content != undefined) {	
 				
@@ -130,16 +160,13 @@ jQuery(document).ready(function($) {
 						$('#popup').removeClass('fullscreen');
 					}
 				
-					// If the popup is already visible (gallery mode), reset size and position to accept new content
-					if ( !$('#popup-wrapper:visible') ) {
+					// If not in gallery mode, reset size and position to accept new content
+					if ( !gallery_running ) {
 						$('#popup').removeClass('custom-width custom-height').removeAttr('style').empty();
 					}
-				
-					// Determine content type (image, element by ID, or external iframe)
-					var filetype = popup_content.substr(popup_content.lastIndexOf('.')).toLowerCase();
 					
-					// IMAGE Mode
-					if (filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
+					// IMAGE (and VIDEO) Mode
+					if ($(this).hasClass('video') || filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
 						popup_type = 'image';
 						$('#popup').removeClass('fullscreen');
 						$('#popup, #popup-background').addClass('image');
@@ -147,82 +174,151 @@ jQuery(document).ready(function($) {
 							$('#popup').addClass('image-gallery');
 						}
 						
-						var img = new Image();
-						img.onload = function() {
-							$('#popup').removeClass('custom-width custom-height').removeAttr('style');
-							$('#popup-wrapper').show(); // parent container must be visible for height calculations
-						
-							var this_width = img.width;
-							if (popup_custom_width) {
-								this_width = popup_custom_width;
+						// VIDEO Mode
+						if ($(this).hasClass('video')) {
+							var vid = $(this).attr('data-video-id');
+							var videotype = false;
+							if ($(this).hasClass('youtube')) {
+								videotype = 'youtube';
 							}
-							$('#popup').removeClass('scroll').width(this_width).html('<div class="relative"><img id="popup-image" tabindex="-1" class="aria-target" width="'+img.width+'" height="'+img.height+'" src="'+popup_content+'" alt="'+popup_alt+'"></div>');
-						
-							if (popup_caption != '' && popup_caption != undefined) {
-								$('#popup').append('<p class="caption">'+popup_caption+'</p>');
+							else if ($(this).hasClass('cornellcast')) {
+								videotype = 'cornellcast';
 							}
-																		
-							// Detect scaled images
-							var scaled_height = img.height;
-							if (img.width != $('#popup-image').width()) {
-								scaled_height = parseInt(scaled_height * ($('#popup-image').width() / img.width));
+							else if ($(this).hasClass('html5')) {
+								videotype = 'html5';
 							}
-							$('#popup-image').css({
-								'width': $('#popup-image').width()+'px',
-								'height': scaled_height+'px'
-							});
-						
-							$('#popup').click(function(e) {
-								e.stopPropagation(); // propagation must be stopped to prevent a click from passing through to #popup-background (which closes the popup)
-							});
-						
-							$('#popup-image').css({
-								'width': 'auto',
-								'height': 'auto'
-							});
+							var video_transition = 0;
+							if ( $('#popup-wrapper:visible') ) {
+								video_transition = popup_fadein_speed;
+							}
+							$('#popup-wrapper').fadeOut(video_transition, function() {
+								var videoElement;
+								$('#popup').addClass('video').html('<div class="relative popup-video"></div>');
 							
-							$('#popup-wrapper').hide();
-							popupControls();
-							
-							$('#popup-wrapper').fadeIn(popup_fadein_speed, function() {
-								if (gallery_running) {
-									$('#popup-image').focus();
-								}
-								else {
-									$('#popup-anchor').focus();
-								}
-								$('#popup-background .spinner').addClass('off');
-								gallery_running = true;
-							});
-						}
-						img.onerror = function() {
-						
-							// Oh no! Error loading image!
-							$('#popup-wrapper').show();
-							$('#popup').addClass('error').removeClass('scroll').width(300).html('<div class="relative clearfix"><div id="popup-panel" class="panel dialog no-border" role="alert"><h3 id="popup-error" class="aria-target" tabindex="-1">Error</h3><p><span class="fa fa-image fa-3x fa-pull-left fade" aria-hidden="true"></span> The requested image could not be loaded.</p></div></div>');
-							$('#popup-background .spinner').addClass('off');
-							popupControls();
-							$('#popup-wrapper').hide().fadeIn(popup_fadein_speed, function() {
-								$('#popup-error').focus();
-							});
-							
-						}
-						// If the popup is already visible (gallery mode), fade out before fading back in
-						if ( $('#popup-wrapper:visible') ) {
-							$('#popup-wrapper').fadeOut(popup_fadein_speed, function() {
+								var slide = $('#popup .popup-video').first();
+								
 								$('#popup, #popup-background').removeClass('error swipe-left swipe-right custom-width custom-height');
-								img.src = popup_content;
+								if (popup_caption) {
+									$('#popup').append('<p class="caption">'+popup_caption+'</p>')
+								}
+								if (videotype == 'youtube') {
+									$(slide).prepend('<iframe class="video-container" width="560" height="315" src="https://www.youtube.com/embed/'+vid+'?rel=0&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="YouTube video"></iframe>');
+									$(slide).find('.video-container').on('load',function() {
+										videoElement = $(this).contents().find('video');
+									});
+								}
+								else if (videotype == 'cornellcast') {
+									$(slide).prepend('<iframe class="video-container" src="//www.cornell.edu/video/'+vid+'/embed" width="560" height="315" frameborder="0" allowfullscreen title="CornellCast video"></iframe>');
+									$(slide).find('.video-container').on('load',function() {
+										videoElement = $(this).contents().find('video');
+									});
+								}
+								else if (videotype == 'html5') {
+									$(slide).prepend('<video class="video-container aria-target" width="560" height="315" controls="controls" preload="preload"><source type="video/mp4" src="'+vid+'"></video>');
+									videoElement = $(slide).find('video');
+									$(videoElement).click(function(e) {
+										e.stopPropagation(); // propagation must be stopped to prevent a click from passing through to #popup-background (which closes the popup)
+									});
+								}
+								popupControls();
+								$('#popup-wrapper').fadeIn(popup_fadein_speed, function() {
+									// If the popup is already visible (gallery mode), focus on the next video
+									if (gallery_running) {
+										$('#popup-anchor').focus();
+									}
+									else {
+										//$(slide).find('.video-container').focus(); // disabled temporarily, pending video/iframe/accessibility R&D
+										$('#popup-anchor').focus();
+									}
+									$('#popup-background .spinner').addClass('off');
+									gallery_running = true;
+								});
 							});
+							
 						}
+						// IMAGE Mode
 						else {
-							img.src = popup_content;
+							var img = new Image();
+							img.onload = function() {
+								$('#popup').removeClass('custom-width custom-height').removeAttr('style');
+								$('#popup-wrapper').show(); // parent container must be visible for height calculations
+						
+								var this_width = img.width;
+								if (popup_custom_width) {
+									this_width = popup_custom_width;
+								}
+								$('#popup').removeClass('scroll').width(this_width).html('<div class="relative"><img id="popup-image" tabindex="-1" class="aria-target" width="'+img.width+'" height="'+img.height+'" src="'+popup_content+'" alt="'+popup_alt+'"></div>');
+						
+								if (popup_caption != '' && popup_caption != undefined) {
+									$('#popup').append('<p class="caption">'+popup_caption+'</p>');
+								}
+																		
+								// Detect scaled images
+								var scaled_height = img.height;
+								if (img.width != $('#popup-image').width()) {
+									scaled_height = parseInt(scaled_height * ($('#popup-image').width() / img.width));
+								}
+								$('#popup-image').css({
+									'width': $('#popup-image').width()+'px',
+									'height': scaled_height+'px'
+								});
+						
+								$('#popup').click(function(e) {
+									e.stopPropagation(); // propagation must be stopped to prevent a click from passing through to #popup-background (which closes the popup)
+								});
+						
+								$('#popup-image').css({
+									'width': 'auto',
+									'height': 'auto'
+								});
+							
+								$('#popup-wrapper').hide();
+								popupControls();
+							
+								$('#popup-wrapper').fadeIn(popup_fadein_speed, function() {
+									if (gallery_running) {
+										$('#popup-image').focus();
+									}
+									else {
+										$('#popup-anchor').focus();
+									}
+									$('#popup-background .spinner').addClass('off');
+									gallery_running = true;
+									resizeDone(); // correct for oversized images (borrowed from the resize event)
+								});
+							}
+							img.onerror = function() {
+						
+								// Oh no! Error loading image!
+								$('#popup-wrapper').show();
+								$('#popup').addClass('error').removeClass('scroll').width(300).html('<div class="relative clearfix"><div id="popup-panel" class="panel dialog no-border" role="alert"><h3 id="popup-error" class="aria-target" tabindex="-1">Error</h3><p><span class="fa fa-image fa-3x fa-pull-left fade" aria-hidden="true"></span> The requested image could not be loaded.</p></div></div>');
+								$('#popup-background .spinner').addClass('off');
+								popupControls();
+								$('#popup-wrapper').hide().fadeIn(popup_fadein_speed, function() {
+									$('#popup-error').focus();
+								});
+							
+							}
+							// If the popup is already visible (gallery mode), fade out before fading back in
+							if ( $('#popup-wrapper:visible') ) {
+								$('#popup-wrapper').fadeOut(popup_fadein_speed, function() {
+									$('#popup, #popup-background').removeClass('error swipe-left swipe-right custom-width custom-height');
+									img.src = popup_content;
+									$('#popup').removeClass('video');
+								});
+							}
+							else {
+								img.src = popup_content;
+								$('#popup').removeClass('video');
+							}
+						
 						}
 					
 						$('#popup-background').show();
 					
 					}
 					else {
-						$('#popup').removeClass('custom-width custom-height').removeAttr('style').empty();
+						$('#popup').removeClass('custom-width custom-height video').removeAttr('style').empty();
 						
 						// DOM ELEMENT Mode
 						if (popup_content.indexOf('#') == 0) {
@@ -317,6 +413,25 @@ jQuery(document).ready(function($) {
 									$('#popup').outerHeight(contain_height);
 								}
 							}
+							else if (popup_type == 'image') {
+								$('#popup-image').css('max-height','none');
+								$('#popup').css('width','auto');
+								if ($(window).width() > 767) {
+									var available_image_height = $('#popup').height();
+									if ($('#popup .caption').length > 0) {
+										available_image_height -= $('#popup .caption').outerHeight();
+									}
+									if (available_image_height > 100) {
+										if ($('#popup').height() > $(window).height()-30) {
+											$('#popup-image').css('max-height',(available_image_height-30)+'px');
+											$('#popup').width($('#popup-image').width());
+										}
+									}
+									else {
+										setTimeout(function(){ resizeDone(); }, 500); // try again in 0.5 seconds (Safari image render bug workaround)
+									}
+								}
+							}
 							else if (popup_type == 'iframe') {
 								if ( !$('#popup').hasClass('custom-width') ) {
 									$('#popup').outerWidth(parseInt($(window).width()*popup_proportion));
@@ -408,8 +523,9 @@ jQuery(document).ready(function($) {
 			}
 			$(popup_source).focus(); // return focus to the original source of the popup
 			$('.popup-active').removeClass('popup-active');
-			$('#popup').removeClass('image image-gallery error swipe-left swipe-right');
+			$('#popup').removeClass('image image-gallery error swipe-left swipe-right').removeAttr('aria-labelledby');
 			gallery_running = false;
+			$('#popup .video-container').remove();
 		});
 	}
 

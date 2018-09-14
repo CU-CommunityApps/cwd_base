@@ -84,6 +84,11 @@
         <h1 class="cu-logo"><a href="http://www.cornell.edu"><img class="sr-only" src="/{{ directory }}/images/cornell/bold_cornell_logo_simple_b31b1b.svg" alt="Cornell University" width="245" height="62"></a></h1>
         <div class="cu-unit">
           <h2>Cornell Base Theme</h2>
+        {% if is_front %}
+          <h3 class="sans">Welcome</h3>
+        {% else %}
+          <h3 class="sans"><a href="{{ section_path }}">{{ section_title }}</a></h3>
+        {% endif %}
         </div>
         <div class="buttons">
           <button class="mobile-button" id="mobile-nav">Main Menu</button>

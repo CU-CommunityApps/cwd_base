@@ -2,7 +2,8 @@
 
 function cwd_base_preprocess_html(&$variables) {
 
-  // Make 'is_front' available to the html.html template
+  /* Make 'is_front' available to the html.html template
+     ------------------------------------------------------------------------ */
   $variables['base_path'] = base_path();
   try {
     $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
@@ -11,10 +12,39 @@ function cwd_base_preprocess_html(&$variables) {
     $variables['is_front'] = FALSE;
   }
 
-  // If the node object is present, make node data available to the html.html template
+
+  /* If the node object is present, make node data available to the html.html template
+     ------------------------------------------------------------------------ */
   if (($node = \Drupal::routeMatch()->getParameter('node')) && $node instanceof \Drupal\node\NodeInterface) {
     $variables['node'] = $node;
   }
+
+
+  /* Get Section Title (top-most parent, under home)
+     ------------------------------------------------------------------------ */
+  $section_title = $section_path = NULL;
+
+  $path_items = explode('/',\Drupal::request()->getRequestUri()); // generate an array of path items
+  $section_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/'. $path_items[1]); // array index 1 will always return the top level under root
+  $request = \Symfony\Component\HttpFoundation\Request::create($section_alias);
+  $router = \Drupal::service('router.no_access_checks'); // router.matcher won't work for nodes below, since the values object is protected
+  try {
+    $match = $router->matchRequest($request);
+    if ($match['node'] != NULL) { // nodes
+      $section_title = $match['node']->getTitle();
+      $section_path = $section_alias;
+    }
+    else if ($match['_title'] != NULL) { // non-nodes (/user, views content, etc)
+       $section_title = $match['_title'];
+       $section_path = $section_alias;
+    }
+  }
+  catch (\Exception $e) {
+    // No route was found, variables will be left NULL
+  }
+
+  $variables['section_title'] = $section_title;
+  $variables['section_path'] = $section_path;
 
 
 }

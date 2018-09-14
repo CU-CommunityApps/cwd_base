@@ -1,4 +1,4 @@
-/* CWD Image Slider (ama39, last update: 8/10/17)
+/* CWD Image Slider (ama39, last update: 9/3/18)
    - ...
    - >> TODO: more introduction and documentation will be added here soon (in the meantime, please see the "Scripted Components" documentation for more information) <<
    - preloads images and creates "buffer" layers to allow cover placement and ensure smooth transitions
@@ -59,6 +59,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 	var slide_interval;
 	var is_transitioning = false;
 	var queued_request = false;
+	var photo_credit_mode = false;
 	
 	jQuery(document).ready(function($) {
 		
@@ -87,6 +88,9 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 		$(image_div).addClass('slider');
 		$(image_div).css('background',bg_color); // background color
 		$(caption_div).find('.caption-inner').remove(); // remove static caption if present
+		if ($(caption_div).hasClass('photo-credits')) {
+			photo_credit_mode = true; // restyles the caption into an icon with tooltip for simple photo credits instead of headlines
+		}
 	
 		// build image set and preload
 		for (i=0;i<slide_count;i++) {
@@ -123,15 +127,6 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 			// detect visible captions
 			if (image_array[i][1].length > 0 || image_array[i][2].length > 0) {
 				captionless = false;
-				// number all slides for screen readers
-				/* **This was well-intentioned, but seems to confuse macOS Voiceover in Safari, so it's disabled and will be removed soon.
-				if ($(caption_div_inner + ' p').length > 0) {
-					$(caption_div_inner + ' p').prepend('<span class="hidden">Slide '+(i+1)+':</span> ');
-				}
-				else {
-					$(caption_div_inner + ' h2').prepend('<span class="hidden">Slide '+(i+1)+':</span> ');
-				}
-				*/
 			}
 			else {
 				// detect empty captions and supply alt text if available
@@ -144,6 +139,18 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 					$(caption_div_inner + '.caption'+i+' .caption-focus').append('<p class="hidden"><span>Slide '+(i+1)+'</span></p>');
 				}
 			}
+			
+			// photo credit mode
+			if (photo_credit_mode) {
+				$(caption_div_inner + '.caption'+i).find('.caption-focus').wrapInner('<div class="photo-credit-text off"></div>');
+				$(caption_div_inner + '.caption'+i).find('.caption-focus').append('<span class="photo-credit-icon zmdi zmdi-camera" aria-hidden="true"><span class="sr-only">Show Photo Credit</span></span>');
+				$(caption_div_inner + '.caption'+i).find('.photo-credit-icon').hover(function() {
+					$(this).prev('.photo-credit-text').removeClass('off');
+				}, function() {
+					$(this).prev('.photo-credit-text').addClass('off');
+				});
+			}
+			
 		}
 		if (captionless) {
 			$('body').addClass('slider-no-caption');

@@ -2,6 +2,7 @@
 /**
  * @file
  * Theme override for main view template.
+ * Includes some elements from classy/templates/views/views-view.html.twig #teamD7
  *
  * Available variables:
  * - attributes: Remaining HTML attributes for the element.
@@ -33,6 +34,9 @@
 {%
   set classes = [
     dom_id ? 'js-view-dom-id-' ~ dom_id,
+    'view',
+    'view-' ~ css_name,
+    'view-display-id-' ~ display_id,
     'cwd-component',
     'cwd-component-rows'
   ]
@@ -52,8 +56,16 @@
   {{ attachment_before }}
 
 
-  {{ rows }}
-  {{ empty }}
+  {% if rows %}
+    <div class="view-content">
+      {{ rows }}
+    </div>
+  {% elseif empty %}
+    <div class="view-empty">
+      {{ empty }}
+    </div>
+  {% endif %}
+
   {{ pager }}
 
   {{ attachment_after }}

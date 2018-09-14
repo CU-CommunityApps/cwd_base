@@ -80,15 +80,19 @@
   margin-bottom: 5px;
   position: relative;
   padding-bottom: 66.7%;
-  /* overidden by javascript */
-  overflow: hidden;
   background: #2d2d2d;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  -webkit-background-size: 100% auto;
-  -moz-background-size: 100% auto;
-  -o-background-size: 100% auto;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
+  transition: padding-bottom 0.3s ease-in-out;
+}
+
+.cwd-gallery.viewer .slide.video {
+  padding-bottom: 56.25%;
+  background: #000 !important;
 }
 
 .cwd-gallery.viewer .slide.portrait {
@@ -119,11 +123,27 @@
   background: #2d2d2d;
   background: rgba(45, 45, 45, 0.7);
   background: -moz-linear-gradient(top, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(45, 45, 45, 0)), color-stop(100%, rgba(45, 45, 45, 0.8)));
   background: -webkit-linear-gradient(top, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
-  background: -o-linear-gradient(top, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
-  background: -ms-linear-gradient(top, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
   background: linear-gradient(to bottom, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
+  transition: opacity 0.5s;
+}
+
+.cwd-gallery.viewer .slide.video .caption {
+  top: 0;
+  bottom: auto;
+  padding: 0.8em 0.8em 4em;
+  background: -moz-linear-gradient(top, rgba(45, 45, 45, 0.8) 0%, rgba(45, 45, 45, 0) 100%);
+  background: -webkit-linear-gradient(top, rgba(45, 45, 45, 0.8) 0%, rgba(45, 45, 45, 0) 100%);
+  background: linear-gradient(to bottom, rgba(45, 45, 45, 0.8) 0%, rgba(45, 45, 45, 0) 100%);
+}
+
+.cwd-gallery.viewer .slide .caption.fadeout {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slide.video .gallery-nav .next-prev a {
+  display: none;
 }
 
 .cwd-gallery.viewer .thumbnails {
@@ -228,6 +248,40 @@
   -o-transition: transform .15s, opacity .15s;
   -ms-transition: transform .15s, opacity .15s;
   transition: transform .15s, opacity .15s;
+}
+
+.cwd-gallery.viewer .thumbnails a.video {
+  position: relative;
+}
+
+.cwd-gallery .thumbnails a.video:after {
+  position: absolute;
+  display: inline-block;
+  font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+  speak: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '\f2d9';
+  font-size: 16px;
+  color: #fff;
+  background: #000;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 2px 5px 4px;
+  right: 6px;
+  top: 6px;
+  border-radius: 1px;
+}
+
+/* Video Container */
+.video-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
 }
 
 @media (min-width: 480px) {

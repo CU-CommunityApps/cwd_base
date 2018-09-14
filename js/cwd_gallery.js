@@ -1,4 +1,4 @@
-/* CWD Image Gallery (ama39, last update: 8/10/17)
+/* CWD Image Gallery (ama39, last update: 9/6/18)
    - Supports two interface modes:
    - 1. Thumbnail Grid with Modal ("Grid mode") - a collection of clickable thumbnails which launch full-sized images in a modal popup (requires cwd_popups.js)
    - -- Grid mode doesn't technically require this JavaScript file (all functionality is handled by the "gallery" scripting in cwd_popups.js).
@@ -8,6 +8,10 @@
    - Set up and activate a gallery by including the "cwd-gallery" class on its container and following the markup guide in the "Scripted Components" documentation.
    - Include the "viewer" class to activate Viewer mode or the "grid" class for Grid mode.
    
+   - Video Support:
+   - -- Currently supports HTML5, YouTube, and CornellCast
+   - -- HTML5 video is currently limited to MP4. Other file formats can easily be added, but a larger video strategy is needed to facilitate the creation of all the video and caption files needed for maximum browser compatibility and accessibility.
+   
    - Accessibility Notes:
    - -- The Image Gallery is keyboard and screen reader accessible, allowing users to browse gallery content with minimal UI-manipulation.
    - -- Be sure to follow the markup guide in the "Scripted Components" documentation carefully and include alt text as well as captions if applicable.
@@ -16,6 +20,7 @@
    
    - Future Plans:
    - -- Smarter preloading (maybe asynchronous preloading that loads images when their thumbnail is visible on screen instead of all images at once?)
+   - -- Better video accessibility (it is greatly limited by YouTube and CornellCast being in iframes, which cannot be controlled with JavaScript, cross-domain)
    ------------------------------------------------------------------------- */
 	
 // defaults
@@ -50,22 +55,73 @@ jQuery(document).ready(function($) {
 		$(slide).append('<p class="caption"></p><div class="gallery-nav"><div class="next-prev"><a class="prev" href="#"><span class="hidden">Previous Item</span></a><a class="next" href="#"><span class="hidden">Next Item</span></a></div></div>');
 		
 		// configure thumbnail buttons
+		var videoElement;
 		$(this).find('.thumbnails a').click(function(e) {
 			e.preventDefault();
-			var native_width = parseInt($(this).attr('data-native-width'));
-			var native_height = parseInt($(this).attr('data-native-height'));
+			//console.log('click');
 			
-			// detect images that are too tall for the viewer's ratio (e.g., square images, portrait images)
-			if (native_height / native_width > slide_ratio) {
-				$(slide).addClass('portrait');
+			// Video Content
+			if ($(this).hasClass('video')) {
+				if ($(this).hasClass('active')) {
+					$(slide).find('.video-container').focus();
+					//videoElement[0].play; // this currently won't work for YouTube and CornellCast, due to cross-domain iframe restrictions
+				}
+				else {
+					$(slide).find('.video-container').remove();
+					$(slide).find('.caption').show().removeClass('fadeout');
+					
+					$(slide).addClass('video');
+					if ($(this).hasClass('youtube')) {
+						$(slide).prepend('<iframe class="video-container" width="560" height="315" src="https://www.youtube.com/embed/'+$(this).attr('data-video-id')+'?rel=0&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="YouTube video"></iframe>');
+						$(slide).find('.caption').hide();
+						$(slide).find('.video-container').on('load',function() {
+							videoElement = $(this).contents().find('video');
+						});
+					}
+					else if ($(this).hasClass('cornellcast')) {
+						$(slide).prepend('<iframe class="video-container" src="//www.cornell.edu/video/'+$(this).attr('data-video-id')+'/embed" width="560" height="315" frameborder="0" allowfullscreen title="CornellCast video"></iframe>');
+						$(slide).find('.caption').text($(this).attr('data-title'));
+						$(slide).find('.video-container').on('load',function() {
+							videoElement = $(this).contents().find('video');
+							//videoElement[0].volume = 0.5;
+							videoElement[0].onplay = function() {
+								$(slide).find('.caption').addClass('fadeout'); // this currently won't work, due to cross-domain iframe restrictions
+							};
+						});
+					}
+					else if ($(this).hasClass('html5')) {
+						$(slide).prepend('<video class="video-container" width="560" height="315" controls="controls" preload="preload"><source type="video/mp4" src="'+$(this).attr('data-video-id')+'"></video>');
+						$(slide).find('.caption').text($(this).attr('data-title'));
+						videoElement = $(slide).find('video');
+						//videoElement[0].volume = 0.5;
+						videoElement[0].onplay = function() {
+							$(slide).find('.caption').addClass('fadeout');
+						};
+						videoElement[0].onpause = function() {
+							//$(slide).find('.caption').removeClass('fadeout'); // currently left off, to avoid conflicting with some browsers' built-in video player interface (e.g., Safari's fullscreen and pop-out buttons)
+						};
+					}
+				}
 			}
+			// Image Content
 			else {
-				$(slide).removeClass('portrait');
-			}
+				$(slide).find('.video-container').remove();
+				$(slide).find('.caption').show().removeClass('fadeout');
+				var native_width = parseInt($(this).attr('data-native-width'));
+				var native_height = parseInt($(this).attr('data-native-height'));
 			
-			// display image and caption
-			$(slide).attr('style','background-image:url('+$(this).attr('href')+');');
-			$(slide).find('.caption').text($(this).attr('data-title'));
+				// detect images that are too tall for the viewer's ratio (e.g., square images, portrait images)
+				if (native_height / native_width > slide_ratio) {
+					$(slide).addClass('portrait');
+				}
+				else {
+					$(slide).removeClass('portrait');
+				}
+			
+				// display image and caption
+				$(slide).removeClass('video').attr('style','background-image:url('+$(this).attr('href')+');');
+				$(slide).find('.caption').text($(this).attr('data-title'));
+			}
 			
 			// thumbnail states
 			$(gallery).find('.thumbnails a').removeClass('active');
@@ -140,20 +196,64 @@ jQuery(document).ready(function($) {
 		
 			$(this).find('.thumbnails a').each(function(i) {
 			
-				// preload images
-				// TODO: some kind of smarter, asynchronous preloading?
-				var img = new Image();
-				var button = $(this);
-				img.onload = function() {
-					$(button).attr('data-native-width',this.width);
-					$(button).attr('data-native-height',this.height);
+				var target_href = $(this).attr('href');
+				var filetype = target_href.substr(target_href.lastIndexOf('.')).toLowerCase();
+				//console.log(filetype);
 				
+				// Image Content
+				if (filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
+					// preload images
+					// TODO: some kind of smarter, asynchronous preloading?
+					var img = new Image();
+					var button = $(this);
+					img.onload = function() {
+						$(button).attr('data-native-width',this.width);
+						$(button).attr('data-native-height',this.height);
+				
+						// activate first slide
+						if (i == 0) {
+							$(button).trigger('click');
+						}
+					};
+					img.src = $(this).attr('href');
+				}
+				// Video Content
+				else {
+					var videotype = false;
+					var vid = 0;
+					if (target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0) {
+						videotype = 'youtube';
+						var url_process = target_href.replace(/\/$/,'').replace('watch?v=','').split('/');
+						vid = url_process[url_process.length-1];
+						// Examples:
+						// www.youtube.com/watch?v=-SwWL5xCzhM
+						// youtu.be/-SwWL5xCzhM
+						// www.youtube.com/embed/-SwWL5xCzhM
+					}
+					else if (target_href.indexOf('cornell.edu/video') >= 0) {
+						videotype = 'cornellcast';
+						var url_process = target_href.replace(/\/$/,'').replace('/embed','').split('/');
+						vid = url_process[url_process.length-1];
+						// Examples:
+						// www.cornell.edu/video/glorious-to-view
+						// www.cornell.edu/video/glorious-to-view/
+						// www.cornell.edu/video/glorious-to-view/embed
+					}
+					else if (filetype == '.mp4') {
+						videotype = 'html5';
+						vid = target_href;
+					}
+					//console.log(videotype + ' --> ' + vid)
+					if (videotype != false && vid != 0) {
+						$(this).addClass('video').addClass(videotype).attr('data-video-id',vid);
+					}
+					
 					// activate first slide
 					if (i == 0) {
 						$(button).trigger('click');
 					}
-				};
-				img.src = $(this).attr('href');
+					
+				}
 			
 			});
 		});

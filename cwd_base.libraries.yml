@@ -16,11 +16,13 @@ global-styling:
     js/contrib/jquery-ui-1.10.2.custom.min.js: {}
     js/contrib/jquery-ui-easing.min.js: {}
     js/contrib/jquery.detect_swipe.js: {}
+    js/contrib/pep.js: {}
     js/contrib/modernizr.js: {}
     js/cwd.js: {}
     js/cwd_utilities.js: {}
     js/cwd_gallery.js: {}
     js/cwd_popups.js: {}
+    js/cwd_card_slider.js: {}
 
 header-scripts:
   header: true

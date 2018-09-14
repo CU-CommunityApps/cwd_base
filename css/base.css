@@ -241,7 +241,7 @@ template {
   box-sizing: border-box;
 }
 
-.sr-only, .visually-hidden {
+.sr-only, .visually-hidden, .hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -294,48 +294,6 @@ template {
 
 .row:after {
   clear: both;
-}
-
-/* Bootstrap Depreciated */
-.no-bootstrap {
-  margin-right: -4em;
-}
-
-.no-bootstrap boot {
-  position: relative;
-  left: -1.85em;
-  font-size: 150%;
-}
-
-.no-bootstrap fire:first-of-type {
-  position: relative;
-  top: -0.1em;
-}
-
-.no-bootstrap smoke:first-of-type {
-  position: relative;
-  left: -0.3em;
-  top: -0.2em;
-  font-size: 200%;
-  display: inline-block;
-  transform: rotate(270deg);
-  opacity: 0.35;
-}
-
-.no-bootstrap smoke:last-of-type {
-  position: relative;
-  left: -3em;
-  top: -0.2em;
-  display: inline-block;
-  transform: rotate(330deg);
-  opacity: 0.5;
-}
-
-.no-bootstrap fire:last-of-type {
-  position: relative;
-  left: -5.8em;
-  top: 0.1em;
-  font-size: 80%;
 }
 
 /* CWD Cornell Framework Base
@@ -661,7 +619,7 @@ h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:la
   text-transform: lowercase;
 }
 
-.text-uppercase {
+.text-uppercase, .uppercase {
   text-transform: uppercase;
 }
 
@@ -1109,7 +1067,7 @@ blockquote {
 }
 
 blockquote.offset {
-  font-family: Iowan Old Style, Lusitana, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
   font-size: 20px;
   line-height: 1.45;
   color: #444;
@@ -1118,6 +1076,7 @@ blockquote.offset {
   border-left-color: #b31b1b;
   margin: 1.25em 0;
   padding: 15px 30px;
+  clear: both;
 }
 
 blockquote.offset p {
@@ -1131,10 +1090,16 @@ blockquote footer, blockquote.offset footer {
 }
 
 /* Figures */
-figure, .caption {
+figure {
   background: rgba(0, 0, 0, 0.05);
   clear: both;
   margin: 1em 0;
+}
+
+.caption {
+  background: rgba(0, 0, 0, 0.05);
+  clear: both;
+  margin: 0 0 1em;
 }
 
 a figure:last-child:after {
@@ -1157,7 +1122,7 @@ figure img {
 
 figcaption, .caption {
   padding: 0.55em 0.6em;
-  color: #666;
+  color: #555;
   clear: both;
 }
 
@@ -1254,22 +1219,22 @@ main .row > .primary:last-child:after, main .row > .secondary:last-child:after {
 }
 
 /* Tables */
-.table {
+table {
   font-size: 13px;
   width: 100%;
   margin-bottom: 3em;
   border-collapse: collapse;
 }
 
-.table th[scope='col'], .table thead th {
+table th[scope='col'], table thead th {
   text-align: left;
 }
 
-.table th[scope='col'].text-center, .table thead th.text-center {
+table th[scope='col'].text-center, table thead th.text-center {
   text-align: center;
 }
 
-.table caption {
+table caption {
   padding: 0.6em 0;
   border-top: 2px solid #e8e8e8;
   font-family: Avenir Next, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica Neue, sans-serif;
@@ -1277,182 +1242,182 @@ main .row > .primary:last-child:after, main .row > .secondary:last-child:after {
   font-weight: 400;
 }
 
-.table .blank {
+table .blank {
   background: none !important;
 }
 
-.table td, .table th {
+table td, table th {
   background: #fff;
   padding: 0.4em 0.6em;
   border: 1px solid #d9d9d9;
   border-width: 0 1px;
 }
 
-.table.compact td, .table.compact th {
+table.compact td, table.compact th {
   font-size: 12px;
   padding: 0.2em 0.3em;
 }
 
-.table td:first-child, .table th:first-child {
+table td:first-child, table th:first-child {
   border-left-width: 0;
 }
 
-.table td:last-child, .table th:last-child {
+table td:last-child, table th:last-child {
   border-right-width: 0;
 }
 
-.table th {
+table th {
   background: #fafafa;
 }
 
-.table thead th {
+table thead th {
   background: #efefef;
   border-bottom-width: 1px;
 }
 
-.table.bordered tr > * {
+table.bordered tr > * {
   border-width: 1px;
 }
 
-.table.flat tr > * {
+table.flat tr > * {
   border-width: 0;
 }
 
-.table.flat td, .table.flat th {
+table.flat td, table.flat th {
   padding: 0.8em;
   background: #fafafa;
 }
 
-.table.flat th {
+table.flat th {
   background: #f2f2f2;
 }
 
-.table.flat th[scope='col'], .table.flat thead th {
+table.flat th[scope='col'], table.flat thead th {
   background: #e6e6e6;
 }
 
-.table.striped tr:nth-child(even) td {
+table.striped tr:nth-child(even) td {
   background: #f7f7f7;
 }
 
-.table.striped tbody tr:nth-child(even) th {
+table.striped tbody tr:nth-child(even) th {
   background: #f0f0f0;
 }
 
-.table.flat.striped tr:nth-child(even) td {
+table.flat.striped tr:nth-child(even) td {
   background: #ededed;
 }
 
-.table.flat.striped tbody tr:nth-child(even) th {
+table.flat.striped tbody tr:nth-child(even) th {
   background: #e8e8e8;
 }
 
-.table.colored td {
+table.colored td {
   background: #f6ffff;
   border-color: #afbfc9;
 }
 
-.table.colored.striped tr:nth-child(even) > td {
+table.colored.striped tr:nth-child(even) > td {
   background: #ebf3f8;
 }
 
-.table.colored th[scope='col'], .table.colored thead th,
-.table.flat.colored th[scope='col'], .table.flat.colored thead th {
+table.colored th[scope='col'], table.colored thead th,
+table.flat.colored th[scope='col'], table.flat.colored thead th {
   background: #cfe3ef;
   border-color: #afbfc9;
 }
 
-.table.flat.colored tr > th[scope='row'] {
+table.flat.colored tr > th[scope='row'] {
   border-right-width: 1px;
 }
 
-.table.rainbow tr * {
+table.rainbow tr * {
   border-color: #aaa;
 }
 
-.table.rainbow tr > *:nth-child(5n+1) {
+table.rainbow tr > *:nth-child(5n+1) {
   background: #f6ffff;
 }
 
-.table.rainbow tr > *:nth-child(5n+2) {
+table.rainbow tr > *:nth-child(5n+2) {
   background: #f6fff7;
 }
 
-.table.rainbow tr > *:nth-child(5n+3) {
+table.rainbow tr > *:nth-child(5n+3) {
   background: #fffff6;
 }
 
-.table.rainbow tr > *:nth-child(5n+4) {
+table.rainbow tr > *:nth-child(5n+4) {
   background: #fff7fa;
 }
 
-.table.rainbow tr > *:nth-child(5n+5) {
+table.rainbow tr > *:nth-child(5n+5) {
   background: #fcf7ff;
 }
 
-.table.rainbow thead tr > *:nth-child(5n+1) {
+table.rainbow thead tr > *:nth-child(5n+1) {
   background: #cfe3ef;
 }
 
-.table.rainbow thead tr > *:nth-child(5n+2) {
+table.rainbow thead tr > *:nth-child(5n+2) {
   background: #cfefd1;
 }
 
-.table.rainbow thead tr > *:nth-child(5n+3) {
+table.rainbow thead tr > *:nth-child(5n+3) {
   background: #efe7cf;
 }
 
-.table.rainbow thead tr > *:nth-child(5n+4) {
+table.rainbow thead tr > *:nth-child(5n+4) {
   background: #efd3d1;
 }
 
-.table.rainbow thead tr > *:nth-child(5n+5) {
+table.rainbow thead tr > *:nth-child(5n+5) {
   background: #e7d1f1;
 }
 
-.table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+1) {
+table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+1) {
   background: #ebf3f8;
 }
 
-.table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+2) {
+table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+2) {
   background: #ebf8ec;
 }
 
-.table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+3) {
+table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+3) {
   background: #f8f5eb;
 }
 
-.table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+4) {
+table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+4) {
   background: #f8edec;
 }
 
-.table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+5) {
+table.rainbow.striped tr:nth-child(even) > td:nth-child(5n+5) {
   background: #f5ecf9;
 }
 
-.table.colored tr > th[scope='row'],
-.table.rainbow tr > th[scope='row'] {
+table.colored tr > th[scope='row'],
+table.rainbow tr > th[scope='row'] {
   background: #fafafa !important;
 }
 
-.table.colored.striped tr:nth-child(even) > th[scope='row'], .table.flat.colored .blank,
-.table.rainbow.striped tr:nth-child(even) > th[scope='row'], .table.flat.rainbow .blank, .table.rainbow thead th:not([scope='col']) {
+table.colored.striped tr:nth-child(even) > th[scope='row'], table.flat.colored .blank,
+table.rainbow.striped tr:nth-child(even) > th[scope='row'], table.flat.rainbow .blank, table.rainbow thead th:not([scope='col']) {
   background: #f0f0f0 !important;
 }
 
-.table.flat.sectioned thead th {
+table.flat.sectioned thead th {
   border-bottom-width: 1px;
 }
 
-.table.flat.sectioned tbody > tr:first-child > td {
+table.flat.sectioned tbody > tr:first-child > td {
   border-top: 1px solid #d9d9d9;
 }
 
-.table.flat.sectioned tbody > tr:first-child > th {
+table.flat.sectioned tbody > tr:first-child > th {
   border-top: 1px solid #d9d9d9;
 }
 
-.table.sectioned tbody:before {
+table.sectioned tbody:before {
   content: '';
   display: block;
   height: 1.5em;
@@ -1638,7 +1603,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   transition: background-color .15s;
 }
 
-#main-navigation li.current-menu-item > a, #main-navigation li.current-menu-ancestor > a, #main-navigation li.active-trail > a,
+#main-navigation li.current-menu-item > a, #main-navigation li.current-menu-ancestor > a, #main-navigation li.active-trail > a, #main-navigation .container-fluid > ul > li.menu-item--active-trail > a,
 #main-navigation a:hover, #main-navigation li.active > a, #main-navigation > .container-fluid > ul > li > a.is-active, #main-navigation li:hover > a, .dropdown-menu li:hover > a {
   /* includes WordPress and Drupal menu classes */
   background: #444;
@@ -1834,7 +1799,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
     height: auto;
   }
 
-  #main-navigation li.current-menu-item a, #main-navigation li.current-menu-ancestor a,
+  #main-navigation li.current-menu-item a, #main-navigation li.current-menu-ancestor a, #main-navigation .container-fluid > ul > li.menu-item--active-trail a,
   #main-navigation li.active-trail a,
   #main-navigation li.active a,
   #main-navigation li > a.is-active {
@@ -2008,6 +1973,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-decoration: underline;
+  vertical-align: middle;
 }
 
 .breadcrumb li a:hover .limiter, .breadcrumb li a:focus .limiter {
@@ -2020,7 +1986,8 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   font-size: 18px;
   line-height: 13px;
   position: relative;
-  bottom: -3px;
+  vertical-align: middle;
+  bottom: -2px;
   color: #bbb;
   color: rgba(0, 0, 0, 0.2);
 }
@@ -2159,13 +2126,13 @@ img, video {
 
 .align-mobile.align-left {
   float: left;
-  margin: 0.3em 20px 2px 0;
+  margin: 0.3em 20px 4px 0;
   max-width: 40%;
 }
 
 .align-mobile.align-right {
   float: right;
-  margin: 0.3em 0 2px 20px;
+  margin: 0.3em 0 4px 20px;
   max-width: 40%;
 }
 
@@ -2536,12 +2503,15 @@ figure.three-col > img {
   margin-bottom: 0;
 }
 
-.panel.dialog h1 .fa, .panel.dialog h2 .fa, .panel.dialog h3 .fa, .panel.dialog h4 .fa {
+.panel.dialog h1 .fa, .panel.dialog h2 .fa, .panel.dialog h3 .fa, .panel.dialog h4 .fa,
+.panel.dialog h1 .zmdi, .panel.dialog h2 .zmdi, .panel.dialog h3 .zmdi, .panel.dialog h4 .zmdi {
   margin: 0 8px 0 -1px;
   padding-left: 1px;
   font-size: 28px;
   line-height: 0.55;
   opacity: 0.3;
+  position: relative;
+  top: 2px;
 }
 
 .panel.dialog-error h1 .fa:before, .panel.dialog-error h2 .fa:before, .panel.dialog-error h3 .fa:before, .panel.dialog-error h4 .fa:before {
@@ -2648,7 +2618,7 @@ figure.three-col > img {
 
 .cwd-component .metadata-set {
   font-size: 11px;
-  color: #888;
+  color: #767676;
 }
 
 .cwd-component .metadata-set > * {
@@ -2665,7 +2635,7 @@ figure.three-col > img {
 }
 
 .cwd-component .metadata-set a {
-  color: #888;
+  color: #767676;
   text-decoration: none;
 }
 
@@ -2786,7 +2756,7 @@ figure.three-col > img {
 
 .cwd-component .date {
   font-size: 11px;
-  color: #888;
+  color: #767676;
   margin-bottom: 0.5em;
 }
 
@@ -2863,7 +2833,7 @@ figure.three-col > img {
 }
 
 .cwd-component .events day {
-  font-family: Iowan Old Style, Lusitana, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
   font-size: 27px;
   line-height: 0.65;
   display: block;
@@ -2973,6 +2943,10 @@ figure.three-col > img {
 
 .cwd-component .title + .date, .cwd-component .subheading + .date {
   margin-top: -1em;
+}
+
+.cwd-component a img {
+  vertical-align: middle;
 }
 
 .cwd-component .image + .caption {
@@ -3109,7 +3083,7 @@ figure.three-col > img {
 #main .secondary .spotlight figure h3 {
   color: #b31b1b;
   font-size: 15px;
-  font-family: Iowan Old Style, Lusitana, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
   text-transform: uppercase;
   margin: 0.75em 0 0.55em;
 }
@@ -3127,14 +3101,14 @@ figure.three-col > img {
 @media (min-width: 480px) {
   .align-left {
     float: left;
-    margin: 0.3em 20px 2px 0;
+    margin: 0.3em 20px 4px 0;
     width: auto;
     max-width: 40%;
   }
 
   .align-right {
     float: right;
-    margin: 0.3em 0 2px 20px;
+    margin: 0.3em 0 4px 20px;
     width: auto;
     max-width: 40%;
   }
@@ -3389,26 +3363,13 @@ figure.three-col > img {
     width: 25%;
   }
 
-  .two-col.padded > *:nth-child(odd) {
-    padding-right: 15px;
-    padding-bottom: 15px;
+  .two-col.padded, .three-col.padded, .four-col.padded {
+    margin-left: -15px;
+    margin-right: -15px;
   }
 
-  .two-col.padded > *:nth-child(even) {
-    padding-left: 15px;
-    padding-bottom: 15px;
-  }
-
-  .three-col.padded > *, .four-col.padded > * {
+  .two-col.padded > *, .three-col.padded > *, .four-col.padded > * {
     padding: 0 15px 15px;
-  }
-
-  .three-col.padded > *:nth-child(3n+1), .four-col.padded > *:nth-child(4n+1) {
-    padding-left: 0;
-  }
-
-  .three-col.padded > *:nth-child(3n+3), .four-col.padded > *:nth-child(4n+4) {
-    padding-right: 0;
   }
 
   .list-menu.cols-2 li, .list-menu.cols-3 li, .list-menu.cols-4 li {
@@ -3725,6 +3686,7 @@ figure.three-col > img {
     border: 0;
     border-right: 3px solid #b31b1b;
     margin: 2px 30px 10px -30px;
+    clear: none;
   }
 
   .sidebar-left blockquote.offset {
