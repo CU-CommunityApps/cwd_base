@@ -236,6 +236,14 @@ template {
 
 /* CKEditor WYSIWYG CSS (a streamlined/modified version of base.css)
    ***************************************************************** */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Verdana, sans-serif;
   font-size: 14px;
@@ -245,7 +253,7 @@ body {
 }
 
 a {
-  color: #127cb5;
+  color: #1179b1;
 }
 
 a:hover, a:focus {
@@ -599,7 +607,7 @@ a.inherit {
 .header-emblem:before {
   content: '\f02e';
   padding-right: 0.4em;
-  color: #ac6464;
+  color: #a96060;
 }
 
 .no-deco, .link-icon, .link-icon-right {
@@ -1520,6 +1528,66 @@ figure.three-col > img {
 
 .cke_panel_container .column {
   border: 0;
+}
+
+/* CKEditor Figure Caption Fix */
+.caption > figcaption {
+  display: block !important;
+  font-size: 13px;
+}
+
+/* CKEditor Visual Guides */
+div:not(.cke_widget_wrapper):not(.cke_panel_block) {
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  margin: 0 0 4px;
+  padding: 4px;
+}
+
+.cke_widget_wrapper div {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+div:not(.cke_widget_wrapper):not(.cke_panel_block) div {
+  border-color: rgba(0, 0, 255, 0.35);
+}
+
+div:not(.cke_widget_wrapper):not(.cke_panel_block) div div {
+  border-color: rgba(0, 255, 0, 0.4);
+}
+
+div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
+  border-color: rgba(255, 0, 255, 0.4);
+}
+
+.cke_editable section {
+  border: 1px dashed #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 4px 4px 2em;
+}
+
+.two-col, .three-col, .four-col,
+.two-col.padded, .three-col.padded, .four-col.padded {
+  display: flex;
+  margin: 0 0 4px !important;
+  padding: 4px !important;
+}
+
+.two-col > *, .three-col > *, .four-col > *,
+.two-col.padded > *, .three-col.padded > *, .four-col.padded > * {
+  margin: 2px !important;
+  padding: 4px !important;
+}
+
+@media (max-width: 600px) {
+  .two-col, .three-col, .four-col {
+    flex-wrap: wrap;
+  }
+
+  .two-col > *, .three-col > *, .four-col > * {
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=ckeditor.css.map */

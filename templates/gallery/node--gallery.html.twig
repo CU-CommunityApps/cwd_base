@@ -86,9 +86,10 @@
   {% if node.field_gallery_type.value == 1 %}
     {% set gallery_type_class = 'grid' %}
   {% endif %}
-    <div class="cwd-gallery strips {{ gallery_type_class }}" role="region" aria-label="Image Gallery">
+    <div class="cwd-gallery strips {{ gallery_type_class }}">
 
-    {% if gallery_type_class == 'viewer' %}<div class="slide" role="presentation"></div>{% endif %}
+    <h3 class="sr-only">Media Gallery</h3>
+    {% if gallery_type_class == 'viewer' %}<div class="slide"></div>{% endif %}
     <div class="thumbnails-band">
       <div class="thumbnails flex">
         {{ content.field_gallery_image }}

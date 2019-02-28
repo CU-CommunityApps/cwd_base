@@ -310,7 +310,7 @@ main, #main, body > footer, .band {
 }
 
 a {
-  color: #127cb5;
+  color: #1179b1;
 }
 
 a:hover, a:focus {
@@ -530,7 +530,7 @@ h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:la
   flex-wrap: wrap;
 }
 
-.flex-grow {
+.flex-nowrap, .flex-grow {
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
@@ -648,6 +648,10 @@ h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:la
   margin-bottom: 0.5em !important;
 }
 
+.full-margin {
+  margin-bottom: 1em !important;
+}
+
 .nobr {
   white-space: nowrap;
 }
@@ -723,7 +727,7 @@ a.inherit {
 .header-emblem:before {
   content: '\f02e';
   padding-right: 0.4em;
-  color: #ac6464;
+  color: #a96060;
 }
 
 .receded {
@@ -845,7 +849,7 @@ a.link-button .fa:first-child, a.link-more .fa:first-child {
   left: 0;
 }
 
-.aria-target:focus {
+.aria-target:focus, .custom-focus:focus {
   outline: none;
 }
 
@@ -898,7 +902,8 @@ body > footer a:active {
   text-decoration-color: rgba(255, 255, 255, 0.4);
 }
 
-body > footer .footer-links a {
+body > footer .footer-links a,
+.footer-links-mimic a {
   color: #7bc9ff;
   -moz-text-decoration-color: rgba(123, 201, 255, 0.4);
   -webkit-text-decoration-color: rgba(123, 201, 255, 0.4);
@@ -906,7 +911,8 @@ body > footer .footer-links a {
   transition: color 0.2s, -moz-text-decoration-color 0.2s, -webkit-text-decoration-color 0.2s, text-decoration-color 0.2s;
 }
 
-body > footer .footer-links a:hover, body > footer .footer-links a:focus {
+body > footer .footer-links a:hover, body > footer .footer-links a:focus,
+.footer-links-mimic a:hover, .footer-links-mimic a:focus {
   color: #fff;
   -moz-text-decoration-color: white;
   -webkit-text-decoration-color: white;
@@ -914,7 +920,8 @@ body > footer .footer-links a:hover, body > footer .footer-links a:focus {
   transition: none;
 }
 
-body > footer .footer-links a:active {
+body > footer .footer-links a:active,
+.footer-links-mimic a:active {
   color: #666;
   -moz-text-decoration-color: rgba(255, 255, 255, 0.4);
   -webkit-text-decoration-color: rgba(255, 255, 255, 0.4);
@@ -925,7 +932,7 @@ body > footer a.link-block {
   background: rgba(109, 195, 255, 0.15);
   text-decoration: none;
   font-family: Avenir Next, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica Neue, sans-serif;
-  font-size: 28px;
+  font-size: 24px;
   padding: 0.5em 0.8em;
   margin-top: 8px;
 }
@@ -1460,7 +1467,8 @@ table.sectioned tbody:before {
 
 #main form input[type='submit'],
 #main form input[type='reset'],
-#main form input[type='button'] {
+#main form input[type='button'],
+#main form input#edit-reset[type='submit'] {
   -webkit-appearance: none;
   background: #767676;
   color: #fff;
@@ -1472,12 +1480,14 @@ table.sectioned tbody:before {
 }
 
 #main form input[type='reset']:hover, #main form input[type='reset']:focus,
-#main form input[type='button']:hover, #main form input[type='button']:focus {
+#main form input[type='button']:hover, #main form input[type='button']:focus,
+#main form input#edit-reset[type='submit']:hover, #main form input#edit-reset[type='submit']:focus {
   background: #888;
 }
 
 #main form input[type='reset']:active,
-#main form input[type='button']:active {
+#main form input[type='button']:active,
+#main form input#edit-reset[type='submit']:active {
   background: #666;
 }
 
@@ -2062,7 +2072,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
 
 .secondary-navigation a:hover, .secondary-navigation a:focus,
 .secondary-navigation ul ul li a:hover, .secondary-navigation ul ul li a:focus {
-  color: #127cb5;
+  color: #1179b1;
   transition: none;
 }
 
@@ -2356,6 +2366,10 @@ figure.three-col > img {
   margin: 2em 0;
 }
 
+.secondary h2 + .cwd-card-grid {
+  margin-top: 1em;
+}
+
 .cwd-card-grid:last-child {
   margin-bottom: 0;
 }
@@ -2578,7 +2592,7 @@ figure.three-col > img {
 }
 
 .cwd-component .subheading h4 {
-  color: #ac6464 !important;
+  color: #a96060 !important;
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 1em;
@@ -2941,8 +2955,12 @@ figure.three-col > img {
   min-height: 1px;
 }
 
-.cwd-component .title + .date, .cwd-component .subheading + .date {
+.cwd-component .title + .date, .cwd-component .subheading + .date, .cwd-component .subheading + .subheading, .cwd-component .subheading h4 + h4 {
   margin-top: -1em;
+}
+
+.cwd-component .field-name-field-image a {
+  display: block;
 }
 
 .cwd-component a img {

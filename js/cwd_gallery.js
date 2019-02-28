@@ -1,4 +1,4 @@
-/* CWD Image Gallery (ama39, last update: 9/6/18)
+/* CWD Image Gallery (ama39, last update: 10/14/18)
    - Supports two interface modes:
    - 1. Thumbnail Grid with Modal ("Grid mode") - a collection of clickable thumbnails which launch full-sized images in a modal popup (requires cwd_popups.js)
    - -- Grid mode doesn't technically require this JavaScript file (all functionality is handled by the "gallery" scripting in cwd_popups.js).
@@ -58,12 +58,13 @@ jQuery(document).ready(function($) {
 		var videoElement;
 		$(this).find('.thumbnails a').click(function(e) {
 			e.preventDefault();
-			//console.log('click');
 			
 			// Video Content
 			if ($(this).hasClass('video')) {
 				if ($(this).hasClass('active')) {
-					$(slide).find('.video-container').focus();
+					$(slide).find('.video-container').focus(function() {
+						$(slide).find('.caption').addClass('fadeout');
+					}).focus();
 					//videoElement[0].play; // this currently won't work for YouTube and CornellCast, due to cross-domain iframe restrictions
 				}
 				else {
@@ -72,21 +73,25 @@ jQuery(document).ready(function($) {
 					
 					$(slide).addClass('video');
 					if ($(this).hasClass('youtube')) {
-						$(slide).prepend('<iframe class="video-container" width="560" height="315" src="https://www.youtube.com/embed/'+$(this).attr('data-video-id')+'?rel=0&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="YouTube video"></iframe>');
+						$(slide).prepend('<iframe class="video-container" width="560" height="315" src="https://www.youtube.com/embed/'+$(this).attr('data-video-id')+'?rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="YouTube video"></iframe>');
 						$(slide).find('.caption').hide();
+						/* // this currently won't work, due to cross-domain iframe restrictions
 						$(slide).find('.video-container').on('load',function() {
 							videoElement = $(this).contents().find('video');
 						});
+						*/
 					}
 					else if ($(this).hasClass('cornellcast')) {
 						$(slide).prepend('<iframe class="video-container" src="//www.cornell.edu/video/'+$(this).attr('data-video-id')+'/embed" width="560" height="315" frameborder="0" allowfullscreen title="CornellCast video"></iframe>');
 						$(slide).find('.caption').text($(this).attr('data-title'));
 						$(slide).find('.video-container').on('load',function() {
+							/* // this currently won't work, due to cross-domain iframe restrictions
 							videoElement = $(this).contents().find('video');
-							//videoElement[0].volume = 0.5;
+							videoElement[0].volume = 0.5;
 							videoElement[0].onplay = function() {
-								$(slide).find('.caption').addClass('fadeout'); // this currently won't work, due to cross-domain iframe restrictions
+								$(slide).find('.caption').addClass('fadeout');
 							};
+							*/
 						});
 					}
 					else if ($(this).hasClass('html5')) {

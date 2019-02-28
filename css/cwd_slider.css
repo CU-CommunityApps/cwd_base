@@ -171,6 +171,7 @@ main .slider-container {
 
 main .slider-caption .caption-inner, #main .slider-caption .caption-inner {
   left: 5%;
+  max-width: 90%;
 }
 
 main .slider-caption .campaign-nav, #main .slider-caption .campaign-nav {
@@ -445,6 +446,31 @@ main .slider-caption h2, #main .slider-caption h2 {
 
 .photo-credits .photo-credit-text p {
   text-transform: none;
+}
+
+.photo-credits .empty .photo-credit-icon {
+  display: none;
+}
+
+/* Extra Heading Animation */
+@keyframes extra-heading-fade-in {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.extra-heading-animate {
+  animation-name: extra-heading-fade-in;
+  animation-duration: 0.8s;
+}
+
+.extra-heading-animate.quick {
+  animation-duration: 0.32s;
 }
 
 /*# sourceMappingURL=cwd_slider.css.map */

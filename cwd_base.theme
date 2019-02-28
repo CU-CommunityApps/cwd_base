@@ -1,17 +1,21 @@
 <?php
 
-function cwd_base_preprocess_html(&$variables) {
-
-  /* Make 'is_front' available to the html.html template
-     ------------------------------------------------------------------------ */
-  $variables['base_path'] = base_path();
+/* Make 'is_front' available to the an additional template (call from the associated preprocess)
+   -------------------------------------------------------------------------- */
+function cwd_base_is_front(&$variables) {
   try {
     $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
   }
   catch (Exception $e) {
     $variables['is_front'] = FALSE;
   }
+  $variables['#cache']['contexts'][] = 'url.path.is_front'; // Ensure the cache varies correctly. https://www.drupal.org/node/2830442
+}
 
+function cwd_base_preprocess_html(&$variables) {
+
+  $variables['base_path'] = base_path();
+  cwd_base_is_front($variables); // make 'is_front' available to the html.html template
 
   /* If the node object is present, make node data available to the html.html template
      ------------------------------------------------------------------------ */
@@ -47,4 +51,12 @@ function cwd_base_preprocess_html(&$variables) {
   $variables['section_path'] = $section_path;
 
 
+}
+
+function cwd_base_preprocess_node(&$variables) {
+  cwd_base_is_front($variables); // make 'is_front' available to the node.html template
+}
+
+function cwd_base_preprocess_paragraph(&$variables) {
+  cwd_base_is_front($variables); // make 'is_front' available to the paragraph.html template
 }

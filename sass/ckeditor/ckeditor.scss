@@ -11,6 +11,13 @@
 /* CKEditor WYSIWYG CSS (a streamlined/modified version of base.css)
    ***************************************************************** */
 
+*,
+*:before,
+*:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 body {
 	font-family: $cwd-font-family-base;
 	font-size: 14px;
@@ -528,7 +535,7 @@ table.colored td {
 table.colored.striped tr:nth-child(even) > td {
 	background: #ebf3f8;
 }
-table.colored th[scope='col'], table.colored thead th, 
+table.colored th[scope='col'], table.colored thead th,
 table.flat.colored th[scope='col'], table.flat.colored thead th {
 	background: #cfe3ef;
 	border-color: #afbfc9;
@@ -588,7 +595,7 @@ table.colored tr > th[scope='row'],
 table.rainbow tr > th[scope='row'] {
 	background: #fafafa !important;
 }
-table.colored.striped tr:nth-child(even) > th[scope='row'], table.flat.colored .blank, 
+table.colored.striped tr:nth-child(even) > th[scope='row'], table.flat.colored .blank,
 table.rainbow.striped tr:nth-child(even) > th[scope='row'], table.flat.rainbow .blank, table.rainbow thead th:not([scope='col']) {
 	background: #f0f0f0 !important;
 }
@@ -778,7 +785,7 @@ figure.three-col > img {
 	padding: 5px 8px;
 	border: 1px solid #dbdbdb;
 	margin-bottom: 1.5em;
-	
+
 	/* Bootstrap Overrides */
 	background-color: transparent;
 	-moz-border-radius: 0;
@@ -832,7 +839,7 @@ figure.three-col > img {
 .panel.dialog *:last-child {
 	margin-bottom: 0;
 }
-.panel.dialog h1 .fa, .panel.dialog h2 .fa, .panel.dialog h3 .fa, .panel.dialog h4 .fa, 
+.panel.dialog h1 .fa, .panel.dialog h2 .fa, .panel.dialog h3 .fa, .panel.dialog h4 .fa,
 .panel.dialog h1 .zmdi, .panel.dialog h2 .zmdi, .panel.dialog h3 .zmdi, .panel.dialog h4 .zmdi {
 	margin: 0 8px 0 -1px;
 	padding-left: 1px;
@@ -1012,7 +1019,7 @@ blockquote.offset p {
 @media (max-width: 767px) { // Prevent iPhone Safari Form Zoom ************ //
 
 
-	
+
 } // ************** //
 /* ********************************************************** */
 @media only print { /* Project Print Styles ***************** */
@@ -1035,7 +1042,56 @@ blockquote.offset p {
 	border: 0;
 }
 
+/* CKEditor Figure Caption Fix */
+.caption > figcaption {
+	display: block !important;
+	font-size: 13px;
+}
 
 
+/* CKEditor Visual Guides */
+div:not(.cke_widget_wrapper):not(.cke_panel_block) {
+	border: 1px solid rgba(255,0,0,0.3);
+	margin: 0 0 4px;
+	padding: 4px;
+}
+.cke_widget_wrapper div {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+div:not(.cke_widget_wrapper):not(.cke_panel_block) div {
+	border-color: rgba(0,0,255,0.35);
+}
+div:not(.cke_widget_wrapper):not(.cke_panel_block) div div {
+	border-color: rgba(0,255,0,0.4);
+}
+div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
+	border-color: rgba(255,0,255,0.4);
+}
+.cke_editable section {
+	border: 1px dashed #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 4px 4px 2em;
+}
+.two-col, .three-col, .four-col, 
+.two-col.padded, .three-col.padded, .four-col.padded {
+	display: flex;
+	margin: 0 0 4px !important;
+	padding: 4px !important;
+}
+.two-col > *, .three-col > *, .four-col > *, 
+.two-col.padded > *, .three-col.padded > *, .four-col.padded > * {
+	margin: 2px !important;
+	padding: 4px !important;
+}
+@media (max-width: 600px) {
+	.two-col, .three-col, .four-col {
+		flex-wrap: wrap;
+	}
+	.two-col > *, .three-col > *, .four-col > * {
+		width: 100%;
+	}
+}
 
 

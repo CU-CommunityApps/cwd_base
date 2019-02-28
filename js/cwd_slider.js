@@ -1,4 +1,4 @@
-/* CWD Image Slider (ama39, last update: 9/3/18)
+/* CWD Image Slider (ama39, last update: 1/29/19)
    - ...
    - >> TODO: more introduction and documentation will be added here soon (in the meantime, please see the "Scripted Components" documentation for more information) <<
    - preloads images and creates "buffer" layers to allow cover placement and ensure smooth transitions
@@ -19,6 +19,7 @@
 // Default Settings
 var default_div = '#site-header'; // default background container
 var default_caption_div = '#site-headline'; // default caption container
+var default_heading2 = ''; // default second heading container (unused by default) *Target a heading tag (not a div) with a inner span. e.g., "#slider-extra-headline" to target <h1 id="slider-extra-headline"><span>Placeholder Heading Text</span></h1>
 var default_slide_time = 8; // time between transitions (in seconds)
 var default_transition_speed = 1; // speed of image cross-fade (in seconds) *Note: This only affects image transitions. Caption transition timing is controlled by CSS [cwd_slider.css]
 var default_autoplay = true; // if true, the slider will cycle through images on load (but will stop after user interaction)
@@ -46,7 +47,7 @@ var nextprev = true; // provide Next and Previous buttons
    - All arguments are described above in "default settings"
    - Arguments are optional (they override the default settings) though 'div' and 'caption' will typically be included 
 -------------------------------------------------------------------------------------------- */
-function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
+function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2) {
 	
 	// instanced variables
 	slider_count++;
@@ -66,6 +67,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 		// apply arguments or use defaults
 		var image_div = div || default_div;
 		var caption_div = caption || default_caption_div;
+		var heading2_h = heading2 || default_heading2;
 		var slide_time = time || default_slide_time;
 		var transition_speed = speed || default_transition_speed;
 		var caption_height = height || default_caption_height;
@@ -103,6 +105,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 			$('#'+sid+'-slide-buffer'+i).data('caption',image_array[i][2]); // <- caption
 			$('#'+sid+'-slide-buffer'+i).data('link',image_array[i][3]); // <- link
 			$('#'+sid+'-slide-buffer'+i).data('alt',image_array[i][4]); // <- alt text
+			$('#'+sid+'-slide-buffer'+i).data('heading2',image_array[i][5]); // <- second heading
 			// load image
 			$('#'+sid+'-slide-buffer'+i).css('background-image','url('+image_array[i][0]+')');
 			
@@ -286,6 +289,9 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 			if (!include_transition) {
 				c_speed = 300;
 				$(caption_div).addClass('quick');
+				if ( heading2_h != '' ) {
+					$(heading2_h + ' span').addClass('quick');
+				}
 			}
 			
 			current_slide = slide;
@@ -293,6 +299,11 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 			// update navigation
 			$(caption_div + ' ul a').removeClass('active');
 			$(caption_div + ' ul').children('li').eq(slide).children('a').addClass('active');
+			
+			// update "heading2" if it's in use
+			if ( heading2_h != '' ) {
+				$(heading2_h + ' span').addClass('extra-heading-animate').text($('#'+sid+'-slide-buffer'+slide).data('heading2'));
+			}
 			
 			/* LEGACY CODE: Caption transition and timing is now controlled by CSS [cwd_slider.css]. */
 			/* ------------------------------------------------------------------------------------------
@@ -323,6 +334,9 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg) {
 				$(this).addClass('current-slide').removeClass('incoming-slide');
 				if ($.isNumeric(queued_request) == true) {
 					changeSlide(queued_request,false);
+				}
+				if ( heading2_h != '' ) {
+					$(heading2_h + ' span').removeClass('extra-heading-animate quick');
 				}
 				is_transitioning = queued_request = false;
 			});

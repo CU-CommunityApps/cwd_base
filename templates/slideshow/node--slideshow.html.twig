@@ -74,7 +74,9 @@
 #}
 <article{{ attributes }}>
 
+{% block container_override %}
   <div class="slider-container" id="slider{{ node.id }}"><div class="slider-caption" id="slider-headline{{ node.id }}"></div></div>
+{% endblock %}
   <script>
     if (global_slider_count != undefined) {
       global_slider_count++;
@@ -87,6 +89,8 @@
 
   {{ content }}
 
+{% block config_override %}
   <script>cwd_slider('#slider{{ node.id }}','#slider-headline{{ node.id }}',8,1,true,false);</script>
+{% endblock %}
 
 </article>

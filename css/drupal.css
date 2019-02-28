@@ -1,5 +1,24 @@
 /* Drupal-Specific Styles
    ************************************ */
+.icon-fa {
+  font: normal normal normal 14px/1 FontAwesome;
+  speak: none;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zmdi, .search-help-link:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+  font-size: inherit;
+  speak: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .visually-hidden {
   position: absolute !important;
   clip: rect(1px, 1px, 1px, 1px);
@@ -28,6 +47,8 @@ button .glyphicon-log-in, button .glyphicon-eye-open {
 
 .secondary .block {
   clear: both;
+  float: left;
+  width: 100%;
 }
 
 *[id^='block-'][id$='-admin'] > ul,
@@ -148,6 +169,97 @@ button .glyphicon-log-in, button .glyphicon-eye-open {
 .search-block-form form .form-actions, #search-block-form .form-actions {
   margin: 0 4px 0.5em !important;
   display: flex;
+}
+
+/* search results */
+#main .search-form {
+  margin-bottom: 3em;
+}
+
+form.search-form:before {
+  content: none !important;
+}
+
+.path-search #main .views-exposed-form, .search-results .views-exposed-form {
+  margin-bottom: 0;
+}
+
+#main #search-form .container-inline,
+.path-search #main .views-exposed-form form, .search-results .views-exposed-form form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+#main #search-form .container-inline .form-item,
+.path-search #main .views-exposed-form form .form-item, .search-results .views-exposed-form form .form-item {
+  flex-grow: 1;
+  margin: 0.25em 4px 0 !important;
+  max-width: 492px;
+}
+
+#main #search-form .container-inline > input,
+.path-search #main .views-exposed-form form .form-actions, .search-results .views-exposed-form form .form-actions {
+  margin: 0.25em 4px 0 !important;
+}
+
+#main #search-form .container-inline input,
+.path-search #main .views-exposed-form form input, .search-results .views-exposed-form form input {
+  height: 2.5em;
+  margin-bottom: 0;
+}
+
+.search-help-link,
+.path-search #main .view > header, .search-results .view > header,
+.path-search #main .view-empty, .search-results .view-empty {
+  display: inline-block;
+  margin-top: 1.25em;
+  padding: 0.3em 0.7em;
+  text-decoration: none;
+  color: #444;
+  background: #f7f7f7;
+  font-size: 13px;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Avenir Next, "Segoe UI", Roboto, Helvetica Neue, sans-serif;
+}
+
+.path-search #main .view > header, .search-results .view > header,
+.path-search #main .view-empty, .search-results .view-empty {
+  display: block;
+  text-align: center;
+  margin: 3em 0 0.5em 0;
+  padding: 0.5em 0;
+}
+
+.search-help-link:before {
+  content: '\f1f5';
+  margin-right: 0.3em;
+  font-size: 16px;
+  position: relative;
+  top: 0.1em;
+}
+
+.path-search #main ol, .search-results ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+.path-search #main ol h3, .search-results ol h3,
+.path-search #main .views-field-title, .search-results .views-field-title {
+  font-family: Avenir Next, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+
+.path-search #main ol p, .search-results ol p,
+.path-search #main .views-field-search-api-excerpt, .search-results .views-field-search-api-excerpt {
+  font-size: 13px;
+}
+
+.path-search #main ol li, .search-results ol li {
+  margin-bottom: 2em;
 }
 
 /* messages */

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="52px" viewBox="0 0 27 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>chevron-right-rect</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="chevron-right-rect">
+            <rect id="Rectangle" fill-opacity="0.5" fill="#000000" fill-rule="nonzero" x="0" y="0" width="27" height="52"></rect>
+            <polygon id="Chevron" fill="#FFFFFF" points="10.9335938 18.375 19.1835938 26.625 10.9335938 34.875 9 32.9414062 15.3164062 26.625 9 20.3085938"></polygon>
+        </g>
+    </g>
+</svg>

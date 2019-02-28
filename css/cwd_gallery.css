@@ -284,6 +284,11 @@
   height: 100%;
 }
 
+.video-container:focus {
+  outline: 3px solid rgba(0, 150, 255, 0.4);
+  outline-offset: 2px;
+}
+
 @media (min-width: 480px) {
   .cwd-gallery .col {
     width: 33.3333333%;

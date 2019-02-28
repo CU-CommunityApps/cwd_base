@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 8/15/18)
+/* CWD Utilities (ama39, last update: 1/29/19)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Mobile Expander
    - 3. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
@@ -51,16 +51,24 @@ var msie = document.documentMode;
 
 	// Utility Navigation (appended for mobile)
 	if ($('#utility-navigation li').length > 0) {
-		$('#main-navigation ul').first().append('<li class="parent mobile-nav-only"><a class="more-links-button" href="#">More...</a><ul class="list-menu links vertical children more-links"></ul>');
-		$('#utility-navigation li').each(function() {
-			$('#main-navigation .more-links').append($(this).clone().addClass('mobile-nav-only'));
-		});
-		$('.more-links-button').click(function(e) {
-			e.preventDefault();
-		}).mousedown(function(e) {
-			mousedown = true;
-			$(this).find('.fa').trigger('mousedown');
-		});
+		if ($('#main-navigation').length > 0) {
+			$('#main-navigation ul').first().append('<li class="parent mobile-nav-only"><a class="more-links-button" href="#">More...</a><ul class="list-menu links vertical children more-links"></ul>');
+			$('#utility-navigation li').each(function() {
+				$('#main-navigation .more-links').append($(this).clone().addClass('mobile-nav-only'));
+			});
+			$('.more-links-button').click(function(e) {
+				e.preventDefault();
+			}).mousedown(function(e) {
+				mousedown = true;
+				$(this).find('.fa').trigger('mousedown');
+			});
+		}
+		else {
+			$('#site-header').append('<nav class="mobile-nav-only" id="main-navigation" aria-label="Main Navigation"><div class="container-fluid"><a id="mobile-home" href="/"><span class="sr-only">Home</span></a><ul class="list-menu links"></ul></div></nav>')
+			$('#utility-navigation li').each(function() {
+				$('#main-navigation .list-menu').append($(this).clone().addClass('mobile-nav-only'));
+			});
+		}
 	}
 
 	// Dropdown Menus

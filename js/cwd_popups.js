@@ -1,4 +1,4 @@
-/* CWD Modal Popups (ama39, last update: 9/6/18)
+/* CWD Modal Popups (ama39, last update: 10/14/18)
 	- Displays content as a "popup" overlay, rather than leaving the current page or opening a new window.
 	- Activate on any link by applying a "popup" class (e.g., <a class="popup" href="bigredbear.jpg">Behold the Big Red Bear!</a>).
 	- Supports images, DOM elements by ID, and Iframes (auto-detected from the href attribute).
@@ -388,7 +388,7 @@ jQuery(document).ready(function($) {
 					
 						popupControls(popup_content);
 					}
-				
+					
 					// Refresh positioning and scale on resize
 					if (!popup_fullscreen) {
 						$(window).on('resize.popup',function() {
@@ -417,15 +417,23 @@ jQuery(document).ready(function($) {
 								$('#popup-image').css('max-height','none');
 								$('#popup').css('width','auto');
 								if ($(window).width() > 767) {
+									/* Calculate and Resize to Accomodate Tall Images
+									   -- Todo: This code works for most reasonable combinations of image dimensions, screen proportions and caption lengths, but could still use some work. Basing image size on height is always tricky in CSS (perhaps a flexbox-based layout would be more reliable?) 
+									   -- Todo: Likewise, tall images with long captions may not fit on a mobile screen
+									*/
 									var available_image_height = $('#popup').height();
 									if ($('#popup .caption').length > 0) {
 										available_image_height -= $('#popup .caption').outerHeight();
 									}
 									if (available_image_height > 100) {
-										if ($('#popup').height() > $(window).height()-30) {
-											$('#popup-image').css('max-height',(available_image_height-30)+'px');
+										if ($('#popup').height() > $(window).height()-20) {
+											$('#popup-image').css('max-height',(available_image_height-20)+'px');
+											$('#popup').width($('#popup-image').width()-20);
+										}
+										else {
 											$('#popup').width($('#popup-image').width());
 										}
+										
 									}
 									else {
 										setTimeout(function(){ resizeDone(); }, 500); // try again in 0.5 seconds (Safari image render bug workaround)
