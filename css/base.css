@@ -413,6 +413,18 @@ li > ul, li > ol {
   margin-top: 0.5em;
 }
 
+ul.disc > li {
+  list-style-type: disc;
+}
+
+ul.square > li {
+  list-style-type: square;
+}
+
+ul.circle > li {
+  list-style-type: circle;
+}
+
 ol.decimal-leading-zero > li {
   list-style-type: decimal-leading-zero;
 }
@@ -1206,7 +1218,7 @@ main .row > .primary:last-child:after, main .row > .secondary:last-child:after {
   background: #e8f3f8;
 }
 
-.row > .secondary:empty {
+main .row > .secondary:empty, main .row > .secondary.empty {
   display: none;
 }
 
@@ -1617,10 +1629,12 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
 #main-navigation a:hover, #main-navigation li.active > a, #main-navigation > .container-fluid > ul > li > a.is-active, #main-navigation li:hover > a, .dropdown-menu li:hover > a {
   /* includes WordPress and Drupal menu classes */
   background: #444;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 #main-navigation a:focus {
   background: #444;
+  background: rgba(0, 0, 0, 0.3);
   /* outline-color: #fff; */
 }
 

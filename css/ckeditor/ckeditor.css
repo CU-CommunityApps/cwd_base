@@ -346,6 +346,18 @@ li > ul, li > ol {
   margin-top: 0.5em;
 }
 
+ul.disc > li {
+  list-style-type: disc;
+}
+
+ul.square > li {
+  list-style-type: square;
+}
+
+ul.circle > li {
+  list-style-type: circle;
+}
+
 ol.decimal-leading-zero > li {
   list-style-type: decimal-leading-zero;
 }
@@ -1521,6 +1533,11 @@ figure.three-col > img {
   margin-bottom: 0 !important;
 }
 
+.cke_panel_container .panel {
+  padding: 4px !important;
+  margin-bottom: 0 !important;
+}
+
 .cke_panel_container aside {
   padding: 0 !important;
   background: none !important;
@@ -1537,7 +1554,7 @@ figure.three-col > img {
 }
 
 /* CKEditor Visual Guides */
-div:not(.cke_widget_wrapper):not(.cke_panel_block) {
+div:not(.cke_widget_wrapper):not(.cke_panel_block):not(.panel) {
   border: 1px solid rgba(255, 0, 0, 0.3);
   margin: 0 0 4px;
   padding: 4px;

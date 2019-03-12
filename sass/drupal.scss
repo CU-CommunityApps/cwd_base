@@ -394,7 +394,10 @@ form.search-form:before {
 	display: none !important;
 }
 
-
+/* views */
+.view > footer {
+	clear: both;
+}
 
 
 // ************************************************************************ //
