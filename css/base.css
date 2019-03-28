@@ -566,7 +566,7 @@ h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:la
   width: 100%;
 }
 
-.icon-fa, .list-menu.nav a:after, .cwd-component .link.link-button-icon a:before, .header-emblem:before, .back-to-toc:before {
+.icon-fa, .list-menu.nav a:after, .cwd-component .link.link-button-icon a:before, .header-emblem:before, .back-to-toc:before, ul.custom > li:before, ul.custom.recursive ul > li:before {
   font: normal normal normal 14px/1 FontAwesome;
   speak: none;
   font-size: inherit;
@@ -1085,7 +1085,7 @@ blockquote {
   border-left: 1px solid #e6e6e6;
 }
 
-blockquote.offset {
+blockquote.offset, blockquote.impact {
   font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
   font-size: 20px;
   line-height: 1.45;
@@ -1098,12 +1098,12 @@ blockquote.offset {
   clear: both;
 }
 
-blockquote.offset p {
+blockquote.offset p, blockquote.impact p {
   font-size: 20px;
   line-height: 1.45;
 }
 
-blockquote footer, blockquote.offset footer {
+blockquote footer, blockquote.offset footer, blockquote.impact footer {
   background: none;
   padding: 0;
 }
@@ -1113,6 +1113,10 @@ figure {
   background: rgba(0, 0, 0, 0.05);
   clear: both;
   margin: 1em 0;
+}
+
+div > figure {
+  margin-top: 0;
 }
 
 .caption {
@@ -1216,6 +1220,10 @@ main .row > .primary:last-child:after, main .row > .secondary:last-child:after {
 
 .band.accent1 {
   background: #e8f3f8;
+}
+
+.band.accent2 {
+  background: #f6f6f6;
 }
 
 main .row > .secondary:empty, main .row > .secondary.empty {
@@ -2336,6 +2344,97 @@ hr.extra-heavy {
   background: rgba(225, 202, 244, 0.5);
 }
 
+ul.custom, ul.custom.recursive ul,
+ol.custom, ol.custom.recursive ol {
+  padding-left: 0;
+}
+
+ul.custom > li, ul.custom.recursive ul > li {
+  list-style: none;
+  position: relative;
+  padding-left: 1.2em;
+}
+
+ul.custom > li:before, ul.custom.recursive ul > li:before {
+  content: '\f0da';
+  opacity: 0.5;
+  position: absolute;
+  left: 2px;
+  line-height: inherit;
+}
+
+ul.custom.success > li, ul.custom.success.recursive ul > li,
+ul.custom.warning > li, ul.custom.warning.recursive ul > li {
+  padding-left: 1.7em;
+}
+
+ul.custom.chevrons > li:before, ul.custom.chevrons.recursive ul > li:before {
+  content: '\f105';
+  font-size: 143%;
+  line-height: 1.09;
+}
+
+ul.custom.success > li:before, ul.custom.success.recursive ul > li:before {
+  content: '\f00c';
+  color: #008a00;
+  opacity: 1;
+  left: 1px;
+}
+
+ul.custom.warning > li:before, ul.custom.warning.recursive ul > li:before {
+  content: '\f071';
+  color: #cc1e1e;
+  opacity: 1;
+  left: 1px;
+}
+
+ol.custom > li, ol.custom.recursive ol > li {
+  list-style: none;
+  position: relative;
+  padding-left: 3em;
+  min-height: 2.2em;
+  margin-bottom: 1em;
+}
+
+li > ol.custom, ol.custom.recursive li > ol {
+  margin-top: 1.25em;
+}
+
+ol.custom, ol.custom.recursive ol {
+  counter-reset: ordered-list;
+}
+
+ol.custom > li:before, ol.custom.recursive ol > li:before {
+  counter-increment: ordered-list;
+  content: counter(ordered-list);
+  position: absolute;
+  left: 0;
+  top: -0.3em;
+  width: 2.2em;
+  height: 2.2em;
+  line-height: 2.2em;
+  background: #eee;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 100%;
+  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+  text-align: center;
+}
+
+ol.custom.large {
+  margin-top: 3em;
+  margin-bottom: 2em;
+}
+
+ol.custom.large > li, ol.custom.large.recursive ol > li {
+  padding-left: 5.5em;
+  min-height: 4.4em;
+  margin-bottom: 2em;
+}
+
+ol.custom.large > li:before, ol.custom.large.recursive ol > li:before {
+  font-size: 200%;
+}
+
 /* Simple Columns */
 .two-col, .three-col, .four-col {
   overflow: hidden;
@@ -2568,11 +2667,11 @@ figure.three-col > img {
 }
 
 .cwd-component h3 {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .cwd-component h4 {
-  font-size: 18px;
+  font-size: 16px;
   color: #767676;
   margin-bottom: 0;
 }
@@ -2583,26 +2682,73 @@ figure.three-col > img {
   margin-bottom: 0.25em;
 }
 
-.cwd-component a.designer {
+.cwd-component a.designer, .cwd-component a .designer .deco {
   color: #444;
   text-decoration: none;
+  background-image: -moz-linear-gradient(left, rgba(213, 220, 230, 0.4) 0%, rgba(213, 220, 230, 0.4) 100%);
+  background-image: -webkit-linear-gradient(left, rgba(213, 220, 230, 0.4) 0%, rgba(213, 220, 230, 0.4) 100%);
+  background-image: linear-gradient(to right, rgba(213, 220, 230, 0.4) 0%, rgba(213, 220, 230, 0.4) 100%);
+  background-image: none;
+  background-position: 0 1.15em;
+  background-repeat: repeat-x;
+  background-size: 10px 2px;
 }
 
-.cwd-component a.designer .deco {
-  border-bottom: 2px solid transparent;
-  -webkit-transition: border-color .15s;
-  -moz-transition: border-color .15s;
-  -o-transition: border-color .15s;
-  -ms-transition: border-color .15s;
-  transition: border-color .15s;
-}
-
-.cwd-component a.designer:hover, .cwd-component a.designer:focus {
+.cwd-component a.designer:hover, .cwd-component a:hover .designer .deco {
   color: #000;
+  background-image: -moz-linear-gradient(left, rgba(96, 155, 221, 0.5) 0%, rgba(96, 155, 221, 0.5) 100%);
+  background-image: -webkit-linear-gradient(left, rgba(96, 155, 221, 0.5) 0%, rgba(96, 155, 221, 0.5) 100%);
+  background-image: linear-gradient(to right, rgba(96, 155, 221, 0.5) 0%, rgba(96, 155, 221, 0.5) 100%);
+  background-position: 0 1.15em;
+  background-repeat: repeat-x;
+  background-size: 10px 2px;
 }
 
-.cwd-component a.designer:hover .deco, .cwd-component a.designer:focus .deco {
-  border-color: #afcdee;
+.cwd-component a.designer:active, .cwd-component a:active .designer .deco {
+  color: #777;
+  background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+  background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+@keyframes fancypants {
+  0% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.1) 0%, rgba(96, 155, 221, 0.1) 100%);
+  }
+  10% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.15) 0%, rgba(96, 155, 221, 0.15) 100%);
+  }
+  20% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.2) 0%, rgba(96, 155, 221, 0.2) 100%);
+  }
+  30% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.25) 0%, rgba(96, 155, 221, 0.25) 100%);
+  }
+  40% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.29) 0%, rgba(96, 155, 221, 0.29) 100%);
+  }
+  50% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.33) 0%, rgba(96, 155, 221, 0.33) 100%);
+  }
+  60% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.37) 0%, rgba(96, 155, 221, 0.37) 100%);
+  }
+  70% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.41) 0%, rgba(96, 155, 221, 0.41) 100%);
+  }
+  80% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.44) 0%, rgba(96, 155, 221, 0.44) 100%);
+  }
+  90% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.47) 0%, rgba(96, 155, 221, 0.47) 100%);
+  }
+  100% {
+    background-image: linear-gradient(to right, rgba(96, 155, 221, 0.5) 0%, rgba(96, 155, 221, 0.5) 100%);
+  }
+}
+.cwd-component a.designer:hover, .cwd-component a:hover .designer .deco {
+  animation-name: fancypants;
+  animation-duration: 0.15s;
 }
 
 .cwd-component .subheading h4 {
@@ -2932,6 +3078,11 @@ figure.three-col > img {
   border: 0;
 }
 
+h2 + .cwd-component-rows:not(.blocked):not(.striped):not(.card-slider) .card:first-of-type, h3 + .cwd-component-rows:not(.blocked):not(.striped):not(.card-slider) .card:first-of-type,
+h2 + .back-to-toc + .cwd-component-rows:not(.blocked):not(.striped):not(.card-slider) .card:first-of-type, h3 + .back-to-toc + .cwd-component-rows:not(.blocked):not(.striped):not(.card-slider) .card:first-of-type {
+  padding-top: 0.5em;
+}
+
 .cwd-component-rows.blocked .card, .cwd-component-rows.striped .card {
   border: 0;
   margin: 1px 0 0 -1.5%;
@@ -2940,7 +3091,7 @@ figure.three-col > img {
   background: rgba(0, 0, 0, 0.03);
 }
 
-.cwd-component-rows.blocked .card {
+.cwd-component-rows.blocked .card, .cwd-component-rows.striped .card {
   margin-top: 4px;
 }
 
@@ -2969,8 +3120,12 @@ figure.three-col > img {
   min-height: 1px;
 }
 
-.cwd-component .title + .date, .cwd-component .subheading + .date, .cwd-component .subheading + .subheading, .cwd-component .subheading h4 + h4 {
+.cwd-component .title + .date, .cwd-component .subheading + .date, .cwd-component .subheading + .subheading {
   margin-top: -1em;
+}
+
+.cwd-component .subheading h4 + h4 {
+  margin-top: -0.8em;
 }
 
 .cwd-component .field-name-field-image a {
@@ -3441,12 +3596,22 @@ figure.three-col > img {
     padding-left: 20px;
   }
 
-  .cwd-component-rows .group-fields .group-fields {
+  .cwd-component-rows.all-thumbs .group-image {
+    width: 35%;
+    width: calc(164px);
+  }
+
+  .cwd-component-rows.all-thumbs .group-fields {
+    width: 65%;
+    width: calc(100% - 164px);
+  }
+
+  .cwd-component-rows .group-fields .group-fields, .cwd-component-rows.all-thumbs .group-fields .group-fields {
     width: 100%;
     padding-left: 0;
   }
 
-  .cwd-component-rows .group-more {
+  .cwd-component-rows .group-more, .cwd-component-rows.all-thumbs .group-more {
     width: 100%;
     clear: both;
   }
@@ -3605,7 +3770,15 @@ figure.three-col > img {
     width: calc(100% - 180px);
   }
 
-  .cwd-component-rows .group-fields .group-fields {
+  .cwd-component-rows.all-thumbs .group-image {
+    width: calc(250px);
+  }
+
+  .cwd-component-rows.all-thumbs .group-fields {
+    width: calc(100% - 250px);
+  }
+
+  .cwd-component-rows .group-fields .group-fields, .cwd-component-rows.all-thumbs .group-fields .group-fields {
     width: 100%;
   }
 
@@ -3635,6 +3808,14 @@ figure.three-col > img {
   .cwd-card-grid.three-card .card:nth-child(1n+4) {
     border-top: 3px solid #e7e7e7;
     padding-top: 30px;
+  }
+
+  .cwd-component h3 {
+    font-size: 22px;
+  }
+
+  .cwd-component h4 {
+    font-size: 18px;
   }
 
   .nav-justified {

@@ -1,4 +1,4 @@
-/* CWD Card Slider (ama39, last update: 9/6/18)
+/* CWD Card Slider (ama39, last update: 3/27/19)
    - 
    
    - Accessibility Notes:
@@ -36,6 +36,7 @@ jQuery(document).ready(function($) {
 		var cards_per_screen = Math.round(viewer_width / card_width);
 		
 		var scroll_target = 0;
+		var active_pip = 0;
 		
 		$(window).resize(function() {
 			viewer_width = $(viewer_band).width();
@@ -72,10 +73,12 @@ jQuery(document).ready(function($) {
 			$(this).append(nextprev_html);
 			$(this).find('.next, .prev').click(function(e) {
 				if ($(this).hasClass('prev')) {
-					scroll_target -= viewer_width;
+					//scroll_target -= viewer_width;
+					scroll_target = (active_pip - 1) * cards_per_screen * card_width;
 				}
 				else {
-					scroll_target += viewer_width;
+					//scroll_target += viewer_width;
+					scroll_target = (active_pip + 1) * cards_per_screen * card_width;
 				}
 				if (scroll_target < 10) {
 					scroll_target = 0;
@@ -92,6 +95,69 @@ jQuery(document).ready(function($) {
 		}
 		
 		updateButtons(viewer,viewer_scroll_limit,scroll_target); // refresh buttons
+		
+		
+		function updateButtons(viewer,viewer_scroll_limit,scroll_target) {
+		
+			// update enabled/disabled
+			$(viewer).find('.next-prev button').prop('disabled',false);
+			if (scroll_target == 0) {
+				$(viewer).find('.prev').prop('disabled',true);
+			}
+			if (scroll_target == viewer_scroll_limit) {
+				$(viewer).find('.next').prop('disabled',true);
+			}
+		
+			// Indicator Pips
+			var viewer_width_natural = 0;
+			viewer_width_natural = $(viewer).find('.cards').first()[0].scrollWidth;
+			var pip_count =  Math.ceil( viewer_width_natural / $(viewer).find('.cards').first().outerWidth() - 0.1);
+			var pips_html = '';
+			if (pip_count > 1) {
+				for (i=0;i<pip_count;i++) {
+					pips_html += '<button class="pip"><span class="sr-only">Slide Set '+(i+1)+'</span></button>';
+				}
+				$(viewer).find('.next-prev button').show(); // also show Next and Prev buttons
+			}
+			else {
+				$(viewer).find('.next-prev button').hide(); // only a single slide set is visible, so also hide Next and Prev buttons
+			}
+			$(viewer).find('.pips').html(pips_html);
+		
+			active_pip = 0;
+			if (scroll_target > 0) {
+				active_pip = ((scroll_target / viewer_scroll_limit) * pip_count).toFixed(1);
+				if (pip_count - active_pip <= 1 ) {
+					active_pip = Math.floor(active_pip) - 1;
+				}
+				else {
+					active_pip = Math.ceil(active_pip) - 1;
+				}
+			}
+			$(viewer).find('.pip').eq(active_pip).addClass('active');
+		
+			$(viewer).find('.pip').click(function(e) {
+				var this_pip = $(this).index();
+				var pip_change = 0;
+				var change_direction = 'next';
+				if (this_pip > active_pip) {
+					pip_change = this_pip - active_pip;
+				}
+				else if (this_pip < active_pip) {
+					pip_change = active_pip - this_pip;
+					change_direction = 'prev';
+				}
+			
+				var trigger_clicks = []; // a generic array used below to direct forEach() to call the jQuery trigger() function multiple times
+				for (i=0;i<pip_change;i++) {
+					trigger_clicks.push(0);
+				}
+				trigger_clicks.forEach(function(i) {
+					$(viewer).find('.'+change_direction).trigger('click');
+				});
+			});
+		
+		}
  		
 	});
 	
@@ -138,61 +204,6 @@ jQuery(document).ready(function($) {
 		
 	});
 	
-	function updateButtons(viewer,viewer_scroll_limit,scroll_target) {
-		
-		// update enabled/disabled
-		$(viewer).find('.next-prev button').prop('disabled',false);
-		if (scroll_target == 0) {
-			$(viewer).find('.prev').prop('disabled',true);
-		}
-		if (scroll_target == viewer_scroll_limit) {
-			$(viewer).find('.next').prop('disabled',true);
-		}
-		
-		// Indicator Pips
-		var viewer_width_natural = 0;
-		viewer_width_natural = $(viewer).find('.cards').first()[0].scrollWidth;
-		var pip_count =  Math.ceil( viewer_width_natural / $(viewer).find('.cards').first().outerWidth() - 0.1);
-		var pips_html = '';
-		if (pip_count > 1) {
-			for (i=0;i<pip_count;i++) {
-				pips_html += '<button class="pip"><span class="sr-only">Slide Set '+(i+1)+'</span></button>';
-			}
-			$(viewer).find('.next-prev button').show(); // also show Next and Prev buttons
-		}
-		else {
-			$(viewer).find('.next-prev button').hide(); // only a single slide set is visible, so also hide Next and Prev buttons
-		}
-		$(viewer).find('.pips').html(pips_html);
-		
-		var active_pip = 0;
-		if (scroll_target > 0) {
-			active_pip = Math.ceil((scroll_target / viewer_scroll_limit) * pip_count) - 1;
-		}
-		$(viewer).find('.pip').eq(active_pip).addClass('active');
-		
-		$(viewer).find('.pip').click(function(e) {
-			var this_pip = $(this).index();
-			var pip_change = 0;
-			var change_direction = 'next';
-			if (this_pip > active_pip) {
-				pip_change = this_pip - active_pip;
-			}
-			else if (this_pip < active_pip) {
-				pip_change = active_pip - this_pip;
-				change_direction = 'prev';
-			}
-			
-			var trigger_clicks = []; // a generic array used below to direct forEach() to call the jQuery trigger() function multiple times
-			for (i=0;i<pip_change;i++) {
-				trigger_clicks.push(0);
-			}
-			trigger_clicks.forEach(function(i) {
-				$(viewer).find('.'+change_direction).trigger('click');
-			});
-		});
-		
-	}
 
 });
 

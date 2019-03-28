@@ -927,9 +927,14 @@ table.scrolling > thead > tr > th {
     display: none;
   }
 
-  .content-tabs.tabs-mobile-expand li {
+  .content-tabs.tabs-mobile-expand > li, .content-tabs.tabs-mobile-expand > ul > li, .content-tabs.tabs-mobile-expand > ol > li {
     display: block !important;
-    margin-bottom: 2em;
+    margin-bottom: 4em;
+    padding: 0 !important;
+  }
+
+  .content-tabs.tabs-mobile-expand > li:last-of-type, .content-tabs.tabs-mobile-expand > ul > li:last-of-type, .content-tabs.tabs-mobile-expand > ol > li:last-of-type {
+    margin-bottom: 0;
   }
 
   .tabs-nav.tabs-mobile-expand, .content-tabs.tabs-mobile-accordion li {

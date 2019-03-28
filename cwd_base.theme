@@ -34,11 +34,11 @@ function cwd_base_preprocess_html(&$variables) {
   $router = \Drupal::service('router.no_access_checks'); // router.matcher won't work for nodes below, since the values object is protected
   try {
     $match = $router->matchRequest($request);
-    if ($match['node'] != NULL) { // nodes
+    if (array_key_exists('node',$match)) { // nodes
       $section_title = $match['node']->getTitle();
       $section_path = $section_alias;
     }
-    else if ($match['_title'] != NULL) { // non-nodes (/user, views content, etc)
+    else if (array_key_exists('_title',$match)) { // non-nodes (/user, views content, etc)
        $section_title = $match['_title'];
        $section_path = $section_alias;
     }
