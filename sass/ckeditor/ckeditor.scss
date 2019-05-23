@@ -1092,16 +1092,23 @@ div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
 	display: flex;
 	margin: 0 0 4px !important;
 	padding: 4px !important;
+	flex-wrap: wrap;
 }
 .two-col > *, .three-col > *, .four-col > *, 
 .two-col.padded > *, .three-col.padded > *, .four-col.padded > * {
 	margin: 2px !important;
 	padding: 4px !important;
 }
+.two-col > * {
+	width: calc(50% - 4px);
+}
+.three-col > * {
+	width: calc(33% - 4px);
+}
+.four-col > * {
+	width: calc(25% - 4px);
+}
 @media (max-width: 600px) {
-	.two-col, .three-col, .four-col {
-		flex-wrap: wrap;
-	}
 	.two-col > *, .three-col > *, .four-col > * {
 		width: 100%;
 	}

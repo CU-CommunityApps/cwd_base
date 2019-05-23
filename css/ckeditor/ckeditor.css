@@ -619,7 +619,7 @@ a.inherit {
 .header-emblem:before {
   content: '\f02e';
   padding-right: 0.4em;
-  color: #a96060;
+  color: #9b5959;
 }
 
 .no-deco, .link-icon, .link-icon-right {
@@ -1589,6 +1589,7 @@ div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
   display: flex;
   margin: 0 0 4px !important;
   padding: 4px !important;
+  flex-wrap: wrap;
 }
 
 .two-col > *, .three-col > *, .four-col > *,
@@ -1597,11 +1598,19 @@ div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
   padding: 4px !important;
 }
 
-@media (max-width: 600px) {
-  .two-col, .three-col, .four-col {
-    flex-wrap: wrap;
-  }
+.two-col > * {
+  width: calc(50% - 4px);
+}
 
+.three-col > * {
+  width: calc(33% - 4px);
+}
+
+.four-col > * {
+  width: calc(25% - 4px);
+}
+
+@media (max-width: 600px) {
   .two-col > *, .three-col > *, .four-col > * {
     width: 100%;
   }

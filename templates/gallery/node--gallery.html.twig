@@ -1,7 +1,8 @@
 {#
 /**
  * @file
- * Default theme implementation to display a node.
+ * Theme override for a gallery node on CTI.
+ * Based on the same-named template in cwd_base.
  *
  * Available variables:
  * - node: The node entity with limited access to object properties and methods.
@@ -72,33 +73,135 @@
  * @ingroup themeable
  */
 #}
+
+{####### varrrriabllllles #######}
+
+{% set has_body, has_glitems, has_meta, has_svc, has_tags = false, false, false, false, false %}
+{% set galbod = {} %}
+{% set gallery_type_class = 'viewer' %}
+{% set glitems = [] %}
+{% set glervice = [] %}
+{% set glags = [] %}
+
+{% if node.field_service_term is defined and node.field_service_term is not empty %}
+  {% set has_svc = true %}
+  {% for key, value in node.field_service_term %}
+    {% set glervice = glervice|merge([node.field_service_term[key].entity.name.value]) %}
+  {% endfor %}
+{% endif %}
+
+{% if node.field_tags is defined and node.field_tags is not empty %}
+  {% set has_tags = true %}
+  {% for key, value in node.field_tags %}
+    {% set glags = glags|merge([node.field_tags[key].entity.name.value]) %}
+  {% endfor %}
+{% endif %}
+
+{% if has_svc or has_tags %}
+  {% set has_meta = true %}
+{% endif %}
+
+{% if node.field_gallery_type.value == 1 %}
+  {% set gallery_type_class = 'grid' %}
+{% endif %}
+
+{% if node.field_gallery_media is defined and node.field_gallery_media is not empty %}
+  {% set has_glitems = true %}
+  {% for key, value in node.field_gallery_media %}
+    {% set glshort = node.field_gallery_media[key].entity %}
+    {% set glitem_bundle = glshort.bundle[0].target_id %}
+    {% if glitem_bundle == 'video' %}
+      {% set glitem = {
+        'gltype':  'glvid',
+        'gurl':    glshort.field_media_video_embed_field[0].value,
+        'glimg_uri':    glshort.thumbnail[0].entity.uri.value,
+        'galt':    'Video (press to interact)',
+        'gitle':   glshort.name[0].value,
+      } %}
+    {% else %}
+      {% set glitem = {
+        'gltype':  'glimg',
+        'gurl':    glshort.field_media_image.entity.uri.value,
+        'glimg_uri':    glshort.field_media_image.entity.uri.value,
+        'galt':    glshort.field_media_image[0].alt,
+        'gitle':   glshort.field_media_image[0].title is not empty ? glshort.field_media_image[0].title : NULL,
+      } %}
+    {% endif %}
+    {% set glitems = glitems|merge([glitem]) %}
+  {% endfor %}
+{% endif %}
+
+{% if node.body is defined and node.body is not empty %}
+  {% set has_body = true %}
+  {# {% set galbod = {
+    '#type':   'processed_text',
+    '#text':    node.body.value,
+    '#format':  node.body.format,
+  } %} #}
+{% endif %}
+
+{####### outpuuuuuut #######}
+
 <article{{ attributes }}>
 
+  {% if view_mode != 'full' %}
   {{ title_prefix }}
-  {% if not page %}
     <h2{{ title_attributes }}>
       <a href="{{ url }}" rel="bookmark">{{ label }}</a>
     </h2>
-  {% endif %}
   {{ title_suffix }}
 
-  {% set gallery_type_class = 'viewer' %}
-  {% if node.field_gallery_type.value == 1 %}
-    {% set gallery_type_class = 'grid' %}
-  {% endif %}
-    <div class="cwd-gallery strips {{ gallery_type_class }}">
+  {{ content }}
 
-    <h3 class="sr-only">Media Gallery</h3>
-    {% if gallery_type_class == 'viewer' %}<div class="slide"></div>{% endif %}
-    <div class="thumbnails-band">
-      <div class="thumbnails flex">
-        {{ content.field_gallery_image }}
+  {% else %} {# "if vm not full" != true #}
+
+  {% if has_meta == true %}
+    <div class="group-meta field-group metadata-set">
+      {% if has_svc == true %}
+        {% for key, value in glervice %}
+          <div class="field field-name-field-service-term">
+            <span class="deco">{{ value }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% if has_tags == true %}
+        {% for key, value in glags %}
+          <div class="field field-name-field-tags">
+            <span class="deco">{{ value }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if has_glitems == true %}
+    <div class="cwd-gallery strips {{ gallery_type_class }}" role="region" aria-label="Image Gallery">
+      {% if gallery_type_class == 'viewer' %}<div class="slide" role="presentation"></div>{% endif %}
+      <div class="thumbnails-band">
+        <div class="thumbnails flex">
+          {% for key, value in glitems %}
+            {% set title_aria_bridge = '' %}
+            {% if glitems[key].gitle %}
+              {% set title_aria_bridge = ', Caption: ' %}
+            {% endif %}
+            <div class="col">
+              <a role="img" href="{{ file_url(glitems[key].gurl) }}" data-title="{{ glitems[key].gitle }}" data-alt="{{ glitems[key].galt }}" aria-label="{{ glitems[key].galt }}{{ title_aria_bridge }}{{ glitems[key].gitle }}">
+              {% if glitems[key].gitle %}
+                <h3 class="sr-only">{{ glitems[key].gitle }}</h3>
+              {% endif %}
+              <img src="{{ glitems[key].glimg_uri | image_style('gallery_thumbnail') }}" alt="{{ glitems[key].galt }}">
+              </a>
+            </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
+  {% endif %}
 
-  {% if node.body.value %}
+  {% if has_body == true %}
     <hr class="section-break">
     {{ content.body }}
   {% endif %}
 
+  {% endif %} {# "if vm not full" != true #}
 </article>
