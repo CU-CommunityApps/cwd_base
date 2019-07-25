@@ -61,7 +61,7 @@ jQuery(document).ready(function($) {
 		// Close key shortcut
 		$(document).keyup(function(e) {
 			if (e.keyCode == 27) { // escape key
-				if ( $('#popup-wrapper:visible') ) {
+				if ( $('#popup-wrapper:visible').length > 0 ) {
 					$('#popup-close').trigger('click');
 				}
 			}

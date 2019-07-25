@@ -23,6 +23,15 @@ function cwd_base_preprocess_html(&$variables) {
     $variables['node'] = $node;
   }
 
+  /* If in a 401/403/404 error state, make a boolean available to the html.html template
+     ------------------------------------------------------------------------ */
+  $is_error_page = false;
+  $status = \Drupal::requestStack()->getCurrentRequest()->attributes->get('exception');
+  if ($status) { // If we later want specific codes, we can add: "if ($status->getStatusCode() == 404)"
+    $is_error_page = true;
+  }
+  $variables['is_error_page'] = $is_error_page;
+
 
   /* Get Section Title (top-most parent, under home)
      ------------------------------------------------------------------------ */

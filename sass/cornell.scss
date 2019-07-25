@@ -63,6 +63,11 @@
 .cu-search .search-filters {
 	margin-top: 0.5em;
 }
+.cu-search fieldset.search-filters {
+	padding: 0;
+	border: 0;
+	margin: 0.5em 0 0;
+}
 .cu-search .search-filters label {
 	font-size: 14px;
 	font-weight: 500;
@@ -350,7 +355,7 @@
 	height: 39px;
 	margin-top: -4px;
 	background-color: #b31b1b;
-	background-position: 50% 55%;
+	background-position: 50% 56%;
 }
 .cu-red.cu-seal .mobile-button {
 	background-color: #a01114;

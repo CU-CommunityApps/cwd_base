@@ -341,7 +341,7 @@ form.search-form:before {
   display: none;
 }
 
-.secondary-navigation.drupal-section-navigation .menu-item--active-trail, .secondary-navigation.drupal-section-navigation .menu-item--active-trail .menu-item {
+.secondary .menu-block-title + .secondary-navigation.drupal-section-navigation .menu-item, .secondary-navigation.drupal-section-navigation .menu-item--active-trail, .secondary-navigation.drupal-section-navigation .menu-item--active-trail .menu-item {
   display: block;
 }
 
@@ -403,6 +403,35 @@ form.search-form:before {
 /* views */
 .view > footer {
   clear: both;
+}
+
+/* webforms */
+.webform-element-help {
+  margin: 0 0.75em;
+  position: relative;
+  top: -0.15em;
+  border: 2px solid #767676;
+  background: #767676;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.js-form-type-webform-markup {
+  margin-bottom: 2.5em !important;
+}
+
+fieldset.webform-composite-hidden-title > legend {
+  border: 0 !important;
+  margin: 0 !important;
+}
+
+.webform-confirmation__message, .webform-confirmation__back {
+  margin-bottom: 1.5em;
+}
+
+/* margin fix for error pages rendering an unwrapped text node to the DOM */
+.error-page #main h1 {
+  margin-bottom: 0.7em;
 }
 
 /*# sourceMappingURL=drupal.css.map */

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="116px" viewBox="0 0 27 116" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>unfold-band</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="unfold-band">
+            <rect id="band" fill="#2D668E" x="0" y="0" width="27" height="116"></rect>
+            <path d="M13.828125,53.34375 L11.171875,56 L10,54.828125 L13.828125,51 L17.65625,54.828125 L16.484375,56 L13.828125,53.34375 Z M13.828125,63.65625 L16.484375,61 L17.65625,62.171875 L13.828125,66 L10,62.171875 L11.171875,61 L13.828125,63.65625 Z" id="unfold-more" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

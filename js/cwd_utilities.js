@@ -150,6 +150,13 @@ var msie = document.documentMode;
 	$('#mobile-nav-dimmer').click(function(e) {
 		$('#mobile-close').trigger('click');
 	});
+	$(document).keyup(function(e) {
+		if (e.keyCode == 27) { // escape key
+			if ( $('#mobile-nav-dimmer:visible').length > 0 ) {
+				$('#mobile-close').trigger('click');
+			}
+		}
+	})
 	
 	
 	// 2. Empty Sidebar Helper ------------------------------------------------
@@ -235,31 +242,42 @@ var msie = document.documentMode;
 	//$('.drupal #sidebar-top nav, nav.nav-body').addClass('mobile-expander').prepend('<h1 class="sans nav-heading">In this section<span class="punc">:</span></h1>');
 	//$('.drupal.page-search-site #sidebar-top nav .nav-heading').addClass('hidden').html('Filter results<span class="punc">:</span>');
 	$('.mobile-expander').each(function() {
-		$(this).prepend('<a href="#" aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi zmdi-menu"></span>More in this Section</a>');
-		//if ($(this).children('h1, h2, h3, h4, h5, h6').length > 0) {
+		if ( $(this).prev('.menu-block-title').length > 0 ) {
+			$(this).prev('.menu-block-title').before('<a href="#" aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi zmdi-menu"></span>More in this Section</a>');
+			var expand_header = $(this).prevAll('.mobile-expander-heading').first();
+			$(expand_header).nextAll('.menu-block-title, .mobile-expander').wrapAll('<div class="mobile" />');
+		}
+		else {
+			$(this).prepend('<a href="#" aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi zmdi-menu"></span>More in this Section</a>');
 			var expand_header = $(this).children('.mobile-expander-heading').first();
 			$(expand_header).nextAll().wrapAll('<div class="mobile" />');
-			$(expand_header).click(function(e) {
-				e.preventDefault();
-				if ($(window).width() <= mobile_expander_breakpoint) {
-					$(this).toggleClass('open');
-				}
-			});
-			$(expand_header).next('.mobile').find('a').focus(function() {
-				$(this).parents('.mobile').prev('.mobile-expander-heading').addClass('open');
-			}); // TODO: focus and mouse event reconciliation for full keyboard support
-
-			// hide empty menus
-			if ( $(this).is('nav') ) {
-			  var has_items = false;
-			  if ( $(this).find('li:visible').length > 1) {
-			    has_items = true;
-			  }
-			  if (!has_items) {
-			    $(this).remove();
-			  }
+		}
+		
+		
+		$(expand_header).click(function(e) {
+			e.preventDefault();
+			if ($(window).width() <= mobile_expander_breakpoint) {
+				$(this).toggleClass('open');
 			}
-		//}
+		});
+		$(expand_header).next('.mobile').find('a').focus(function() {
+			$(this).parents('.mobile').prev('.mobile-expander-heading').addClass('open');
+		}); // TODO: focus and mouse event reconciliation for full keyboard support
+
+		// hide empty menus
+		if ( $(this).is('nav') ) {
+			var has_items = false;
+			var min_items = 1;
+			if ( $(this).prev('.menu-block-title').length > 0 ) {
+				min_items = 0
+			}
+			if ( $(this).find('li:visible').length > min_items) {
+				has_items = true;
+			}
+			if (!has_items) {
+				$(this).remove();
+			}
+		}
 	});
 	// Activate Mobile Expander for Unit Navigation at 959 instead of 767
 	//$('#unit-navigation .mobile-expander-heading').addClass('unit-nav').off('click').click(function(e) {
@@ -411,33 +429,6 @@ var msie = document.documentMode;
 			}
 		});
 	});
-
-
-/*
-<div class="tabs">
-	<div role="tablist" aria-label="Entertainment">
-	  <button role="tab" aria-selected="true" aria-controls="nils-tab" id="nils">Nils Frahm</button>
-	  <button role="tab" aria-selected="false" aria-controls="agnes-tab" id="agnes" tabindex="-1">Agnes Obel</button>
-	  <button role="tab" aria-selected="false" aria-controls="complexcomplex" id="complex" tabindex="-1" data-deletable="">Joke</button>
-	</div>
-
-	<div tabindex="0" role="tabpanel" id="nils-tab" aria-labelledby="nils">
-	  <p>Nils Frahm is a German musician, composer and record producer based in Berlin. He is known for combining classical and electronic music and for an unconventional approach to the piano in which he mixes a grand piano, upright piano, Roland Juno-60, Rhodes piano, drum machine, and Moog Taurus.</p>
-	</div>
-
-	<div tabindex="0" role="tabpanel" id="agnes-tab" aria-labelledby="agnes" hidden="">
-	  <p>Agnes Caroline Thaarup Obel is a Danish singer/songwriter. Her first album, Philharmonics, was released by PIAS Recordings on 4 October 2010 in Europe. Philharmonics was certified gold in June 2011 by the Belgian Entertainment Association (BEA) for sales of 10,000 Copies.</p>
-	</div>
-
-	<div tabindex="0" role="tabpanel" id="complexcomplex" aria-labelledby="complex" hidden="">
-	  <p>Fear of complicated buildings:</p>
-	  <p>A complex complex complex.</p>
-	</div>
-</div>
-*/
-
-
-
 
 
 });})(jQuery, this);
