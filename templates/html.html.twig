@@ -58,42 +58,45 @@
 </head>
 <body{{ attributes.addClass(body_classes) }}>
 
-    <div id="skipnav"><a href="#main">{{ 'Skip to main content'|t }}</a></div>
+  <div id="skipnav"><a href="#main">{{ 'Skip to main content'|t }}</a></div>
 
-    <div id="cu-search" class="cu-search">
-      <div class="container-fluid">
-        <form id="cu-search-form" role="search" action="https://www.cornell.edu/search/">
-          <label for="cu-search-query" class="sr-only">Search:</label>
-          <input type="text" id="cu-search-query" name="q" value="" size="30">
-          <button name="btnG" id="cu-search-submit" type="submit" value="go"><span class="sr-only">Submit Search</span></button>
+  <div id="cu-search" class="cu-search">
+    <div class="container-fluid">
+      <form id="cu-search-form" role="search" action="https://www.cornell.edu/search/">
+        <label for="cu-search-query" class="sr-only">Search:</label>
+        <input type="text" id="cu-search-query" name="q" value="" size="30" tabindex="1">
+        <button name="btnG" id="cu-search-submit" type="submit" value="go" tabindex="2"><span class="sr-only">Submit Search</span></button>
 
-          <fieldset class="search-filters" role="radiogroup">
-            <legend class="sr-only">Search Filters</legend>
-            <input type="radio" id="cu-search-filter1" name="sitesearch" value="thissite" checked="checked">
-            <label for="cu-search-filter1"><span class="sr-only">Search </span>This Site</label>
-            <input type="radio" id="cu-search-filter2" name="sitesearch" value="cornell">
-            <label for="cu-search-filter2"><span class="sr-only">Search </span>Cornell</label>
-          </fieldset>
-        </form>
-      </div>
+        <fieldset class="search-filters" role="radiogroup">
+          <legend class="sr-only">Search Filters</legend>
+          <input type="radio" id="cu-search-filter1" name="sitesearch" value="thissite" tabindex="1" checked="checked">
+          <label for="cu-search-filter1"><span class="sr-only">Search </span>This Site</label>
+          <input type="radio" id="cu-search-filter2" name="sitesearch" value="cornell" tabindex="1">
+          <label for="cu-search-filter2"><span class="sr-only">Search </span>Cornell</label>
+        </fieldset>
+      </form>
+    </div>
   </div>
 
   <div id="brand" class="band">
-    <header id="cu-header">
+    <header id="cu-header" aria-labelledby="cu-unit">
       <div class="cu45-helper"></div>
       <div class="container-fluid cu-brand">
         <h1 class="cu-logo"><a href="https://www.cornell.edu"><img class="sr-only" src="/themes/custom/cwd_base/images/cornell/bold_cornell_logo_simple_b31b1b.svg" alt="Cornell University" width="245" height="62"></a></h1>
         <div class="cu-unit">
-          <h2>Cornell Base Theme</h2>
-        {% if is_front %}
-          <h3 class="sans">Welcome</h3>
-        {% else %}
-          <h3 class="sans"><a href="{{ section_path }}">{{ section_title }}</a></h3>
-        {% endif %}
+          {% if is_front -%}
+            <h2>{{ site_name }}</h2>
+            {% if site_slogan is not empty -%}
+            <h3 class="sans">{{ site_slogan }}</h3>
+            {% endif -%}
+          {% else -%}
+            <h2><a href="{{ base_path }}">{{ site_name }}</a></h2>
+            <h3 class="sans"><a href="{{ section_path }}">{{ section_title }}</a></h3>
+          {% endif -%}
         </div>
         <div class="buttons">
           <button class="mobile-button" id="mobile-nav">Main Menu</button>
-          <button class="mobile-button" id="cu-search-button">Search</button>
+          <button class="mobile-button" id="cu-search-button" aria-label="Show search section">Search</button>
           {{ page.nav_utility }}
         </div>
       </div>

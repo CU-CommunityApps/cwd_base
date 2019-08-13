@@ -17,6 +17,12 @@ function cwd_base_preprocess_html(&$variables) {
   $variables['base_path'] = base_path();
   cwd_base_is_front($variables); // make 'is_front' available to the html.html template
 
+  /* Make system.site.name and system.site.slogan available to html.html template
+     ------------------------------------------------------------------------ */
+  $site_config = \Drupal::config('system.site');
+  $variables['site_name'] = $site_config->get('name');
+  $variables['site_slogan'] = $site_config->get('slogan');
+
   /* If the node object is present, make node data available to the html.html template
      ------------------------------------------------------------------------ */
   if (($node = \Drupal::routeMatch()->getParameter('node')) && $node instanceof \Drupal\node\NodeInterface) {
