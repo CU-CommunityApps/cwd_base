@@ -13,8 +13,6 @@ global-styling:
       fonts/totally-cornered.css: {}
       css/drupal.css: {}
   js:
-    js/contrib/jquery-ui-1.10.2.custom.min.js: {}
-    js/contrib/jquery-ui-easing.min.js: {}
     js/contrib/jquery.detect_swipe.js: {}
     js/contrib/pep.js: {}
     js/contrib/modernizr.js: {}
@@ -30,3 +28,4 @@ header-scripts:
     js/cwd_slider.js: {}
   dependencies:
     - core/jquery
+    - core/jquery.ui
