@@ -28,4 +28,3 @@ header-scripts:
     js/cwd_slider.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.ui

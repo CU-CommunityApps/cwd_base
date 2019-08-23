@@ -1113,5 +1113,70 @@ div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
 		width: 100%;
 	}
 }
-
+/* Expander cues */
+.expander {
+	position: relative;
+	padding-top: 44px !important;
+	padding-bottom: 16px !important;
+	margin-bottom: 12px !important;
+	border: 3px double #bbb !important;
+}
+.expander:before {
+	display: inline-block;
+	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+	font-size: inherit;
+	speak: none;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: '\f246';
+	font-size: 22px;
+	background: #aaa;
+	color: #fff;
+	display: block;
+	padding: 4px 6px 5px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+}
+.expander h2 + div, .expander h3 + div, .expander h4 + div, .expander h5 + div, .expander h6 + div {
+	/* border-top-width: 2px; */
+	border-top-style: dashed !important;
+	margin-top: -0.75em !important;
+	margin-bottom: 1em !important;
+	/* margin-left: 4px !important; */
+	border-left-width: 3px !important;
+}
+.expander h2 + div {
+	margin-top: -1em !important;
+}
+.expander h2 + div:before, .expander h3 + div:before, .expander h4 + div:before, .expander h5 + div:before, .expander h6 + div:before {
+	display: inline-block;
+	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+	font-size: inherit;
+	speak: none;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: '\f18e';
+	font-size: 14px;
+	display: block;
+	margin-top: -12px;
+	margin-left: 1px;
+	color: #666;
+	text-shadow: 0 2px 1px #fff, 2px 0 1px #fff, 0 -2px 1px #fff, -2px 0 1px #fff;
+}
+.expander div div {
+	border-color: rgba(0, 0, 255, 0.35) !important;
+}
+.expander div div div {
+	border-color: rgba(255, 0, 255, 0.4) !important;
+}
+.expander div div div div {
+	border-color: rgba(0,255,0,0.4) !important;
+}
+.expander div div div div div {
+	border-color: rgba(255,0,0,0.3) !important;
+}
 

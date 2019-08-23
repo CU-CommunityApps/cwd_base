@@ -41,7 +41,9 @@
     'cwd-component-rows'
   ]
 %}
+{% block view_class_override %}
 <div{{ attributes.addClass(classes) }}>
+{% endblock %}
   {{ title_prefix }}
   {{ title }}
   {{ title_suffix }}

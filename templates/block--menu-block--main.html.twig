@@ -40,11 +40,11 @@
   ]
 %}
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
-{{ title_prefix }}
+{# title_prefix #}
 {% if label %}
-<h2{{ title_attributes }}>{{ label }}</h2>
+<h2{{ title_attributes.addClass('menu-block-title') }}>{{ label }}</h2>
 {% endif %}
-{{ title_suffix }}
+{# title_suffix #}
 <nav class="secondary-navigation drupal-section-navigation mobile-expander" aria-label="Section Navigation">
 {# Menu. #}
 {% block content %}

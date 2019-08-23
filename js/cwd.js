@@ -1,7 +1,8 @@
-/* CWD Base JavaScript (ama39, last update: 8/9/17)
+/* CWD Base JavaScript (ama39, last update: 8/20/19)
 	General scripting that applies to all sites:
    - 1. Helper Body Classes (modify styles or scripts for Windows, IE, and mobile/touch platforms)
-   - 2. Cornell Search (focus control for keyboard accessibility) 
+   - 2. Cornell Search (focus control for keyboard accessibility)
+   - 3. jQuery Easing Functions (mimicking jQuery UI)
    ------------------------------------------------------------------------- */
 
 jQuery(document).ready(function($) {
@@ -42,7 +43,7 @@ jQuery(document).ready(function($) {
 			mousedown = false;
 		}
 	});
-	$('#cu-search input').focus(function() {
+	$('#cu-search input, #cu-search-form').focus(function() {
 		if (!mousedown) {
 			$('#cu-search, #cu-search-button').addClass('open');
 			mousedown = false;
@@ -50,4 +51,23 @@ jQuery(document).ready(function($) {
 	});
 
 	
+});
+
+// 3. jQuery Easing Functions (mimicking jQuery UI) ------------------------------------------------
+jQuery.easing['jswing'] = jQuery.easing['swing'];
+jQuery.extend( jQuery.easing, {
+	def: 'easeOutQuad',
+	swing: function (x, t, b, c, d) {
+		return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
+	},
+	easeInQuad: function (x, t, b, c, d) {
+		return c*(t/=d)*t + b;
+	},
+	easeOutQuad: function (x, t, b, c, d) {
+		return -c *(t/=d)*(t-2) + b;
+	},
+	easeInOutQuad: function (x, t, b, c, d) {
+		if ((t/=d/2) < 1) return c/2*t*t + b;
+		return -c/2 * ((--t)*(t-2) - 1) + b;
+	}
 });

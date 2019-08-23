@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="10px" viewBox="0 0 12 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>checked</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M11.7466028,1.77324597 C11.8790766,1.90571975 11.9453125,2.06657835 11.9453125,2.25582661 C11.9453125,2.44507487 11.8790766,2.60593348 11.7466028,2.73840726 L5.64337702,8.84163306 C5.51090324,8.97410685 5.35004463,9.04034274 5.16079637,9.04034274 C4.97154811,9.04034274 4.81068951,8.97410685 4.67821573,8.84163306 L1.14402218,5.30743952 C1.0115484,5.17496574 0.9453125,5.01410713 0.9453125,4.82485887 C0.9453125,4.63561061 1.0115484,4.47475201 1.14402218,4.34227823 L2.10918347,3.37711694 C2.24165725,3.24464315 2.40251585,3.17840726 2.59176411,3.17840726 C2.78101237,3.17840726 2.94187098,3.24464315 3.07434476,3.37711694 L5.16079637,5.47066532 L9.81628024,0.808084677 C9.94875402,0.675610897 10.1096126,0.609375 10.2988609,0.609375 C10.4881091,0.609375 10.6489678,0.675610897 10.7814415,0.808084677 L11.7466028,1.77324597 Z" id="path-1"></path>
+        <filter x="-4.5%" y="-5.9%" width="109.1%" height="123.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="checked">
+            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
