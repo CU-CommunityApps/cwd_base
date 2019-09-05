@@ -9,7 +9,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-zmdi, .search-help-link:before {
+.icon-zmdi, .search-help-link:before, .simplesamlphp-auth-login-link:before {
   display: inline-block;
   font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
   font-size: inherit;
@@ -432,6 +432,45 @@ fieldset.webform-composite-hidden-title > legend {
 /* margin fix for error pages rendering an unwrapped text node to the DOM */
 .error-page #main h1 {
   margin-bottom: 0.7em;
+}
+
+/* saml login */
+#user-login-form {
+  max-width: 600px;
+}
+
+.simplesamlphp-auth-login-link {
+  display: inline-block;
+  margin: 0.15em 0 0.75em;
+  background: none !important;
+  padding: 4px 10px;
+  float: right;
+  clear: right;
+  font-size: 14px;
+  text-decoration: underline !important;
+}
+
+.simplesamlphp-auth-login-link:before {
+  content: '\f203';
+  padding-right: 0.3em;
+  color: #ccc;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 19px;
+  position: relative;
+  top: 0.1em;
+}
+
+.simplesamlphp-auth-login-link:hover:before {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.simplesamlphp-auth-login-link:active:before {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+#edit-actions + .simplesamlphp-auth-login-link,
+#edit-submit + .simplesamlphp-auth-login-link {
+  float: none;
 }
 
 /*# sourceMappingURL=drupal.css.map */
