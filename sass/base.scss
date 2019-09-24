@@ -578,18 +578,19 @@ a.link-button:hover, a.link-button:focus {
 a.link-button:active {
 	background: $cwd-color-button-active;
 }
-a.link-button .fa {
+a.link-button .fa, a.link-button .zmdi {
 	font-size: 18px;
 	position: relative;
 	top: 0.5px;
 	margin: 0 -0.05em 0 0.5em;
 }
-a.link-more .fa {
+a.link-more .fa, a.link-more .zmdi {
 	position: relative;
 	top: 0.5px;
 	margin: 0 -0.05em 0 0.5em;
 }
-a.link-button .fa:first-child, a.link-more .fa:first-child {
+a.link-button .fa:first-child, a.link-more .fa:first-child, 
+a.link-button .zmdi:first-child, a.link-more .zmdi:first-child {
 	margin: 0 0.5em 0 -0.05em;
 }
 
@@ -2491,6 +2492,13 @@ ol.custom.large > li, ol.custom.large.recursive ol > li {
 ol.custom.large > li:before, ol.custom.large.recursive ol > li:before {
 	font-size: 200%;
 }
+.no-bullet li {
+	padding-left: 0 !important;
+}
+.no-bullet li:before {
+	content: none !important;
+}
+
 
 /* Simple Columns */
 
@@ -3780,7 +3788,8 @@ body > footer .h5, #body-footer .h5 {
 body > footer, #body-footer {
 	font-size: 14px;
 }
-body > footer .two-col, body > footer .two-col > *, #body-footer .two-col, #body-footer .two-col > * {
+body > footer .two-col, body > footer .two-col > *, #body-footer .two-col, #body-footer .two-col > *, 
+body > footer .three-col, body > footer .three-col > *, #body-footer .three-col, #body-footer .three-col > * {
 	margin: 0;
 	padding-bottom: 0 !important;
 }
