@@ -2412,7 +2412,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
     display: inline;
   }
 
-  #main-navigation li.active > a, #main-navigation li > a.is-active, #main-navigation li.active:hover > a, #main-navigation li:hover > a.is-active {
+  #main-navigation li.active > a, #main-navigation li > a.is-active, #main-navigation > .container-fluid > ul > li > a.is-active, #main-navigation li.active:hover > a, #main-navigation li:hover > a.is-active {
     background: #0068ac;
     background: rgba(0, 104, 172, 0.5);
   }
