@@ -594,7 +594,7 @@ abbr {
   width: 100%;
 }
 
-.icon-fa, .list-menu.nav a:after, .cwd-component .link.link-button-icon a:before, .header-emblem:before, .back-to-toc:before, ul.custom > li:before, ul.custom.recursive ul > li:before, .footer-accessibility:before {
+.icon-fa:before, .list-menu.nav a:after, .cwd-component .link.link-button-icon a:before, .header-emblem:before, .back-to-toc:before, ul.custom > li:before, ul.custom.recursive ul > li:before, .footer-accessibility:before {
   font: normal normal normal 14px/1 FontAwesome;
   speak: none;
   font-size: inherit;
@@ -603,7 +603,7 @@ abbr {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-zmdi, .tutorial.tip:before, .tutorial.note:before, .breadcrumb li a:after, ul.custom.status > li:before {
+.icon-zmdi:before, .tutorial.tip:before, .tutorial.note:before, .breadcrumb li a:after, ul.custom.status > li:before {
   display: inline-block;
   font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
   font-size: inherit;
