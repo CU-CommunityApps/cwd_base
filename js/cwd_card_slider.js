@@ -1,11 +1,10 @@
-/* CWD Card Slider (ama39, last update: 3/27/19)
+/* CWD Card Slider (ama39, last update: 10/9/19)
    - 
    
    - Accessibility Notes:
    - -- 
    
    - Future Plans:
-   - -- Possible improvements in focus detection, ensuring that items are optimally visible when accessed by keyboard or screen reader
    - -- Free Scroll Mode (disabling screen-by-screen locking, to allow the element to be freely scrolled with mouse or touch gesture)
    ------------------------------------------------------------------------- */
 	
@@ -158,6 +157,16 @@ jQuery(document).ready(function($) {
 			});
 		
 		}
+		
+		// Focus Detection (for keyboard and screen reader)
+		// -- if cards have focusable elements within, the slider will ensure that these focus events coordinate with the UI (triggering slide sets and pips as needed)
+		 $(this).find('.card *').on('focus', function(e) {
+		
+			var this_card = $(this).parents('.card').first().index()+1;
+			var trigger_pip = Math.ceil(this_card / cards_per_screen);
+			$(viewer).find('.pip').eq(trigger_pip-1).trigger('click');
+		
+		});
  		
 	});
 	
@@ -203,7 +212,6 @@ jQuery(document).ready(function($) {
 		});
 		
 	});
-	
 
 });
 
