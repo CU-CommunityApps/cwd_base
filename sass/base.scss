@@ -3022,7 +3022,7 @@ h2 + .back-to-toc + .cwd-component-rows:not(.blocked):not(.striped):not(.card-sl
 	background: linear-gradient(135deg, rgba(0,0,0,0.08) 0%,rgba(0,0,0,0.03) 100%);
 }
 .cwd-component-rows .group-image, .cwd-component-rows .group-image + .field-group, 
-.cwd-card-grid .group-image, .cwd-card-grid .group-image + .field-group {
+.cwd-card-grid .group-image, .cwd-card-grid .group-image + .field-group, .constrain-480 {
 	max-width: 480px;
 	margin: 0 auto;
 }
@@ -3462,7 +3462,7 @@ main, #main {
 	clear: both;
 }
 .cwd-component-rows .group-image, .cwd-component-rows .group-image + .field-group, 
-.cwd-card-grid .group-image, .cwd-card-grid .group-image + .field-group {
+.cwd-card-grid .group-image, .cwd-card-grid .group-image + .field-group, .constrain-480 {
 	max-width: none;
 }
 
