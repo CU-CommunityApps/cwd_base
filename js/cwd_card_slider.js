@@ -23,7 +23,18 @@ jQuery(document).ready(function($) {
 		if ($(this).hasClass('side-padding')) {
 			$(this).wrap('<div class="card-slider-padded"></div>')
 		}
-		
+		if ($(this).hasClass('shuffle')) {
+			// See https://stackoverflow.com/a/12646864/5135767
+			jQuery.fn.shuffle = function () {
+				for (var i = this.length - 1; i > 0; i--) {
+					var j = Math.floor(Math.random() * (i + 1));
+					$(this[j]).before($(this[i]));
+				}
+				return this;
+			};
+			$(this).find('.card').shuffle();
+		}
+
 		// detect viewer width
 		var viewer = $(this);
 		var viewer_band = $(this).find('.cards').first();
