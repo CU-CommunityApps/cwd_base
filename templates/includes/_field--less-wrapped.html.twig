@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * An include to override image and video embed field templates.
+ * An include to override field.html.twig.
  * ~ Removed <div{{ attributes }}> from multiple section.
  * ~ Removed all <div{{ item.attributes }}> wrappers.
  * ~ Removed title_classes.
@@ -25,7 +25,6 @@
  * @see template_preprocess_field()
  */
 #}
-
 {% if label_hidden %}
   {% if multiple %}
     {% for item in items %}
