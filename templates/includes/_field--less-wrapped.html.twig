@@ -2,7 +2,7 @@
 /**
  * @file
  * An include to override field.html.twig.
- * ~ Removed <div{{ attributes }}> from multiple section.
+ * ~ From label_hidden section, removed <div{{ attributes }}>, "multiple" check.
  * ~ Removed all <div{{ item.attributes }}> wrappers.
  * ~ Removed title_classes.
  *
@@ -26,15 +26,9 @@
  */
 #}
 {% if label_hidden %}
-  {% if multiple %}
-    {% for item in items %}
-      {{ item.content }}
-    {% endfor %}
-  {% else %}
-    {% for item in items %}
-      {{ item.content }}
-    {% endfor %}
-  {% endif %}
+  {% for item in items %}
+    {{ item.content }}
+  {% endfor %}
 {% else %}
   <div{{ attributes }}>
     <div{{ title_attributes }}>{{ label }}</div>
