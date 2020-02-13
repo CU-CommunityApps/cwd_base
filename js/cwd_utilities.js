@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 2/25/19)
+/* CWD Utilities (ama39, last update: 1/30/20)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -6,6 +6,7 @@
    - 5. Mobile Expander (similar to the standard expander, but intended to create single heading + div pairs that are only active at sub-tablet sizes (used, for example, by section navigation))
    - 6. Read More Expander (shortens a block of text to an excerpt (if above a certain character count), and appends a "read more/close" toggle to reveal the rest, apply via .readmore-expander class)
    - 7. Content Tabs (turns an ordered or unordered list into a set of slides with tabbed navigation) -- e.g., <ul class="content-tabs">
+   - 8. Photo Credit/Information (div.photo-credit is turned into a small camera icon, revealing details on hover (or via keyboard/screen reader focus)
    ------------------------------------------------------------------------- */
 
 var mobile_breakpoint = 991; // viewport pixel width at which mobile nav appears (should match the media query in the project's css)
@@ -253,7 +254,6 @@ var msie = document.documentMode;
 			$(expand_header).nextAll().wrapAll('<div class="mobile" />');
 		}
 		
-		
 		$(expand_header).click(function(e) {
 			e.preventDefault();
 			if ($(window).width() <= mobile_expander_breakpoint) {
@@ -279,6 +279,11 @@ var msie = document.documentMode;
 			}
 		}
 	});
+
+	// clone the breadcrumb and prepend to the mobile section nav
+	$('#sidebar-top .secondary-navigation').first().parents('.mobile').first().prepend( $('.breadcrumb').first().addClass('no-mobile').clone().removeClass('no-mobile').addClass('mobile-only') );
+	$('.breadcrumb.mobile-only').removeAttr('aria-labelledby').attr('aria-label','Mobile Breadcrumb').find('#system-breadcrumb').remove();
+
 	// Activate Mobile Expander for Unit Navigation at 959 instead of 767
 	//$('#unit-navigation .mobile-expander-heading').addClass('unit-nav').off('click').click(function(e) {
 		//e.preventDefault();
@@ -427,6 +432,17 @@ var msie = document.documentMode;
 					});
 				});
 			}
+		});
+	});
+
+	// 8. Photo Credit/Information
+	$('.photo-info').each(function() {
+		$(this).attr('tabindex','0').wrapInner('<div class="photo-info-text off"></div>');
+		$(this).append('<span class="photo-info-icon zmdi zmdi-camera" aria-hidden="true"><span class="sr-only">Show Photo Information</span></span>');
+		$(this).find('.photo-info-icon').hover(function() {
+			$(this).prev('.photo-info-text').removeClass('off');
+		}, function() {
+			$(this).prev('.photo-info-text').addClass('off');
 		});
 	});
 
