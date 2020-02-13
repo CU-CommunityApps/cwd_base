@@ -46,3 +46,13 @@ $screen-md-min: 992px;
 $screen-ml-min: 1080px;
 $screen-lg-min: 1200px;
 $screen-xl-min: 1480px;
+
+
+
+// Mixins
+
+@mixin text-decoration-color($value) {
+	-moz-text-decoration-color: $value;
+	-webkit-text-decoration-color: $value;
+	text-decoration-color: $value;
+}

@@ -2,7 +2,7 @@
 @import "cwd-variables";
 
 // normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css
-@import 'normalize';
+@import "normalize";
 
 
 /* Bootstrap Compatibility Bridge
@@ -990,6 +990,9 @@ main .row > .primary:last-child:after, main .row > .secondary:last-child:after {
 }
 .band.accent2 {
 	background: #f6f6f6;
+}
+.band.accent3 {
+	background: #333;
 }
 main .row > .secondary:empty, main .row > .secondary.empty {
 	display: none;
@@ -1989,6 +1992,35 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
 	color: #bbb;
 	color: rgba(0,0,0,0.2);
 }
+.mobile .breadcrumb {
+	margin: 0 0 -0.1em;
+	border: 0;
+	font-size: 14px;
+}
+.mobile .breadcrumb li {
+	margin-right: 0;
+}
+.mobile .breadcrumb li a:after {
+	padding-left: 0.6em;
+}
+@media (max-width: 767px) {
+	.mobile .breadcrumb + h2 {
+		font-size: 22px !important;
+		padding-bottom: 0.8em;
+		margin-bottom: 0.6em;
+		border-bottom: 2px dotted rgba(0,50,100,0.15);
+	}
+	.mobile .breadcrumb + h2 + .secondary-navigation li {
+		font-size: 15px !important;
+		padding: 9px 0 !important;
+		font-weight: 300;
+		border-color: rgba(0,0,0,0.05) !important;
+	}
+	.mobile .breadcrumb + h2 + .secondary-navigation li li {
+		font-size: 15px !important;
+		padding: 6px 0 !important;
+	}
+}
 
 /* Classic Section Navigation (includes WordPress and Drupal support) */
 
@@ -2231,7 +2263,7 @@ strong.tutorial, em.tutorial, span.tutorial {
 	top: 1px;
 }
 .lead, .intro, .lead:last-child, .intro:last-child {
-  color: #777;
+  color: #737373;
   margin-bottom: 1.5em;
 }
 .page-header + .lead, .page-header + .intro, h1 + .lead, h1 + .intro {
@@ -2671,9 +2703,9 @@ figure.three-col > img {
 	font-weight: 600;
 	margin-bottom: 0.25em;
 }
-.cwd-component a.designer, .cwd-component a .designer .deco {
+.cwd-component a.designer, .cwd-component a .designer .deco, .cwd-component .designer a {
 	color: #444;
-	text-decoration: none;
+	text-decoration: none !important;
 	background-image: -moz-linear-gradient(left, rgba(213,220,230,0.4) 0%, rgba(213,220,230,0.4) 100%);
 	background-image: -webkit-linear-gradient(left, rgba(213,220,230,0.4) 0%,rgba(213,220,230,0.4) 100%);
 	background-image: linear-gradient(to right, rgba(213,220,230,0.4) 0%,rgba(213,220,230,0.4) 100%);
@@ -2683,7 +2715,7 @@ figure.three-col > img {
 	background-size: 10px 2px;
 	
 }
-.cwd-component a.designer:hover, .cwd-component a:hover .designer .deco {
+.cwd-component a.designer:hover, .cwd-component a:hover .designer .deco, .cwd-component .designer a:hover {
 	color: #000;
 	background-image: -moz-linear-gradient(left, rgba(96,155,221,0.5) 0%, rgba(96,155,221,0.5) 100%);
 	background-image: -webkit-linear-gradient(left, rgba(96,155,221,0.5) 0%,rgba(96,155,221,0.5) 100%);
@@ -2692,7 +2724,7 @@ figure.three-col > img {
 	background-repeat: repeat-x;
 	background-size: 10px 2px;
 }
-.cwd-component a.designer:active, .cwd-component a:active .designer .deco {
+.cwd-component a.designer:active, .cwd-component a:active .designer .deco, .cwd-component .designer a:active {
 	color: #777;
 	background-image: -moz-linear-gradient(left, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.1) 100%);
 	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.1) 100%);
@@ -2712,30 +2744,73 @@ figure.three-col > img {
 	90% { background-image: linear-gradient(to right, rgba(96,155,221,0.47) 0%,rgba(96,155,221,0.47) 100%); }
 	100% { background-image: linear-gradient(to right, rgba(96,155,221,0.5) 0%,rgba(96,155,221,0.5) 100%); }
 }
-.cwd-component a.designer:hover, .cwd-component a:hover .designer .deco {
+.cwd-component a.designer:hover, .cwd-component a:hover .designer .deco, .cwd-component .designer a:hover {
 	animation-name: fancypants;
 	animation-duration: 0.15s;
 }
 
-.cwd-component .subheading h4 {
+.dark .cwd-component a.designer, .dark .cwd-component a .designer .deco, .dark .cwd-component .designer a, 
+.cwd-component.dark a.designer, .cwd-component.dark a .designer .deco, .cwd-component.dark .designer a, 
+.cwd-component.tiles .group-image a.designer, .cwd-component.tiles .group-image  a .designer .deco, .cwd-component.tiles .group-image .designer a {
+	background-image: -moz-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%);
+	background-image: -webkit-linear-gradient(left, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
+	background-image: linear-gradient(to right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
+	background-image: none; // Comment out to allow a dim underline
+}
+.dark .cwd-component a.designer:hover, .dark .cwd-component a:hover .designer .deco, .dark .cwd-component .designer a:hover, 
+.cwd-component.dark a.designer:hover, .cwd-component.dark a:hover .designer .deco, .cwd-component.dark .designer a:hover, 
+.cwd-component.tiles .group-image a.designer:hover, .cwd-component.tiles .group-image a:hover .designer .deco, .cwd-component.tiles .group-image .designer a:hover {
+	background-image: -moz-linear-gradient(left, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.5) 100%);
+	background-image: -webkit-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%);
+	background-image: linear-gradient(to right, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%);
+}
+.dark .cwd-component a.designer:active, .dark .cwd-component a:active .designer .deco, .dark .cwd-component .designer a:active, 
+.cwd-component.dark a.designer:active, .cwd-component.dark a:active .designer .deco, .cwd-component.dark .designer a:active, 
+.cwd-component.tiles .group-image a.designer:active, .cwd-component.tiles .group-image a:active .designer .deco, .cwd-component.tiles .group-image .designer a:active {
+	background-image: -moz-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%);
+	background-image: -webkit-linear-gradient(left, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
+	background-image: linear-gradient(to right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
+}
+@keyframes fancypants-dark {
+	0% { background-image: linear-gradient(to right, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.1) 100%); }
+	10% { background-image: linear-gradient(to right, rgba(255,255,255,0.15) 0%,rgba(255,255,255,0.15) 100%); }
+	20% { background-image: linear-gradient(to right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%); }
+	30% { background-image: linear-gradient(to right, rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.25) 100%); }
+	40% { background-image: linear-gradient(to right, rgba(255,255,255,0.29) 0%,rgba(255,255,255,0.29) 100%); }
+	50% { background-image: linear-gradient(to right, rgba(255,255,255,0.33) 0%,rgba(255,255,255,0.33) 100%); }
+	60% { background-image: linear-gradient(to right, rgba(255,255,255,0.37) 0%,rgba(255,255,255,0.37) 100%); }
+	70% { background-image: linear-gradient(to right, rgba(255,255,255,0.41) 0%,rgba(255,255,255,0.41) 100%); }
+	80% { background-image: linear-gradient(to right, rgba(255,255,255,0.44) 0%,rgba(255,255,255,0.44) 100%); }
+	90% { background-image: linear-gradient(to right, rgba(255,255,255,0.47) 0%,rgba(255,255,255,0.47) 100%); }
+	100% { background-image: linear-gradient(to right, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%); }
+}
+.dark .cwd-component a.designer:hover, .dark .cwd-component a:hover .designer .deco, .dark .cwd-component .designer a:hover, 
+.cwd-component.dark a.designer:hover, .cwd-component.dark a:hover .designer .deco, .cwd-component.dark .designer a:hover, 
+.cwd-component.tiles .group-image a.designer:hover, .cwd-component.tiles .group-image a:hover .designer .deco, .cwd-component.tiles .group-image .designer a:hover {
+	animation-name: fancypants-dark;
+	animation-duration: 0.15s;
+}
+
+.cwd-component .subheading h4, .cwd-component h4.subheading {
 	color: $cwd-color-subheading-text !important;
 	font-size: 14px;
 	font-weight: 600;
 	margin-bottom: 1em;
 }
-.cwd-component .subheading h4.uppercase {
+.cwd-component .subheading h4.uppercase, .cwd-component h4.subheading.uppercase {
 	font-size: 12px;
 	font-weight: 700;
 	letter-spacing: 0.03em;
 }
-.cwd-component .subheading h4 a {
+.cwd-component .subheading h4 a, .cwd-component h4.subheading a {
 	-webkit-transition: color .15s;
 	-moz-transition: color .15s;
 	-o-transition: color .15s;
 	-ms-transition: color .15s;
 	transition: color .15s;
 }
-.cwd-component .subheading h4 a:hover, .cwd-component .subheading h4 a:focus {
+.cwd-component .subheading h4 a:hover, .cwd-component .subheading h4 a:focus, 
+.cwd-component h4.subheading a:hover, .cwd-component h4.subheading a:focus {
 	color: #000 !important;
 	text-decoration: underline;
 }
@@ -2760,6 +2835,10 @@ figure.three-col > img {
 	padding-right: 0.5em;
 	margin-right: 0.8em;
 	border-right: 1px solid #afcdee;
+}
+.dark .cwd-component .metadata-set > *, 
+.cwd-component.dark .metadata-set > * {
+	border-color: rgba(255,255,255,0.4);
 }
 .cwd-component .metadata-set > *:last-child, .cwd-component .metadata-set.metadata-blocks > * {
 	padding-right: 0;
@@ -3036,7 +3115,7 @@ h2 + .back-to-toc + .cwd-component-rows:not(.blocked):not(.striped):not(.card-sl
 .cwd-component .title + .date, .cwd-component .subheading + .date, .cwd-component .subheading + .subheading {
 	margin-top: -1em;
 }
-.cwd-component .subheading h4 + h4 {
+.cwd-component .subheading h4 + h4, .cwd-component h4.subheading + h4.subheading {
 	margin-top: -0.8em;
 }
 .cwd-component .field-name-field-image a {

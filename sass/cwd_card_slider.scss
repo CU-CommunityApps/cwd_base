@@ -13,6 +13,9 @@
 	padding-top: $grid-gutter-width;
 	background: radial-gradient(ellipse at center top, rgba(0,0,0,0.07) 0%,rgba(0,0,0,0) 60%), radial-gradient(ellipse at center bottom, rgba(0,0,0,0.03) 0%,rgba(0,0,0,0) 40%);
 }
+.card-slider.pips-bottom {
+	padding-top: $grid-gutter-width;
+}
 .card-slider.no-background {
 	background: none;
 }
@@ -41,6 +44,9 @@
 	flex-wrap: nowrap;
 	touch-action: pan-y;
 }
+.card-slider.pips-bottom .cards {
+	padding-bottom: $grid-gutter-width*1.5;
+}
 .card-slider.slide-mobile.scripted .cards { // If JavaScript is present, the natural overflow scrollbar is removed...
 	overflow-x: hidden !important;
 }
@@ -57,6 +63,9 @@
 	flex: 0 0 auto;
 	margin-bottom: 3em;
 	position: relative;
+}
+.card-slider.slide-mobile .card {
+	margin-bottom: 0;
 }
 .card-slider.min-2 .card {
 	width: 50%;
@@ -168,6 +177,56 @@
 	width: 9px;
 	height: 9px;
 }
+.card-slider.pips-bottom {
+	display: -webkit-flex;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-moz-box-orient: vertical;
+	-moz-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-moz-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+.card-slider.pips-bottom .pips {
+	-webkit-box-ordinal-group: 4;
+	-webkit-order: 3;
+	-moz-box-ordinal-group: 4;
+	-ms-flex-order: 3;
+	order: 3;
+}
+
+
+/* Dark Mode */
+.card-slider.dark .next-prev button, 
+.dark .card-slider .next-prev button {
+	background: rgba(255,255,255,0.12);
+}
+.card-slider.dark .next-prev button:hover, .card-slider.dark .next-prev button:focus, 
+.dark .card-slider .next-prev button:hover, .dark .card-slider .next-prev button:focus {
+	background: rgba(255,255,255,0.2);
+}
+.card-slider.dark .next-prev button:active, 
+.dark .card-slider .next-prev button:active {
+	background: rgba(255,255,255,0.08);
+}
+.card-slider.dark .next-prev button:disabled, .card-slider.dark .next-prev button:disabled:hover, .card-slider.dark .next-prev button:disabled:active, 
+.dark .card-slider .next-prev button:disabled, .dark .card-slider .next-prev button:disabled:hover, .dark .card-slider .next-prev button:disabled:active {
+	background: rgba(255,255,255,0.2);
+	opacity: 0.2;
+}
+.card-slider.dark .pips button:before, 
+.dark .card-slider .pips button:before {
+	background: #fff;
+}
 
 
 
@@ -175,11 +234,11 @@
 @media (min-width: $screen-xs-min) { // EXTRA SMALL GRID ****************** //
 
 .card-slider.max-5 .card {
-	width: 50%;
+	width: 50% !important;
 	margin-bottom: 0;
 }
 .card-slider.max-6 .card {
-	width: 50%;
+	width: 50% !important;
 	margin-bottom: 0;
 }
 
@@ -189,11 +248,11 @@
 @media (min-width: $screen-ks-min) { // KINDA SMALL GRID ****************** //
 
 .card-slider.max-4 .card {
-	width: 50%;
+	width: 50% !important;
 	margin-bottom: 0;
 }
 .card-slider.max-6 .card {
-	width: 33.333333333333333%;
+	width: 33.333333333333333% !important;
 }
 
 
@@ -237,20 +296,20 @@
 	overflow-x: auto !important;
 }
 .card-slider .card { // max-3 (default)
-	width: 50%;
+	width: 50% !important;
 	padding-left: $grid-gutter-width;
 	padding-right: $grid-gutter-width;
 	margin-bottom: 0;
 }
 .card-slider.max-1 .card, .card-slider.max-2 .card {
-	width: 100%;
+	width: 100% !important;
 }
 
 .card-slider.max-5 .card {
-	width: 33.333333333333333%;
+	width: 33.333333333333333% !important;
 }
 .card-slider.max-6 .card {
-	width: 25%;
+	width: 25% !important;
 }
 
 .card-slider .pips, .card-slider .next-prev {
@@ -262,16 +321,16 @@
 @media (min-width: $screen-md-min) { // MEDIUM GRID *********************** //
 
 .card-slider.max-2 .card {
-	width: 50%;
+	width: 50% !important;
 }
 .card-slider.max-4 .card {
-	width: 33.333333333333333%;
+	width: 33.333333333333333% !important;
 }
 .card-slider.max-5 .card {
-	width: 25%;
+	width: 25% !important;
 }
 .card-slider.max-6 .card {
-	width: 20%;
+	width: 20% !important;
 }
 
 
@@ -280,7 +339,7 @@
 @media (min-width: $screen-ml-min) { // MEDIUM-LARGE GRID ***************** //
 
 .card-slider .card { // max-3 (default)
-	width: 33.333333333333333%;
+	width: 33.333333333333333% !important;
 }
 
 
@@ -289,13 +348,13 @@
 @media (min-width: $screen-lg-min) { // LARGE GRID ************************ //
 
 .card-slider.max-4 .card {
-	width: 25%;
+	width: 25% !important;
 }
 .card-slider.max-5 .card {
-	width: 20%;
+	width: 20% !important;
 }
 .card-slider.max-6 .card {
-	width: 16.666666666666667%;
+	width: 16.666666666666667% !important;
 }
 .card-slider.pips-large .pips {
 	top: #{-$grid-gutter-width/2};
