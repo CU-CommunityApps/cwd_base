@@ -43,6 +43,9 @@ button .glyphicon-log-in, button .glyphicon-eye-open {
 .navbar-static-top {
 	z-index: auto;
 }
+#toolbar-item-administration-tray li {
+	margin-bottom: 0;
+}
 
 /* Tabs and Simple Menus (Local Tasks, Base Tools, Account Menu, Local Actions, Admin, Login links) */
 // Sadly, there is no predictable class available on these elements in Drupal 8, so we can only target them by the beginning and end of their IDs
