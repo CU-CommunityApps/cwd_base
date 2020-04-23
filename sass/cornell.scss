@@ -39,7 +39,7 @@
 }
 .cu-search .container, .cu-search .container-fluid {
 	@extend .vertical-align;
-	background: url('../images/cornell/cuseal_full_white480_dimmed.png') ($grid-gutter-width / 2) -66px no-repeat;
+	background: ($grid-gutter-width / 2) -66px no-repeat; //url('../images/cornell/cuseal_full_white480_dimmed.png')
 	height: 7em;
 }
 .cu-search form {

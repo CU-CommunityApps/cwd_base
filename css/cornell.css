@@ -33,7 +33,7 @@
   border-bottom: 4px solid #b31b1b; }
 
 .cu-search .container, .cu-search .container-fluid {
-  background: url("../images/cornell/cuseal_full_white480_dimmed.png") 15px -66px no-repeat;
+  background: 15px -66px no-repeat;
   height: 7em; }
 
 .cu-search form {

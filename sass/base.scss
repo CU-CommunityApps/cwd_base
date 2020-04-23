@@ -207,6 +207,10 @@ code {
 	color: #b31b1b;
 	font-size: 100%;
 }
+.dark code, .dark kbd, .dark samp, .dark figure {
+	background: rgba(255,255,255,0.07);
+	color: #fff;
+}
 .intro code, .lead code {
 	font-size: 90%;
 }
@@ -218,6 +222,9 @@ small, figcaption, .caption, h5 small, h6 small, .h5 small, .h6 small {
 }
 small figcaption, figcaption small, small .caption, .caption small {
 	font-size: 91.666666666667%; /* 11px base */
+}
+.dark figcaption, .dark .caption {
+	color: #ddd;
 }
 hr {
 	border: none;
@@ -300,6 +307,36 @@ abbr {
 	-moz-box-align: stretch;
 	-ms-flex-align: stretch;
 	align-items: stretch
+}
+.flex-between {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-moz-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+.flex-duo {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	margin-left: -10px;
+	margin-right: -10px;
+	
+	& > * {
+		min-width: 35%;
+		padding: 0 10px;
+		
+		@media (min-width: 1200px) {
+			min-width: 25%;
+		}
+	}
 }
 .stunt-double { /* This bold and fearless daredevil is used as a second target for multiple backgrounds and other tricks */
 	background: none; // Born of a shadowy past...
@@ -419,6 +456,12 @@ abbr {
 }
 .full-margin {
 	margin-bottom: 1em !important;
+}
+.high-margin {
+	margin-bottom: 1.5em !important;
+}
+.double-margin {
+	margin-bottom: 2em !important;
 }
 .nobr {
 	white-space: nowrap;
@@ -1047,12 +1090,6 @@ table {
 	margin-bottom: 3em;
 	border-collapse: collapse;
 }
-table th[scope='col'], table thead th {
-	text-align: left;
-}
-table th[scope='col'].text-center, table thead th.text-center {
-	text-align: center;
-}
 table caption {
 	padding: 0.6em 0;
 	border-top: 2px solid #e8e8e8;
@@ -1081,10 +1118,14 @@ table td:last-child, table th:last-child {
 }
 table th {
 	background: #fafafa;
+	text-align: left;
 }
 table thead th {
 	background: #efefef;
 	border-bottom-width: 1px;
+}
+table th.text-center {
+	text-align: center;
 }
 
 table.bordered tr > * {
@@ -1595,7 +1636,7 @@ form.no-constrain label, form.no-constrain input, form.no-constrain textarea, fo
 }
 .list-menu.links a {
 	display: block;
-	background: #eee;
+	background: #f5f5f5;
 	background: rgba(0,0,0,0.04);
 	padding: 0.4em 0.7em;
 }
@@ -2751,7 +2792,7 @@ figure.three-col > img {
 
 .dark .cwd-component a.designer, .dark .cwd-component a .designer .deco, .dark .cwd-component .designer a, 
 .cwd-component.dark a.designer, .cwd-component.dark a .designer .deco, .cwd-component.dark .designer a, 
-.cwd-component.tiles .group-image a.designer, .cwd-component.tiles .group-image  a .designer .deco, .cwd-component.tiles .group-image .designer a {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer, .cwd-component.tiles:not(.no-overlay) .group-image a .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a {
 	background-image: -moz-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%);
 	background-image: -webkit-linear-gradient(left, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
 	background-image: linear-gradient(to right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
@@ -2759,14 +2800,14 @@ figure.three-col > img {
 }
 .dark .cwd-component a.designer:hover, .dark .cwd-component a:hover .designer .deco, .dark .cwd-component .designer a:hover, 
 .cwd-component.dark a.designer:hover, .cwd-component.dark a:hover .designer .deco, .cwd-component.dark .designer a:hover, 
-.cwd-component.tiles .group-image a.designer:hover, .cwd-component.tiles .group-image a:hover .designer .deco, .cwd-component.tiles .group-image .designer a:hover {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer:hover, .cwd-component.tiles:not(.no-overlay) .group-image a:hover .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a:hover {
 	background-image: -moz-linear-gradient(left, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.5) 100%);
 	background-image: -webkit-linear-gradient(left, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%);
 	background-image: linear-gradient(to right, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%);
 }
 .dark .cwd-component a.designer:active, .dark .cwd-component a:active .designer .deco, .dark .cwd-component .designer a:active, 
 .cwd-component.dark a.designer:active, .cwd-component.dark a:active .designer .deco, .cwd-component.dark .designer a:active, 
-.cwd-component.tiles .group-image a.designer:active, .cwd-component.tiles .group-image a:active .designer .deco, .cwd-component.tiles .group-image .designer a:active {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer:active, .cwd-component.tiles:not(.no-overlay) .group-image a:active .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a:active {
 	background-image: -moz-linear-gradient(left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 100%);
 	background-image: -webkit-linear-gradient(left, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
 	background-image: linear-gradient(to right, rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.2) 100%);
@@ -2786,7 +2827,7 @@ figure.three-col > img {
 }
 .dark .cwd-component a.designer:hover, .dark .cwd-component a:hover .designer .deco, .dark .cwd-component .designer a:hover, 
 .cwd-component.dark a.designer:hover, .cwd-component.dark a:hover .designer .deco, .cwd-component.dark .designer a:hover, 
-.cwd-component.tiles .group-image a.designer:hover, .cwd-component.tiles .group-image a:hover .designer .deco, .cwd-component.tiles .group-image .designer a:hover {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer:hover, .cwd-component.tiles:not(.no-overlay) .group-image a:hover .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a:hover {
 	animation-name: fancypants-dark;
 	animation-duration: 0.15s;
 }
@@ -3758,10 +3799,10 @@ article aside.sidebar,
 article aside.column {
 	width: 30%;
 	float: right;
-	margin: 0 0 15px 15px;
+	margin: 0 0 15px 20px;
 }
 article aside.column {
-	padding: 5px 0 5px 15px;
+	padding: 5px 0 5px 18px;
 	border: 0;
 	border-left: 1px solid #ebebeb;
 	margin-bottom: 10px;
