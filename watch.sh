@@ -3,4 +3,4 @@
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
-sass --watch sass:css --style expanded
+node-sass -r -w --output-style=nested --source-map=true --output=css sass

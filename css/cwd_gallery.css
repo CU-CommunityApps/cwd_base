@@ -1,44 +1,35 @@
 /* CWD Image/Video Gallery
    ************************************ */
 .cwd-gallery {
-  margin: 0 0 1.5em;
-}
+  margin: 0 0 1.5em; }
 
 .cwd-gallery .thumbnails, .cwd-gallery .thumbnails-band {
-  margin: 0 -10px;
-}
+  margin: 0 -10px; }
 
 .cwd-gallery .thumbnails-band .thumbnails {
-  margin: 0;
-}
+  margin: 0; }
 
 .cwd-gallery .col {
   width: 50%;
-  padding: 10px;
-}
+  padding: 10px; }
 
 .cwd-gallery.viewer .col {
-  width: 29.3333333%;
-}
+  width: 29.3333333%; }
 
 .cwd-gallery img {
   width: 100%;
-  height: auto;
-}
+  height: auto; }
 
 .cwd-gallery .col a {
-  display: block;
-}
+  display: block; }
 
 /* thumbnail strips */
 .cwd-gallery.strips .thumbnails * {
-  position: relative;
-}
+  position: relative; }
 
 .cwd-gallery.strips .col {
   padding: 9px 10px 6px;
-  margin-bottom: 15px;
-}
+  margin-bottom: 15px; }
 
 .cwd-gallery.strips .col:before {
   background: #ededed;
@@ -56,24 +47,19 @@
   background: radial-gradient(ellipse at center top, rgba(75, 90, 110, 0.15) 0%, rgba(75, 90, 110, 0) 60%);
   border: 1px solid #e6e8eb;
   border-color: rgba(0, 0, 0, 0.02);
-  border-width: 1px 0;
-}
+  border-width: 1px 0; }
 
 .cwd-gallery.strips .col:nth-child(odd):before {
-  content: '';
-}
+  content: ''; }
 
 .cwd-gallery.strips .col img {
-  border: 3px solid #fff;
-}
+  border: 3px solid #fff; }
 
 .cwd-gallery.strips .thumbnails a:focus {
-  outline: none;
-}
+  outline: none; }
 
 .cwd-gallery.strips .thumbnails a.active img, .cwd-gallery.strips .thumbnails a:focus img {
-  outline: 3px solid rgba(0, 150, 255, 0.4);
-}
+  outline: 3px solid rgba(0, 150, 255, 0.4); }
 
 /* slide viewer */
 .cwd-gallery.viewer .slide {
@@ -87,26 +73,22 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  transition: padding-bottom 0.3s ease-in-out;
-}
+  transition: padding-bottom 0.3s ease-in-out; }
 
 .cwd-gallery.viewer .slide.video {
   padding-bottom: 56.25%;
-  background: #000 !important;
-}
+  background: #000 !important; }
 
 .cwd-gallery.viewer .slide.portrait {
   -webkit-background-size: auto 100%;
   -moz-background-size: auto 100%;
   -o-background-size: auto 100%;
-  background-size: auto 100%;
-}
+  background-size: auto 100%; }
 
 .cwd-gallery.viewer .slide img {
   position: absolute;
   bottom: 0;
-  z-index: -1;
-}
+  z-index: -1; }
 
 .cwd-gallery.viewer .slide .caption {
   position: absolute;
@@ -125,8 +107,7 @@
   background: -moz-linear-gradient(top, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
   background: -webkit-linear-gradient(top, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
   background: linear-gradient(to bottom, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.8) 100%);
-  transition: opacity 0.5s;
-}
+  transition: opacity 0.5s; }
 
 .cwd-gallery.viewer .slide.video .caption {
   top: 0;
@@ -134,17 +115,14 @@
   padding: 0.8em 0.8em 4em;
   background: -moz-linear-gradient(top, rgba(45, 45, 45, 0.8) 0%, rgba(45, 45, 45, 0) 100%);
   background: -webkit-linear-gradient(top, rgba(45, 45, 45, 0.8) 0%, rgba(45, 45, 45, 0) 100%);
-  background: linear-gradient(to bottom, rgba(45, 45, 45, 0.8) 0%, rgba(45, 45, 45, 0) 100%);
-}
+  background: linear-gradient(to bottom, rgba(45, 45, 45, 0.8) 0%, rgba(45, 45, 45, 0) 100%); }
 
 .cwd-gallery.viewer .slide .caption.fadeout {
   opacity: 0;
-  pointer-events: none;
-}
+  pointer-events: none; }
 
 .slide.video .gallery-nav .next-prev a {
-  display: none;
-}
+  display: none; }
 
 .cwd-gallery.viewer .thumbnails {
   position: relative;
@@ -164,24 +142,20 @@
   background: -webkit-radial-gradient(center top, ellipse cover, rgba(75, 90, 110, 0.15) 0%, rgba(75, 90, 110, 0) 60%);
   background: -o-radial-gradient(center top, ellipse cover, rgba(75, 90, 110, 0.15) 0%, rgba(75, 90, 110, 0) 60%);
   background: -ms-radial-gradient(center top, ellipse cover, rgba(75, 90, 110, 0.15) 0%, rgba(75, 90, 110, 0) 60%);
-  background: radial-gradient(ellipse at center top, rgba(75, 90, 110, 0.15) 0%, rgba(75, 90, 110, 0) 60%);
-}
+  background: radial-gradient(ellipse at center top, rgba(75, 90, 110, 0.15) 0%, rgba(75, 90, 110, 0) 60%); }
 
 .cwd-gallery.viewer .thumbnails::-webkit-scrollbar {
-  width: 0 !important;
-}
+  width: 0 !important; }
 
 .cwd-gallery.viewer .thumbnails .col {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
   padding: 9px 8px 6px;
-  margin-bottom: 16px;
-}
+  margin-bottom: 16px; }
 
 .cwd-gallery.viewer .thumbnails-band {
-  position: relative;
-}
+  position: relative; }
 
 .cwd-gallery.viewer .thumbnails-band:before {
   content: '';
@@ -197,12 +171,10 @@
   background: -o-linear-gradient(left, white 0%, rgba(255, 255, 255, 0) 100%);
   background: -ms-linear-gradient(left, white 0%, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
-  pointer-events: none;
-}
+  pointer-events: none; }
 
 .cwd-gallery.viewer .thumbnails-band.hide-before:before {
-  opacity: 0;
-}
+  opacity: 0; }
 
 .cwd-gallery.viewer .thumbnails-band:after {
   content: '';
@@ -217,16 +189,13 @@
   background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 100%);
   background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 100%);
   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, white 100%);
-  pointer-events: none;
-}
+  pointer-events: none; }
 
 .cwd-gallery.viewer .thumbnails-band.hide-after:after {
-  opacity: 0;
-}
+  opacity: 0; }
 
 .cwd-gallery.viewer.strips .col:before {
-  content: none !important;
-}
+  content: none !important; }
 
 .cwd-gallery.viewer .thumbnails a {
   opacity: 0.5;
@@ -234,8 +203,7 @@
   -moz-transition: transform .15s, opacity .15s;
   -o-transition: transform .15s, opacity .15s;
   -ms-transition: transform .15s, opacity .15s;
-  transition: transform .15s, opacity .15s;
-}
+  transition: transform .15s, opacity .15s; }
 
 .cwd-gallery.viewer .thumbnails a.active {
   opacity: 1;
@@ -247,12 +215,10 @@
   -moz-transition: transform .15s, opacity .15s;
   -o-transition: transform .15s, opacity .15s;
   -ms-transition: transform .15s, opacity .15s;
-  transition: transform .15s, opacity .15s;
-}
+  transition: transform .15s, opacity .15s; }
 
 .cwd-gallery.viewer .thumbnails a.video {
-  position: relative;
-}
+  position: relative; }
 
 .cwd-gallery .thumbnails a.video:after {
   position: absolute;
@@ -270,8 +236,7 @@
   padding: 2px 5px 4px;
   right: 6px;
   top: 6px;
-  border-radius: 1px;
-}
+  border-radius: 1px; }
 
 /* Video Container */
 .video-container {
@@ -281,82 +246,51 @@
   left: 0;
   right: 0;
   width: 100%;
-  height: 100%;
-}
+  height: 100%; }
 
 .video-container:focus {
   outline: 3px solid rgba(0, 150, 255, 0.4);
-  outline-offset: 2px;
-}
+  outline-offset: 2px; }
 
 @media (min-width: 480px) {
   .cwd-gallery .col {
-    width: 33.3333333%;
-  }
-
+    width: 33.3333333%; }
   .cwd-gallery.viewer .col {
-    width: 29.3333333%;
-  }
-
+    width: 29.3333333%; }
   .cwd-gallery.strips .col:before {
-    width: 300%;
-  }
-
+    width: 300%; }
   .cwd-gallery.strips .col:nth-child(odd):before {
-    content: none;
-  }
-
+    content: none; }
   .cwd-gallery.strips .col:nth-child(3n+1):before {
-    content: '';
-  }
-}
+    content: ''; } }
+
 @media (min-width: 768px) {
   .cwd-gallery.viewer .slide .caption {
     font-size: 15px;
-    line-height: inherit;
-  }
-}
+    line-height: inherit; } }
+
 @media (min-width: 992px) {
   .cwd-gallery .col {
-    width: 25%;
-  }
-
+    width: 25%; }
   .cwd-gallery.viewer .col {
-    width: 22%;
-  }
-
+    width: 22%; }
   .cwd-gallery.strips .col:before {
-    width: 400%;
-  }
-
+    width: 400%; }
   .cwd-gallery.strips .col:nth-child(3n+1):before {
-    content: none;
-  }
-
+    content: none; }
   .cwd-gallery.strips .col:nth-child(4n+1):before {
-    content: '';
-  }
-}
+    content: ''; } }
+
 @media (min-width: 1200px) {
   .cwd-gallery .col {
-    width: 20%;
-  }
-
+    width: 20%; }
   .cwd-gallery.viewer .col {
-    width: 18%;
-  }
-
+    width: 18%; }
   .cwd-gallery.strips .col:before {
-    width: 500%;
-  }
-
+    width: 500%; }
   .cwd-gallery.strips .col:nth-child(4n+1):before {
-    content: none;
-  }
-
+    content: none; }
   .cwd-gallery.strips .col:nth-child(5n+1):before {
-    content: '';
-  }
-}
+    content: ''; } }
 
 /*# sourceMappingURL=cwd_gallery.css.map */
