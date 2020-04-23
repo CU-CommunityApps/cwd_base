@@ -417,7 +417,7 @@ jQuery(document).ready(function($) {
 								$('#popup-image').css('max-height','none');
 								$('#popup').css('width','auto');
 								if ($(window).width() > 767) {
-									/* Calculate and Resize to Accomodate Tall Images
+									/* Calculate and Resize to Accommodate Tall Images
 									   -- Todo: This code works for most reasonable combinations of image dimensions, screen proportions and caption lengths, but could still use some work. Basing image size on height is always tricky in CSS (perhaps a flexbox-based layout would be more reliable?) 
 									   -- Todo: Likewise, tall images with long captions may not fit on a mobile screen
 									*/

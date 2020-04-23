@@ -24,7 +24,7 @@ var default_slide_time = 8; // time between transitions (in seconds)
 var default_transition_speed = 1; // speed of image cross-fade (in seconds) *Note: This only affects image transitions. Caption transition timing is controlled by CSS [cwd_slider.css]
 var default_autoplay = true; // if true, the slider will cycle through images on load (but will stop after user interaction)
 var default_random_start = true; // if true, the slider will start on a random slide (instead of always starting at 1)
-var default_caption_height = '8em'; // must be enough height to accomodate the tallest caption text (only for top-aligned captions) (NYI)
+var default_caption_height = '8em'; // must be enough height to accommodate the tallest caption text (only for top-aligned captions) (NYI)
 var default_image_path = ''; // path to images (if not using absolute paths)
 var default_bg_color = '#363f47'; // basic fill color behind images (may be visible briefly during page load)
 

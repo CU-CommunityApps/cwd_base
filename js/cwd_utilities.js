@@ -7,6 +7,10 @@
    - 6. Read More Expander (shortens a block of text to an excerpt (if above a certain character count), and appends a "read more/close" toggle to reveal the rest, apply via .readmore-expander class)
    - 7. Content Tabs (turns an ordered or unordered list into a set of slides with tabbed navigation) -- e.g., <ul class="content-tabs">
    - 8. Photo Credit/Information (div.photo-credit is turned into a small camera icon, revealing details on hover (or via keyboard/screen reader focus)
+   
+   Change Log
+   - 1/30/20 Photo Credit/Information functionality added
+   - 1/23/20 Mobile Expander: If a page breadcrumb is present (using the usual .breadcrumb Drupal markup), the mobile section navigation will now "move" the breadcrumb to inside the expander when in mobile.
    ------------------------------------------------------------------------- */
 
 var mobile_breakpoint = 991; // viewport pixel width at which mobile nav appears (should match the media query in the project's css)
@@ -243,13 +247,19 @@ var msie = document.documentMode;
 	//$('.drupal #sidebar-top nav, nav.nav-body').addClass('mobile-expander').prepend('<h1 class="sans nav-heading">In this section<span class="punc">:</span></h1>');
 	//$('.drupal.page-search-site #sidebar-top nav .nav-heading').addClass('hidden').html('Filter results<span class="punc">:</span>');
 	$('.mobile-expander').each(function() {
+		var expander_icon = 'zmdi-menu';
+		var expander_label = 'More in this Section';
+		if ($(this).find('form[id^=views-exposed-form]').length > 0) {
+			expander_icon = 'zmdi-filter-list';
+			expander_label = 'Filter';
+		}
 		if ( $(this).prev('.menu-block-title').length > 0 ) {
-			$(this).prev('.menu-block-title').before('<a href="#" aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi zmdi-menu"></span>More in this Section</a>');
+			$(this).prev('.menu-block-title').before('<button aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi '+expander_icon+'"></span>'+expander_label+'</button>');
 			var expand_header = $(this).prevAll('.mobile-expander-heading').first();
 			$(expand_header).nextAll('.menu-block-title, .mobile-expander').wrapAll('<div class="mobile" />');
 		}
 		else {
-			$(this).prepend('<a href="#" aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi zmdi-menu"></span>More in this Section</a>');
+			$(this).prepend('<button aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi '+expander_icon+'"></span>'+expander_label+'</button>');
 			var expand_header = $(this).children('.mobile-expander-heading').first();
 			$(expand_header).nextAll().wrapAll('<div class="mobile" />');
 		}
@@ -279,11 +289,11 @@ var msie = document.documentMode;
 			}
 		}
 	});
-
-	// clone the breadcrumb and prepend to the mobile section nav
+	
+	// clone the breadcrumb and prepend to the mobile section nav 
 	$('#sidebar-top .secondary-navigation').first().parents('.mobile').first().prepend( $('.breadcrumb').first().addClass('no-mobile').clone().removeClass('no-mobile').addClass('mobile-only') );
 	$('.breadcrumb.mobile-only').removeAttr('aria-labelledby').attr('aria-label','Mobile Breadcrumb').find('#system-breadcrumb').remove();
-
+	
 	// Activate Mobile Expander for Unit Navigation at 959 instead of 767
 	//$('#unit-navigation .mobile-expander-heading').addClass('unit-nav').off('click').click(function(e) {
 		//e.preventDefault();
@@ -434,7 +444,7 @@ var msie = document.documentMode;
 			}
 		});
 	});
-
+	
 	// 8. Photo Credit/Information
 	$('.photo-info').each(function() {
 		$(this).attr('tabindex','0').wrapInner('<div class="photo-info-text off"></div>');
