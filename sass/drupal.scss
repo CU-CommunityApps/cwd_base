@@ -466,6 +466,15 @@ fieldset.webform-composite-hidden-title > legend {
 	float: none;
 }
 
+/* extlink module */
+svg.ext {
+	width: 1em;
+	height: 1em;
+	padding-right: 0;
+	margin-left: 0.2em;
+	opacity: 0.85;
+}
+
 
 // ************************************************************************ //
 @media (min-width: $screen-xs-min) { // EXTRA SMALL GRID ****************** //

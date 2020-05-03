@@ -2,7 +2,8 @@
 /**
  * @file
  * Theme override to display a node.
- * ~ Removed unnecessary DIV wrapper and problematic ARTICLE wrapper for standard pages (ama39)
+ * ~ Removed unnecessary markup and unused features
+ * ~ Added title and content blocks for easier node template overrides in project themes
  *
  * Available variables:
  * - node: The node entity with limited access to object properties and methods.
@@ -73,10 +74,8 @@
  * @ingroup themeable
  */
 #}
-{% if not page %}
-<article{{ attributes }}>
-{% endif %}
 
+{% block title %}
   {{ title_prefix }}
   {% if not page %}
     <h2{{ title_attributes }}>
@@ -84,21 +83,8 @@
     </h2>
   {% endif %}
   {{ title_suffix }}
+{% endblock %}
 
-  {% if display_submitted %}
-    <footer>
-      {{ author_picture }}
-      <div{{ author_attributes }}>
-        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
-        {{ metadata }}
-      </div>
-    </footer>
-  {% endif %}
-
-  {#<div{{ content_attributes }}>#}
+{% block content %}
   {{ content }}
-  {#</div>#}
-
-{% if not page %}
-</article>
-{% endif %}
+{% endblock %}

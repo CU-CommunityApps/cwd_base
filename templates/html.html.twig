@@ -32,11 +32,11 @@
     db_offline ? 'db-offline',
     not root_path ? 'home' : 'secondary-page',
     'cu-seal',
-    'sidebar',
-    'sidebar-right',
-    'sidebar-tint',
-    'sidebar-tint-fade',
-    'sidebar-tint-edge'
+    root_path ? 'sidebar',
+    root_path ? 'sidebar-right',
+    root_path ? 'sidebar-tint',
+    root_path ? 'sidebar-tint-fade',
+    root_path ? 'sidebar-tint-edge'
   ]
 %}
 {# @todo: tie these into custom theme settings?

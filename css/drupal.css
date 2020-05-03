@@ -409,4 +409,12 @@ fieldset.webform-composite-hidden-title > legend {
 #edit-submit + .simplesamlphp-auth-login-link {
   float: none; }
 
+/* extlink module */
+svg.ext {
+  width: 1em;
+  height: 1em;
+  padding-right: 0;
+  margin-left: 0.2em;
+  opacity: 0.85; }
+
 /*# sourceMappingURL=drupal.css.map */

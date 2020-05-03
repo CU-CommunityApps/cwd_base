@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 1/30/20)
+/* CWD Utilities (ama39, last update: 4/30/20)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -9,6 +9,7 @@
    - 8. Photo Credit/Information (div.photo-credit is turned into a small camera icon, revealing details on hover (or via keyboard/screen reader focus)
    
    Change Log
+   - 4/30/20 New keyboard navigation for Main Navigation, and "on-demand" variant (for keyboard and screen readers, dropdowns will only appear when requested by arrow key)
    - 1/30/20 Photo Credit/Information functionality added
    - 1/23/20 Mobile Expander: If a page breadcrumb is present (using the usual .breadcrumb Drupal markup), the mobile section navigation will now "move" the breadcrumb to inside the expander when in mobile.
    ------------------------------------------------------------------------- */
@@ -81,9 +82,13 @@ var msie = document.documentMode;
 	// Dropdown Menus
 	$('li.menu-item-has-children').addClass('parent'); // WordPress Support
 	$('li.menu-item--expanded').addClass('parent'); // Drupal 8 Support
+	$('.dropdown-menu li a').wrapInner('<span></span>'); // wrap text in a span
+	
 	$('.dropdown-menu li.parent').parent().removeClass('menu').addClass('links list-menu');
-	$('.dropdown-menu li.parent > a').wrapInner('<span></span>').append('<span class="fa fa-caret-down"></span>'); // wrap text in a span and add dropdown caret icons
+	$('.dropdown-menu li.parent > a').attr('aria-haspopup','true').append('<span class="fa fa-caret-down"></span>'); // add dropdown caret icons
 	$('.dropdown-menu li.parent li.parent > a .fa').removeClass('fa-caret-down').addClass('fa-caret-right'); // change sub-dropdown caret icons
+	$('.dropdown-menu-on-demand li.parent ul a').attr('tabindex','-1'); // in on-demand mode, links in dropdowns are not initially accessible by tab order
+	$('.dropdown-menu-on-demand li.parent > ul').attr('aria-hidden','true'); // in on-demand mode, links in dropdowns are not initially accessible to screen reader (including rotor)
 	$('.dropdown-menu li.parent > ul').each(function() {
 		$(this).removeClass('menu').addClass('list-menu links vertical children');
 		if ( !$('body').hasClass('mobile') ) {
@@ -123,7 +128,152 @@ var msie = document.documentMode;
 			$(this).closest('.mobile-expander').children('.mobile-expander-heading').removeClass('open');
 		}
 	});
-
+	
+	// Keyboard Navigation
+	$('.dropdown-menu').find('ul').first().children('li').addClass('top-level-li').children('a').addClass('top-level-link');
+	
+	$('.dropdown-menu-on-demand').find('ul').find('a').each(function() { // on-demand mode only
+		
+		$(this).attr('data-label',$(this).children('span:first-child').text()); // -> generate initial label text
+		$(this).attr('aria-label',$(this).attr('data-label')); // -> apply initial label
+		
+		$(this).focus(function() {
+			if ( !$('body').hasClass('mobile') ) {
+				if ( $(this).hasClass('top-level-link') ) { // top level
+					$(this).closest('ul').find('.children').attr('aria-hidden','true').find('a').attr('tabindex','-1'); // -> lock all submenus
+					if ( $(this).attr('aria-haspopup') == 'true' ) {
+						$(this).attr('aria-label', $(this).attr('data-label') + ': To enter this sub menu, press Down Arrow.'); // -> append help text
+					}
+				}
+				else {
+					$(this).next('ul').attr('aria-hidden','true').find('a').attr('tabindex','-1'); // -> lock children
+					if ( $(this).attr('aria-haspopup') == 'true' ) {
+						if ( $(this).next('ul').hasClass('flip') ) {
+							$(this).attr('aria-label', $(this).attr('data-label') + ': To enter this sub menu, press Left Arrow.'); // -> append help text
+						}
+						else {
+							$(this).attr('aria-label', $(this).attr('data-label') + ': To enter this sub menu, press Right Arrow.'); // -> append help text
+						}
+					}
+				}
+			}
+			else {
+				if ( $(this).hasClass('top-level-link') ) { // top level
+					$(this).closest('ul').find('.children').attr('aria-hidden','false').find('a').attr('tabindex','0'); // -> unlock 1 level of submenus on mobile
+				}
+				else {
+					$(this).closest('ul').find('.children').attr('aria-hidden','true').find('a').attr('tabindex','-1'); // -> lock deeper levels on mobile
+				}
+			}
+		}).blur(function() {
+			$(this).attr('aria-label',$(this).attr('data-label')); // -> reset initial label
+		});
+	});
+	
+	$('.dropdown-menu li a').keydown(function(e) {
+		
+		// Only accept arrow key input without modifier keys, to avoid interfering with system commands
+		if (!$('body').hasClass('mobile') && e.ctrlKey == false && e.altKey == false && e.shiftKey == false && e.metaKey == false) {
+			
+			// RIGHT arrow key -------------------------------------------------------
+			if (e.keyCode == 39) {
+				e.preventDefault();
+				if ( $(this).hasClass('top-level-link') ) { // top level
+					$(this).parent().next().children('a').focus(); // -> next top level item
+				}
+				else if ( $(this).attr('aria-haspopup') == 'true' ) { // dropdown item with submenu
+					if ( $(this).next('ul').hasClass('flip') ) { // submenu positioned left
+						$(this).closest('.top-level-li').next().children('a').first().focus(); // -> next top level item
+					}
+					else {
+						$(this).next('ul').attr('aria-hidden','false').children().children('a').attr('tabindex','0'); // -> unlock sub-submenu
+						$(this).next('ul').find('a').first().focus(); // -> enter sub-submenu
+					}
+				}
+				else { // basic dropdown item
+					if ( $(this).closest('ul').closest('li').hasClass('top-level-li') ) { // 1 level down
+						$(this).closest('.top-level-li').next().children('a').first().focus(); // -> next top level item
+					}
+					else { // 2+ levels down
+						if ( $(this).closest('ul').hasClass('flip') ) { // current menu positioned left
+							$(this).closest('ul').prev('a').focus(); // -> return to parent
+						}
+						else {
+							$(this).closest('.top-level-li').next().children('a').first().focus(); // -> next top level item
+						}
+					}
+				}
+			}
+			
+			// DOWN arrow key --------------------------------------------------------
+			else if (e.keyCode == 40) {
+				e.preventDefault();
+				if ( $(this).hasClass('top-level-link') ) { // top level
+					$(this).next('ul').attr('aria-hidden','false').children().children('a').attr('tabindex','0'); // -> unlock submenu
+					$(this).next('ul').find('a').first().focus(); // -> enter submenu
+				}
+				else {
+					$(this).parent().next().children('a').focus(); // -> next menu item
+				}
+			}
+			
+			// LEFT arrow key --------------------------------------------------------
+			else if (e.keyCode == 37) {
+				e.preventDefault();
+				if ( $(this).hasClass('top-level-link') ) { // top level
+					$(this).parent().prev().children('a').focus(); // -> previous top level item
+				}
+				else if ( $(this).attr('aria-haspopup') == 'true' ) { // dropdown item with submenu
+					if ( !$(this).next('ul').hasClass('flip') ) {  // submenu positioned right
+						$(this).closest('.top-level-li').prev().children('a').first().focus(); // -> next top level item
+					}
+					else {
+						$(this).next('ul').attr('aria-hidden','false').children().children('a').attr('tabindex','0'); // -> unlock sub-submenu
+						$(this).next('ul').find('a').first().focus(); // -> enter sub-submenu
+					}
+				}
+				else { // basic dropdown item
+					if ( $(this).closest('ul').closest('li').hasClass('top-level-li') ) { // 1 level down
+						$(this).closest('.top-level-li').prev().children('a').first().focus(); // -> previous top level item
+					}
+					else { // 2+ levels down
+						if ( !$(this).closest('ul').hasClass('flip') ) { // current menu positioned right
+							$(this).closest('ul').prev('a').focus(); // -> return to parent
+						}
+						else {
+							$(this).closest('.top-level-li').prev().children('a').first().focus(); // -> previous top level item
+						}
+					}
+				}
+			}
+			
+			// UP arrow key ----------------------------------------------------------
+			else if (e.keyCode == 38) {
+				e.preventDefault();
+				if ( $(this).hasClass('top-level-link') ) { // top level
+					$(this).parent().removeClass('open'); // -> visually hide submenu
+				}
+				else if ( $(this).parent().prev('li').length <= 0 ) { // first submenu item
+					$(this).closest('ul').prev('.top-level-link').focus(); // -> return to top level
+				}
+				else {
+					$(this).parent().prev().children('a').focus(); // -> previous menu item
+				}
+			}
+			
+			// ESCAPE key ------------------------------------------------------------
+			else if (e.keyCode == 27) {
+				if ( $(this).hasClass('top-level-link') ) { // top level
+					$(this).parent().removeClass('open'); // -> visually hide submenu
+				}
+				else {
+					$(this).closest('ul').prev('a').focus(); // -> return to parent
+				}
+			}
+		}
+		
+	});
+	
 	// Mobile Navigation
 	$('.dropdown-menu li.parent > a .fa').click(function(e) {
 		e.preventDefault();
@@ -143,7 +293,7 @@ var msie = document.documentMode;
 			$(main_nav_focus_target).focus();
 		});
 	});
-	$('#mobile-home').after('<a id="mobile-close" href="#"><span class="sr-only">Close Menu</span></a>');
+	$('#mobile-home').after('<button id="mobile-close"><span class="sr-only">Close Menu</span></button>');
 	$('#mobile-close').click(function(e) {
 		e.preventDefault();
 		$('#main-navigation, #mobile-nav-dimmer').fadeOut(100,function() {

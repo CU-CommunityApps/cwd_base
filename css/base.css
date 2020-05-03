@@ -263,7 +263,7 @@ main, #main, body > footer, #body-footer, .band {
   line-height: 1.6; }
 
 a {
-  color: #1179b1; }
+  color: #1176ac; }
 
 a:hover, a:focus {
   color: #000; }
@@ -380,6 +380,10 @@ code {
   color: #b31b1b;
   font-size: 100%; }
 
+.dark code, .dark kbd, .dark samp, .dark figure {
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff; }
+
 .intro code, .lead code {
   font-size: 90%; }
 
@@ -393,6 +397,9 @@ small, figcaption, .caption, h5 small, h6 small, .h5 small, .h6 small {
 small figcaption, figcaption small, small .caption, .caption small {
   font-size: 91.666666666667%;
   /* 11px base */ }
+
+.dark figcaption, .dark .caption {
+  color: #ddd; }
 
 hr {
   border: none;
@@ -473,6 +480,33 @@ abbr {
   -moz-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch; }
+
+.flex-between {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+
+.flex-duo {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: -10px;
+  margin-right: -10px; }
+  .flex-duo > * {
+    min-width: 35%;
+    padding: 0 10px; }
+    @media (min-width: 1200px) {
+      .flex-duo > * {
+        min-width: 25%; } }
 
 .stunt-double {
   /* This bold and fearless daredevil is used as a second target for multiple backgrounds and other tricks */
@@ -590,6 +624,12 @@ abbr {
 
 .full-margin {
   margin-bottom: 1em !important; }
+
+.high-margin {
+  margin-bottom: 1.5em !important; }
+
+.double-margin {
+  margin-bottom: 2em !important; }
 
 .nobr {
   white-space: nowrap; }
@@ -952,10 +992,10 @@ body > footer .social img:hover, body > footer .social img:focus, #body-footer .
   opacity: 0.5; }
 
 .light .footer-accessibility a {
-  color: #1179b1;
-  -moz-text-decoration-color: #1179b1;
-  -webkit-text-decoration-color: #1179b1;
-  text-decoration-color: #1179b1; }
+  color: #1176ac;
+  -moz-text-decoration-color: #1176ac;
+  -webkit-text-decoration-color: #1176ac;
+  text-decoration-color: #1176ac; }
 
 .light .footer-accessibility a:hover, .light .footer-accessibility a:focus {
   color: #000;
@@ -1176,12 +1216,6 @@ table {
   margin-bottom: 3em;
   border-collapse: collapse; }
 
-table th[scope='col'], table thead th {
-  text-align: left; }
-
-table th[scope='col'].text-center, table thead th.text-center {
-  text-align: center; }
-
 table caption {
   padding: 0.6em 0;
   border-top: 2px solid #e8e8e8;
@@ -1209,11 +1243,15 @@ table td:last-child, table th:last-child {
   border-right-width: 0; }
 
 table th {
-  background: #fafafa; }
+  background: #fafafa;
+  text-align: left; }
 
 table thead th {
   background: #efefef;
   border-bottom-width: 1px; }
+
+table th.text-center {
+  text-align: center; }
 
 table.bordered tr > * {
   border-width: 1px; }
@@ -1705,7 +1743,7 @@ form.no-constrain label, form.no-constrain input, form.no-constrain textarea, fo
 
 .list-menu.links a {
   display: block;
-  background: #eee;
+  background: #f5f5f5;
   background: rgba(0, 0, 0, 0.04);
   padding: 0.4em 0.7em; }
 
@@ -1737,7 +1775,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   font-size: 15px;
   line-height: 18px; }
 
-#main-navigation a {
+#main-navigation a, #main-navigation button {
   color: #fff;
   padding: 14px 1.5em;
   text-decoration: none;
@@ -1749,18 +1787,21 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   transition: background-color .15s; }
 
 #main-navigation li.current-menu-item > a, #main-navigation li.current-menu-ancestor > a, #main-navigation li.active-trail > a, #main-navigation .container-fluid > ul > li.menu-item--active-trail > a,
-#main-navigation a:hover, #main-navigation li.active > a, #main-navigation > .container-fluid > ul > li > a.is-active, #main-navigation li:hover > a, .dropdown-menu li:hover > a {
+#main-navigation a:hover, #main-navigation button:hover, #main-navigation li.active > a, #main-navigation > .container-fluid > ul > li > a.is-active, #main-navigation li:hover > a, .dropdown-menu li:hover > a {
   /* includes WordPress and Drupal menu classes */
   background: #444;
   background: rgba(0, 0, 0, 0.3); }
 
-#main-navigation a:focus {
+#main-navigation a:focus, #main-navigation button:focus {
   background: #444;
   background: rgba(0, 0, 0, 0.3);
   /* outline-color: #fff; */ }
 
 /* Dropdown Navigation
    ************************************ */
+.dropdown-menu-on-demand.debug a[tabindex='-1'] {
+  background: #b31b1b !important; }
+
 .dropdown-menu ul ul {
   position: absolute;
   z-index: 100;
@@ -1773,11 +1814,11 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   height: 0;
   opacity: 0;
   -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
-  -webkit-transition: opacity 0s linear .2s;
-  -moz-transition: opacity 0s linear .2s;
-  -o-transition: opacity 0s linear .2s;
-  -ms-transition: opacity 0s linear .2s;
-  transition: opacity 0s linear .2s; }
+  -webkit-transition: opacity 0s linear .15s;
+  -moz-transition: opacity 0s linear .15s;
+  -o-transition: opacity 0s linear .15s;
+  -ms-transition: opacity 0s linear .15s;
+  transition: opacity 0s linear .15s; }
 
 .dropdown-menu ul ul.flip {
   right: 0; }
@@ -1833,13 +1874,29 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   position: relative; }
 
 .dropdown-menu li.parent li a {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.dropdown-menu li.parent li a span:first-of-type {
   white-space: nowrap;
   /* disable if necessary to display long link titles with line breaks */
   overflow: hidden;
-  text-overflow: ellipsis; }
-
-.dropdown-menu li.parent li.menu-section {
-  border-top: 2px solid rgba(255, 255, 255, 0.15); }
+  text-overflow: ellipsis;
+  padding: 4px 0;
+  margin: -4px 0; }
 
 #mobile-close, #mobile-nav-dimmer {
   display: none; }
@@ -1893,7 +1950,12 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
     content: '\f175';
     font-size: 24px; }
   #mobile-close {
-    float: right; }
+    float: right;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+    background: none;
+    border: 0;
+    cursor: pointer; }
   #mobile-close:before {
     content: '\f135'; }
   #main-navigation ul {
@@ -1908,7 +1970,8 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
     max-width: none !important;
     display: none;
     opacity: 1;
-    height: auto; }
+    height: auto;
+    padding: 0 0 0 2.25em; }
   #main-navigation li.current-menu-item a, #main-navigation li.current-menu-ancestor a, #main-navigation .container-fluid > ul > li.menu-item--active-trail a,
   #main-navigation li.active-trail a,
   #main-navigation li.active a,
@@ -1920,7 +1983,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   .dropdown-menu .fa-navicon:before {
     content: '\f0c9'; }
   #main-navigation li.open > a {
-    background: #444; }
+    background: rgba(255, 255, 255, 0.01); }
   #main-navigation .open .fa {
     background: #333; }
   #main-navigation ul ul .fa, .dropdown-menu ul ul .fa {
@@ -1932,19 +1995,21 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   #main-navigation .open > ul, .dropdown-menu .open > ul {
     display: block; }
   #main-navigation li {
-    border-bottom: 1px solid #999; }
+    border-bottom: 1px solid #777; }
   #main-navigation ul ul > li {
-    border-bottom: 1px solid #666; }
+    border-bottom: 1px solid #444; }
   #main-navigation ul ul > li:first-child {
     border-top: 0; }
   #main-navigation ul ul > li:last-child {
-    border-bottom: 1px solid #444; }
+    border-bottom: 0; }
   #main-navigation li a {
-    padding: 0 1.2em 0 1.5em;
+    padding: 0 1.2em 0 1.4em;
     line-height: 3.6em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
+  #main-navigation ul ul li a {
+    padding: 0 1.2em 0 0; }
   #main-navigation li.parent > a span:first-child {
     float: left;
     white-space: nowrap;
@@ -1953,7 +2018,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
     max-width: 77%;
     max-width: calc(100% - 4.3em); }
   #main-navigation li li.parent > a span:first-child {
-    display: inline; }
+    max-width: 100%; }
   #main-navigation li.active > a, #main-navigation li > a.is-active, #main-navigation > .container-fluid > ul > li > a.is-active, #main-navigation li.active:hover > a, #main-navigation li:hover > a.is-active {
     background: #0068ac;
     background: rgba(0, 104, 172, 0.5); }
@@ -1972,7 +2037,9 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   #main-navigation .fa:hover {
     background: #444; }
   #mobile-nav {
-    display: block; } }
+    display: block; }
+  #main-navigation ul ul ul {
+    display: none !important; } }
 
 /* Utility Navigation */
 #utility-navigation {
@@ -2051,29 +2118,29 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   color: #bbb;
   color: rgba(0, 0, 0, 0.2); }
 
-.mobile .breadcrumb {
+.mobile > .breadcrumb {
   margin: 0 0 -0.1em;
   border: 0;
   font-size: 14px; }
 
-.mobile .breadcrumb li {
+.mobile > .breadcrumb li {
   margin-right: 0; }
 
-.mobile .breadcrumb li a:after {
+.mobile > .breadcrumb li a:after {
   padding-left: 0.6em; }
 
 @media (max-width: 767px) {
-  .mobile .breadcrumb + h2 {
+  .mobile > .breadcrumb + h2 {
     font-size: 22px !important;
     padding-bottom: 0.8em;
     margin-bottom: 0.6em;
     border-bottom: 2px dotted rgba(0, 50, 100, 0.15); }
-  .mobile .breadcrumb + h2 + .secondary-navigation li {
+  .mobile > .breadcrumb + h2 + .secondary-navigation li {
     font-size: 15px !important;
     padding: 9px 0 !important;
     font-weight: 300;
     border-color: rgba(0, 0, 0, 0.05) !important; }
-  .mobile .breadcrumb + h2 + .secondary-navigation li li {
+  .mobile > .breadcrumb + h2 + .secondary-navigation li li {
     font-size: 15px !important;
     padding: 6px 0 !important; } }
 
@@ -2139,7 +2206,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
 .menu-block-title + .secondary-navigation ul li a:hover, .menu-block-title + .secondary-navigation ul li a:focus,
 .secondary .menu-block-title > a:hover, .secondary .menu-block-title > a:focus,
 .mobile-expander-heading:hover, .mobile-expander-heading:focus {
-  color: #1179b1;
+  color: #1176ac;
   transition: none; }
 
 .secondary-navigation a:active,
@@ -2713,7 +2780,7 @@ figure.three-col > img {
   background-image: -webkit-linear-gradient(left, rgba(213, 220, 230, 0.4) 0%, rgba(213, 220, 230, 0.4) 100%);
   background-image: linear-gradient(to right, rgba(213, 220, 230, 0.4) 0%, rgba(213, 220, 230, 0.4) 100%);
   background-image: none;
-  background-position: 0 1.15em;
+  background-position: 0 1.05em;
   background-repeat: repeat-x;
   background-size: 10px 2px; }
 
@@ -2722,7 +2789,7 @@ figure.three-col > img {
   background-image: -moz-linear-gradient(left, rgba(96, 155, 221, 0.5) 0%, rgba(96, 155, 221, 0.5) 100%);
   background-image: -webkit-linear-gradient(left, rgba(96, 155, 221, 0.5) 0%, rgba(96, 155, 221, 0.5) 100%);
   background-image: linear-gradient(to right, rgba(96, 155, 221, 0.5) 0%, rgba(96, 155, 221, 0.5) 100%);
-  background-position: 0 1.15em;
+  background-position: 0 1.05em;
   background-repeat: repeat-x;
   background-size: 10px 2px; }
 
@@ -2762,7 +2829,7 @@ figure.three-col > img {
 
 .dark .cwd-component a.designer, .dark .cwd-component a .designer .deco, .dark .cwd-component .designer a,
 .cwd-component.dark a.designer, .cwd-component.dark a .designer .deco, .cwd-component.dark .designer a,
-.cwd-component.tiles .group-image a.designer, .cwd-component.tiles .group-image a .designer .deco, .cwd-component.tiles .group-image .designer a {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer, .cwd-component.tiles:not(.no-overlay) .group-image a .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a {
   background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
   background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
@@ -2770,14 +2837,14 @@ figure.three-col > img {
 
 .dark .cwd-component a.designer:hover, .dark .cwd-component a:hover .designer .deco, .dark .cwd-component .designer a:hover,
 .cwd-component.dark a.designer:hover, .cwd-component.dark a:hover .designer .deco, .cwd-component.dark .designer a:hover,
-.cwd-component.tiles .group-image a.designer:hover, .cwd-component.tiles .group-image a:hover .designer .deco, .cwd-component.tiles .group-image .designer a:hover {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer:hover, .cwd-component.tiles:not(.no-overlay) .group-image a:hover .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a:hover {
   background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
   background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%); }
 
 .dark .cwd-component a.designer:active, .dark .cwd-component a:active .designer .deco, .dark .cwd-component .designer a:active,
 .cwd-component.dark a.designer:active, .cwd-component.dark a:active .designer .deco, .cwd-component.dark .designer a:active,
-.cwd-component.tiles .group-image a.designer:active, .cwd-component.tiles .group-image a:active .designer .deco, .cwd-component.tiles .group-image .designer a:active {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer:active, .cwd-component.tiles:not(.no-overlay) .group-image a:active .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a:active {
   background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
   background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%); }
@@ -2808,7 +2875,7 @@ figure.three-col > img {
 
 .dark .cwd-component a.designer:hover, .dark .cwd-component a:hover .designer .deco, .dark .cwd-component .designer a:hover,
 .cwd-component.dark a.designer:hover, .cwd-component.dark a:hover .designer .deco, .cwd-component.dark .designer a:hover,
-.cwd-component.tiles .group-image a.designer:hover, .cwd-component.tiles .group-image a:hover .designer .deco, .cwd-component.tiles .group-image .designer a:hover {
+.cwd-component.tiles:not(.no-overlay) .group-image a.designer:hover, .cwd-component.tiles:not(.no-overlay) .group-image a:hover .designer .deco, .cwd-component.tiles:not(.no-overlay) .group-image .designer a:hover {
   animation-name: fancypants-dark;
   animation-duration: 0.15s; }
 
@@ -3604,27 +3671,29 @@ h2 + .back-to-toc + .cwd-component-rows:not(.blocked):not(.striped):not(.card-sl
     margin: 0 0 3em; }
   .content-block + .content-block, .secondary-navigation + .content-block {
     padding-top: 2.5em; }
-  .sidebar-tint main .row > .secondary {
-    padding-left: 15px;
-    padding-right: 45px; }
-  .sidebar-tint.sidebar-right main .row > .secondary {
+  .sidebar-tint main .row > .secondary, .sidebar-tint.sidebar-right main .row > .secondary {
     padding-left: 45px;
-    padding-right: 15px; }
+    padding-right: 45px; }
   .sidebar-tint main:before {
     width: calc(35% - 60px);
     left: 60px; }
   .sidebar-tint.sidebar-right main:before {
     left: auto;
     right: 60px; }
+  .sidebar-tint.sidebar-tint-edge main .row > .secondary {
+    padding-left: 15px; }
+  .sidebar-tint.sidebar-right.sidebar-tint-edge main .row > .secondary {
+    padding-left: 45px;
+    padding-right: 15px; }
   .sidebar.sidebar-tint-edge main:before {
     width: 35%; }
   article aside.sidebar,
   article aside.column {
     width: 30%;
     float: right;
-    margin: 0 0 15px 15px; }
+    margin: 0 0 15px 20px; }
   article aside.column {
-    padding: 5px 0 5px 15px;
+    padding: 5px 0 5px 18px;
     border: 0;
     border-left: 1px solid #ebebeb;
     margin-bottom: 10px; }
@@ -3682,6 +3751,19 @@ h2 + .back-to-toc + .cwd-component-rows:not(.blocked):not(.striped):not(.card-sl
     border-radius: 4px; }
   #main-navigation .nav-justified > li.parent > a {
     border-radius: 4px 4px 0 0; }
+  .dropdown-menu a .fa {
+    margin-left: 0.5em;
+    font-size: 14px;
+    width: 1em;
+    height: 1em;
+    text-align: center; }
+  .dropdown-menu li li a .fa {
+    margin-left: 1.5em;
+    width: auto;
+    text-align: right;
+    background: none; }
+  .dropdown-menu li.parent li.menu-section {
+    border-top: 2px solid rgba(255, 255, 255, 0.15); }
   #utility-navigation {
     display: block; }
   .mobile-nav-only {
