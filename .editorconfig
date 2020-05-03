@@ -1,0 +1,20 @@
+# CSS Framework/CWD Theme: Drupal editor configuration normalization
+# @see http://editorconfig.org/
+
+# All files.
+[*]
+end_of_line = LF
+indent_style = space
+indent_size = 2
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[{composer.json,composer.lock}]
+indent_size = 4
+
+# CSS Framework files.
+[{*.html,*.scss,*.css,*.map,*.js,*.svg}]
+indent_style = tab
+trim_trailing_whitespace = false
+insert_final_newline = false
