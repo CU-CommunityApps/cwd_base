@@ -16,33 +16,32 @@
 {% if content %}
 
   {% if media.field_aria_description.0.value -%}
-
-    {####### variable setup #######}
-    {% set media_id = media.mid.0.value %}
-    {% set technical_image = {} %}
     {% if media.field_media_image.0.value -%}
-      {% set describedby = 'description-' ~ media_id %}
-      {# Get the image style for whatever view mode was selected when embedding this image. #}
-      {% set style_name = content.field_media_image[0]['#image_style'] %}
-      {# Create the image. #}
-      {% set technical_image = {
-        '#theme':      'image_style',
-        '#style_name': style_name,
-        '#uri':        media.field_media_image.entity.uri.value,
-        '#alt':        media.field_media_image[0].alt,
-        '#attributes': {'aria-describedby':[describedby]},
-      } %}
+
+      {####### variable setup #######}
+      {% set media_id = media.mid.0.value %}
+        {% set describedby = 'description-' ~ media_id %}
+
+        {% set compleximg_alt = media.field_media_image[0].alt ?? '' %}
+        {% set compleximg_url = media.field_media_image.entity.uri.value %}
+        {% if content.field_media_image[0]['#image_style'] %}
+          {# If the current view mode uses an image style, use that image style. #}
+          {% set style_name = content.field_media_image[0]['#image_style'] %}
+          {% set compleximg_url = file_url(compleximg_url|image_style(style_name)) %}
+        {% else -%}
+          {% set compleximg_url = file_url(compleximg_url) %}
+        {%- endif %}
+
+      {####### output #######}
+      <img src="{{ compleximg_url }}" alt="{{ compleximg_alt }}" aria-describedby="{{ describedby }}" />
+      <div id="description-{{ media_id }}" class="sr-only">
+        {{ media.field_aria_description|view }}
+      </div>
+
+      {# And, "just in case"... #}
+      {{ content|without('field_media_image', 'field_aria_description') }}
+
     {% endif %}
-
-    {####### output #######}
-    {{ technical_image }}
-    <div id="description-{{ media_id }}" class="sr-only">
-      {{ media.field_aria_description|view }}
-    </div>
-
-    {# And, "just in case"... #}
-    {{ content|without('field_media_image', 'field_aria_description') }}
-
   {% else -%}
     {{ content }}
   {%- endif %}
