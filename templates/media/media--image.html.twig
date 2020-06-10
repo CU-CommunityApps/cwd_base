@@ -1,0 +1,50 @@
+{#
+/**
+ * @file
+ * Theme override to display an image media item with WA-compliant description.
+ * ~ When field_aria_description has value, this template:
+ * ~~ Adds aria-describedby="description-[MID]" to field_media_image <img> tag.
+ * ~~ Renders field_aria_description inside div#description-[MID].sr-only.
+ * See cwd_base/media/media.html.twig for available variables and other info.
+ *
+ * @see template_preprocess_media()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ title_suffix.contextual_links }}
+{% if content %}
+
+  {% if media.field_aria_description.0.value -%}
+
+    {####### variable setup #######}
+    {% set media_id = media.mid.0.value %}
+    {% set technical_image = {} %}
+    {% if media.field_media_image.0.value -%}
+      {% set describedby = 'description-' ~ media_id %}
+      {# Get the image style for whatever view mode was selected when embedding this image. #}
+      {% set style_name = content.field_media_image[0]['#image_style'] %}
+      {# Create the image. #}
+      {% set technical_image = {
+        '#theme':      'image_style',
+        '#style_name': style_name,
+        '#uri':        media.field_media_image.entity.uri.value,
+        '#alt':        media.field_media_image[0].alt,
+        '#attributes': {'aria-describedby':[describedby]},
+      } %}
+    {% endif %}
+
+    {####### output #######}
+    {{ technical_image }}
+    <div id="description-{{ media_id }}" class="sr-only">
+      {{ media.field_aria_description|view }}
+    </div>
+
+    {# And, "just in case"... #}
+    {{ content|without('field_media_image', 'field_aria_description') }}
+
+  {% else -%}
+    {{ content }}
+  {%- endif %}
+
+{% endif %}
