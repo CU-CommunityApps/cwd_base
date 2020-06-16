@@ -6,7 +6,7 @@
 Included with https://github.com/CU-CommunityApps/CD-demo
 ...along with https://github.com/CU-CommunityApps/cwd_project
 
-**See also:** https://github.com/CU-CommunityApps/cwd-design
+**See also:** https://github.com/CU-CommunityApps/cwd_framework
 
 **See also:** SASS instructions over here: https://github.com/CU-CommunityApps/cwd_base_bootstrap
 
