@@ -21,7 +21,7 @@
       {####### variable setup #######}
       {% set describedby = 'description-' ~ media.mid.0.value %}
       {% set compleximg_alt = media.field_media_image[0].alt ?? '' %}
-      {% set compleximg_url = media|file_uri }}
+      {% set compleximg_url = media|file_uri %}
       {% set style_name = content.field_media_image[0]['#image_style']|default('') %}
 
       {####### output #######}
