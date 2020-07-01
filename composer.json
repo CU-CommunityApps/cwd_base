@@ -11,5 +11,16 @@
         }
     ],
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "update-framework": [
+            "cp -R ../cwd_framework/fonts ./",
+            "cp -R ../cwd_framework/images/cornell ../cwd_framework/images/cwd_utilities ../cwd_framework/images/layout ./images/",
+            "cp -R ../cwd_framework/js/contrib ../cwd_framework/js/cwd*.js ./js/",
+            "cp -R ../cwd_framework/sass/ckeditor ../cwd_framework/sass/components ./sass/",
+            "cp ../cwd_framework/sass/_*.scss ../cwd_framework/sass/base.scss ../cwd_framework/sass/cornell.scss ../cwd_framework/sass/drupal.scss ../cwd_framework/sass/project.scss ./sass/",
+            "cp ../cwd_framework/sass/cwd_*.scss ./sass/",
+            "cp ../cwd_framework/.editorconfig ../cwd_framework/watch.sh ./"
+        ]
+    }
 }
