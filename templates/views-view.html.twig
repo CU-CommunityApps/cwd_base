@@ -41,6 +41,8 @@
     'cwd-basic'
   ]
 %}
+{% set classes = classes|merge(view_add_classes|default([])) %}
+
 {% block view_class_override %}
 <div{{ attributes.addClass(classes) }}>
 {% endblock %}
