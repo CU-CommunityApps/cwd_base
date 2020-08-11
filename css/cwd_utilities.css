@@ -848,7 +848,7 @@ table.scrolling > thead > tr > th {
     font-weight: normal !important;
     font-size: 14px !important;
     line-height: 32px;
-    margin: 0 0 18px;
+    margin: 0;
     cursor: pointer;
     -webkit-appearance: none;
     border: 0;
@@ -886,7 +886,8 @@ width: calc(100% + 12px);
     top: 1px; }
   .mobile-expander-heading.open, .mobile-expander-heading.open:hover {
     color: #000;
-    background: rgba(0, 50, 100, 0.1); }
+    background: rgba(0, 50, 100, 0.1);
+    margin-bottom: 18px; }
   .mobile-expander-heading.open .fa, .mobile-expander-heading.open .zmdi {
     /* color: #3584ba; */
     opacity: 1; }

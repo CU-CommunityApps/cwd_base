@@ -373,6 +373,7 @@ form.search-form:before {
 	text-decoration: none;
 	background: rgba(0,0,0,0.04);
 	border: 1px solid rgba(0,0,0,0.05);
+	color: #000;
 }
 .pager ul li a:hover, .pager ul li a:focus {
 	background: rgba(0,0,0,0.06);
@@ -388,7 +389,7 @@ form.search-form:before {
 }
 .pager ul li.pager-current, 
 .pager ul li.is-active a {
-	background: #3584ba !important;
+	background: #307aab !important;
 	font-weight: 600;
 	color: #fff;
 	border: 1px solid #3584ba;
@@ -467,7 +468,7 @@ fieldset.webform-composite-hidden-title > legend {
 }
 
 /* extlink module */
-svg.ext {
+svg.ext, svg.mailto {
 	width: 1em;
 	height: 1em;
 	padding-right: 0;

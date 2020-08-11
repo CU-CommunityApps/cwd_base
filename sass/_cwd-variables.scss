@@ -28,13 +28,13 @@ $cwd-color-link-active: #666; // text link :active color
 $cwd-color-button: #2d668e; // default button link color
 $cwd-color-button-hover: #2471a7; // text button :hover color (also used for :focus)
 $cwd-color-button-active: #185076; // text button :active color
-$cwd-color-min-contrast: #767676; // The minimum darkness of gray text over white background to meet accessibility guidelines
+$cwd-color-min-contrast: #707070; // The minimum darkness of gray text over light gray (#f7f7f7) background to meet accessibility guidelines
 $cwd-color-min-contrast-large: #949494; // The minimum darkness of gray text over white background to meet accessibility guidelines for large, bolder text
 $cwd-color-accent-heading-h2: #b31b1b; // Applies an accent color to basic heading level 2, informed by your custom design (use #000 to pass on this option)
 $cwd-color-accent-heading-h3: #000; // Applies an accent color to basic heading level 3, informed by your custom design (use #000 to pass on this option)
 $cwd-color-accent-text: #7ab034; // Accent color to call extra attention to text, borders, or other visual trim (e.g., names of buttons described in tutorial, or perhaps an active element among a set)
 $cwd-color-accent-text-contrast: #518212; // If needed, a darker variant of your accent color for use on text to meet accessibility guidelines for small and medium text
-$cwd-color-subheading-text: #9b5959; // Accent color for subheadings that appear under a main title (e.g., categories under news headlines) - be mindful of link colors when selecting this color, to avoid miscommunication of links vs. non-links  
+$cwd-color-subheading-text: #707070; // Accent color for subheadings that appear under a main title (e.g., categories under news headlines) - be mindful of link colors when selecting this color, to avoid miscommunication of links vs. non-links  
 $headings-small-color: inherit; // Override Bootstrap's forced gray color for <small> tags inside headings
 
 // Bootstrap Compatibility

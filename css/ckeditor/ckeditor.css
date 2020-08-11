@@ -263,7 +263,7 @@ h5, .h5 {
 
 h6, .h6 {
   font-size: 16px;
-  color: #767676; }
+  color: #707070; }
 
 .intro, .lead {
   font-size: 18px; }
@@ -496,7 +496,7 @@ a.inherit {
 .header-emblem:before {
   content: '\f02e';
   padding-right: 0.4em;
-  color: #9b5959; }
+  color: #707070; }
 
 .no-deco, .link-icon, .link-icon-right {
   text-decoration: none; }

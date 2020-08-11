@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 4/30/20)
+/* CWD Utilities (ama39, last update: 6/18/20)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -9,6 +9,9 @@
    - 8. Photo Credit/Information (div.photo-credit is turned into a small camera icon, revealing details on hover (or via keyboard/screen reader focus)
    
    Change Log
+   - 6/18/20 Bug fix for mobile section navigation + breadcrumb; the process will now be skipped when section navigation is not present
+   - 6/17/20 WA fix for mobile section navigation + breadcrumb keyboard focus
+   - 5/14/20 Bug fix for the combination of mobile section navigation + breadcrumb, when used with or without Drupal block title markup
    - 4/30/20 New keyboard navigation for Main Navigation, and "on-demand" variant (for keyboard and screen readers, dropdowns will only appear when requested by arrow key)
    - 1/30/20 Photo Credit/Information functionality added
    - 1/23/20 Mobile Expander: If a page breadcrumb is present (using the usual .breadcrumb Drupal markup), the mobile section navigation will now "move" the breadcrumb to inside the expander when in mobile.
@@ -409,9 +412,9 @@ var msie = document.documentMode;
 			$(expand_header).nextAll('.menu-block-title, .mobile-expander').wrapAll('<div class="mobile" />');
 		}
 		else {
-			$(this).prepend('<button aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi '+expander_icon+'"></span>'+expander_label+'</button>');
-			var expand_header = $(this).children('.mobile-expander-heading').first();
-			$(expand_header).nextAll().wrapAll('<div class="mobile" />');
+			$(this).before('<button aria-hidden="true" class="mobile-expander-heading mobile-only"><span class="zmdi '+expander_icon+'"></span>'+expander_label+'</button>');
+			var expand_header = $(this).prevAll('.mobile-expander-heading').first();
+			$(expand_header).nextAll('.mobile-expander').wrapAll('<div class="mobile" />');
 		}
 		
 		$(expand_header).click(function(e) {
@@ -421,7 +424,7 @@ var msie = document.documentMode;
 			}
 		});
 		$(expand_header).next('.mobile').find('a').focus(function() {
-			$(this).parents('.mobile').prev('.mobile-expander-heading').addClass('open');
+			$(this).parents('.mobile').first().prev('.mobile-expander-heading').addClass('open');
 		}); // TODO: focus and mouse event reconciliation for full keyboard support
 
 		// hide empty menus
@@ -441,8 +444,13 @@ var msie = document.documentMode;
 	});
 	
 	// clone the breadcrumb and prepend to the mobile section nav 
-	$('#sidebar-top .secondary-navigation').first().parents('.mobile').first().prepend( $('.breadcrumb').first().addClass('no-mobile').clone().removeClass('no-mobile').addClass('mobile-only') );
-	$('.breadcrumb.mobile-only').removeAttr('aria-labelledby').attr('aria-label','Mobile Breadcrumb').find('#system-breadcrumb').remove();
+	if ($('#sidebar-top .secondary-navigation').length > 0) {
+		$('#sidebar-top .secondary-navigation').first().parents('.mobile').first().prepend( $('.breadcrumb').first().addClass('no-mobile').clone().removeClass('no-mobile').addClass('mobile-only') );
+		$('.breadcrumb.mobile-only').removeAttr('aria-labelledby').attr('aria-label','Mobile Breadcrumb').find('#system-breadcrumb').remove();
+		$('.breadcrumb.mobile-only a').focus(function() {
+			$(this).parents('.mobile').first().prev('.mobile-expander-heading').addClass('open');
+		});
+	}
 	
 	// Activate Mobile Expander for Unit Navigation at 959 instead of 767
 	//$('#unit-navigation .mobile-expander-heading').addClass('unit-nav').off('click').click(function(e) {
