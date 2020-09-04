@@ -92,6 +92,15 @@
     </div>
   </div>
 {% endif %}
+{% if page.supplementary2 %}
+  <div class="band padded" role="complementary">
+    <div class="container-fluid">
+      <div class="row">
+        {{ page.supplementary2 }}
+      </div>
+    </div>
+  </div>
+{% endif %}
 
   <footer>
     <div class="main-footer">
@@ -109,13 +118,8 @@
     <div class="sub-footer">
       <div class="container-fluid sidebar-left">
         <div class="row">
-          <div class="primary">
-            <ul class="list-menu">
-              <li><a href="mailto:web-accessibility@cornell.edu">Web Accessibility Help</a></li>
-            </ul>
-          </div>
-          <div class="secondary">
-            <a href="https://www.cornell.edu">Cornell University</a> &copy;{{ "now"|date("Y") }}
+          <div class="content footer-accessibility vertical-align">
+            <p>If you have a disability and are having trouble accessing information on this website or need materials in an alternate format, contact <a href="mailto:web-accessibility@cornell.edu">web-accessibility@cornell.edu</a> for assistance.</p>
           </div>
         </div>
       </div>

@@ -415,7 +415,8 @@ svg.ext, svg.mailto {
   width: 1em;
   height: 1em;
   padding-right: 0;
-  margin-left: 0.2em;
+  margin-left: 0.15em;
+  margin-right: -0.2em;
   opacity: 0.85; }
 
 /*# sourceMappingURL=drupal.css.map */

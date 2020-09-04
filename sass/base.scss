@@ -2286,6 +2286,9 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
 	width: 100%;
 	width: calc(100% + #{$grid-gutter-width});
 }
+.constrain-480 > .header-with-button {
+	margin-bottom: 1.5em;
+}
 .header-with-button > * {
 	margin: 0 #{$grid-gutter-width/2};
 }
