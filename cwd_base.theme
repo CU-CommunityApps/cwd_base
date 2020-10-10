@@ -72,10 +72,6 @@ function cwd_base_preprocess_node(&$variables) {
   cwd_base_is_front($variables); // make 'is_front' available to the node.html template
 }
 
-function cwd_base_preprocess_paragraph(&$variables) {
-  cwd_base_is_front($variables); // make 'is_front' available to the paragraph.html template
-}
-
 /**
  * The following functions are adding twig suggestions that are already provided
  * by core but not presented in twig debug.
