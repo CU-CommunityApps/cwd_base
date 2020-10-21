@@ -859,7 +859,7 @@ body > footer a:hover, body > footer a:focus, #body-footer a:hover, #body-footer
   text-decoration-color: white; }
 
 body > footer a:active, #body-footer a:active {
-  color: #666;
+  color: #9b9b9b;
   -moz-text-decoration-color: rgba(255, 255, 255, 0.4);
   -webkit-text-decoration-color: rgba(255, 255, 255, 0.4);
   text-decoration-color: rgba(255, 255, 255, 0.4); }
@@ -882,7 +882,7 @@ body > footer .footer-links a:hover, body > footer .footer-links a:focus, #body-
 
 body > footer .footer-links a:active, #body-footer .footer-links a:active,
 .footer-links-mimic a:active {
-  color: #666;
+  color: #9b9b9b;
   -moz-text-decoration-color: rgba(255, 255, 255, 0.4);
   -webkit-text-decoration-color: rgba(255, 255, 255, 0.4);
   text-decoration-color: rgba(255, 255, 255, 0.4); }
