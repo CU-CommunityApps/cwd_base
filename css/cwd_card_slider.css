@@ -14,7 +14,9 @@
   background: none; }
 
 .card-slider .mask {
-  overflow: hidden; }
+  overflow: hidden;
+  display: flex;
+  flex-direction: row-reverse; }
 
 .card-slider .cards {
   display: -webkit-flex;

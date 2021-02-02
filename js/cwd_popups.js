@@ -1,4 +1,4 @@
-/* CWD Modal Popups (ama39, last update: 10/14/18)
+/* CWD Modal Popups (ama39, last update: 10/2/20)
 	- Displays content as a "popup" overlay, rather than leaving the current page or opening a new window.
 	- Activate on any link by applying a "popup" class (e.g., <a class="popup" href="bigredbear.jpg">Behold the Big Red Bear!</a>).
 	- Supports images, DOM elements by ID, and Iframes (auto-detected from the href attribute).
@@ -19,7 +19,7 @@
 
 /* Global Options -------------- */
 var popup_shadow = true; // applies a subtle dropshadow (css class "dropshadow")
-var popup_fadein_speed = 0.25; // speed of popup fade-in (in seconds)
+var popup_fadein_speed = 0.2; // speed of popup fade-in (in seconds) -- note: it's best to leave this at 0.2, since newer CSS has been added which uses the same timing
 var popup_max_width = 800; // max width of unconstrained popups (ID popups only)
 var popup_max_height = 600; // max height of unconstrained popups (ID popups only)
 var popup_proportion = 0.94; // size of unconstrained popups (0.94 = 94% window width and height)
@@ -221,6 +221,8 @@ jQuery(document).ready(function($) {
 									});
 								}
 								popupControls();
+								
+								resizeDone();
 								$('#popup-wrapper').fadeIn(popup_fadein_speed, function() {
 									// If the popup is already visible (gallery mode), focus on the next video
 									if (gallery_running) {
@@ -232,6 +234,7 @@ jQuery(document).ready(function($) {
 									}
 									$('#popup-background .spinner').addClass('off');
 									gallery_running = true;
+									resizeDone();
 								});
 							});
 							
@@ -275,16 +278,20 @@ jQuery(document).ready(function($) {
 								$('#popup-wrapper').hide();
 								popupControls();
 							
-								$('#popup-wrapper').fadeIn(popup_fadein_speed, function() {
-									if (gallery_running) {
-										$('#popup-image').focus();
+								$('#popup-wrapper').addClass('calculating').removeClass('calculating-done').fadeIn({
+									duration: 100, // popup_fadein_speed is circumvented, since it has been replaced with a smoother CSS solution
+									complete: function() {
+										if (gallery_running) {
+											$('#popup-image').focus();
+										}
+										else {
+											$('#popup-anchor').focus();
+										}
+										$('#popup-background .spinner').addClass('off');
+										gallery_running = true;
+										$(this).removeClass('calculating').addClass('calculating-done');
+										resizeDone();
 									}
-									else {
-										$('#popup-anchor').focus();
-									}
-									$('#popup-background .spinner').addClass('off');
-									gallery_running = true;
-									resizeDone(); // correct for oversized images (borrowed from the resize event)
 								});
 							}
 							img.onerror = function() {
@@ -400,59 +407,62 @@ jQuery(document).ready(function($) {
 								resizeDone();
 							}
 						});
-						function resizeDone() {
-							if (popup_type == 'id') {
-								var contain_height = popup_max_height;
-								if ($(window).height()*popup_proportion < contain_height) {
-									contain_height = $(window).height()*0.94;
-								}
-								if ( !$('#popup').hasClass('custom-width') ) {
-									$('#popup').outerWidth(parseInt($(window).width()*popup_proportion));
-								}
-								if ( !$('#popup').hasClass('custom-height') ) {
-									$('#popup').outerHeight(contain_height);
-								}
-							}
-							else if (popup_type == 'image') {
-								$('#popup-image').css('max-height','none');
-								$('#popup').css('width','auto');
-								if ($(window).width() > 767) {
-									/* Calculate and Resize to Accommodate Tall Images
-									   -- Todo: This code works for most reasonable combinations of image dimensions, screen proportions and caption lengths, but could still use some work. Basing image size on height is always tricky in CSS (perhaps a flexbox-based layout would be more reliable?) 
-									   -- Todo: Likewise, tall images with long captions may not fit on a mobile screen
-									*/
-									var available_image_height = $('#popup').height();
-									if ($('#popup .caption').length > 0) {
-										available_image_height -= $('#popup .caption').outerHeight();
-									}
-									if (available_image_height > 100) {
-										if ($('#popup').height() > $(window).height()-20) {
-											$('#popup-image').css('max-height',(available_image_height-20)+'px');
-											$('#popup').width($('#popup-image').width()-20);
-										}
-										else {
-											$('#popup').width($('#popup-image').width());
-										}
-										
-									}
-									else {
-										setTimeout(function(){ resizeDone(); }, 500); // try again in 0.5 seconds (Safari image render bug workaround)
-									}
-								}
-							}
-							else if (popup_type == 'iframe') {
-								if ( !$('#popup').hasClass('custom-width') ) {
-									$('#popup').outerWidth(parseInt($(window).width()*popup_proportion));
-								}
-								if ( !$('#popup').hasClass('custom-height') ) {
-									$('#popup').outerHeight(parseInt($(window).height()*popup_proportion));
-								}
-							}
-						}
 					}
 				}
 			});
 		});
+		
+		// update popup size and correct for oversized images
+		function resizeDone() {
+			if (popup_type == 'id') {
+				var contain_height = popup_max_height;
+				if ($(window).height()*popup_proportion < contain_height) {
+					contain_height = $(window).height()*0.94;
+				}
+				if ( !$('#popup').hasClass('custom-width') ) {
+					$('#popup').outerWidth(parseInt($(window).width()*popup_proportion));
+				}
+				if ( !$('#popup').hasClass('custom-height') ) {
+					$('#popup').outerHeight(contain_height);
+				}
+			}
+			else if (popup_type == 'image') {
+				$('#popup-image').css('max-height','none');
+				$('#popup').css('width','auto');
+				if ($(window).width() > 767 && !$('#popup').hasClass('video') ) {
+					/* Calculate and Resize to Accommodate Tall Images
+						 -- Todo: This code works for most reasonable combinations of image dimensions, screen proportions and caption lengths, but could still use some work. Basing image size on height is always tricky in CSS (perhaps a flexbox-based layout would be more reliable?) 
+						 -- Todo: Likewise, tall images with long captions may not fit on a mobile screen
+					*/
+					var available_image_height = $('#popup').height();
+					if ($('#popup .caption').length > 0) {
+						available_image_height -= $('#popup .caption').outerHeight();
+					}
+					if (available_image_height > 100) {
+						if ($('#popup').height() > $(window).height()-20) {
+							$('#popup-image').css('max-height',(available_image_height-20)+'px');
+							$('#popup').width($('#popup-image').width()-20);
+						}
+						else {
+							$('#popup').width($('#popup-image').width());
+						}
+						
+					}
+					else {
+						setTimeout(function(){ resizeDone(); }, 500); // try again in 0.5 seconds (Safari image render bug workaround)
+					}
+				}
+			}
+			else if (popup_type == 'iframe') {
+				if ( !$('#popup').hasClass('custom-width') ) {
+					$('#popup').outerWidth(parseInt($(window).width()*popup_proportion));
+				}
+				if ( !$('#popup').hasClass('custom-height') ) {
+					$('#popup').outerHeight(parseInt($(window).height()*popup_proportion));
+				}
+			}
+		}
+		
 	}
 	popups(); // process the page
 	

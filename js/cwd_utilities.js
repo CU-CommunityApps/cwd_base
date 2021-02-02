@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 6/18/20)
+/* CWD Utilities (ama39, last update: 11/13/20)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -9,6 +9,7 @@
    - 8. Photo Credit/Information (div.photo-credit is turned into a small camera icon, revealing details on hover (or via keyboard/screen reader focus)
    
    Change Log
+   - 11/13/20 Added support for links on Expander headings
    - 6/18/20 Bug fix for mobile section navigation + breadcrumb; the process will now be skipped when section navigation is not present
    - 6/17/20 WA fix for mobile section navigation + breadcrumb keyboard focus
    - 5/14/20 Bug fix for the combination of mobile section navigation + breadcrumb, when used with or without Drupal block title markup
@@ -133,7 +134,9 @@ var msie = document.documentMode;
 	});
 	
 	// Keyboard Navigation
-	$('.dropdown-menu').find('ul').first().children('li').addClass('top-level-li').children('a').addClass('top-level-link');
+	$('.dropdown-menu').each(function() {
+		$(this).find('ul').first().children('li').addClass('top-level-li').children('a').addClass('top-level-link');
+	});
 	
 	$('.dropdown-menu-on-demand').find('ul').find('a').each(function() { // on-demand mode only
 		
@@ -393,6 +396,15 @@ var msie = document.documentMode;
 				e.preventDefault();
 				$(this).trigger('click');
 			}
+		});
+		
+		// Handle links in the heading
+		$(this).find('a').each(function() {
+			$(this).click(function(e) {
+				e.stopPropagation();
+			});
+			var link_label = $(this).text();
+			$(this).addClass('expander-heading-link').wrapInner('<span class="sr-only"> </span>').prepend('more...').before(link_label + ' ');
 		});
 	});
 	

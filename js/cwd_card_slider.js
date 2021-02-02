@@ -1,4 +1,4 @@
-/* CWD Card Slider (ama39, last update: 10/9/19)
+/* CWD Card Slider (ama39, last update: 10/8/20)
    - 
    
    - Accessibility Notes:
@@ -171,12 +171,18 @@ jQuery(document).ready(function($) {
 		
 		// Focus Detection (for keyboard and screen reader)
 		// -- if cards have focusable elements within, the slider will ensure that these focus events coordinate with the UI (triggering slide sets and pips as needed)
-		 $(this).find('.card *').on('focus', function(e) {
-		
-			var this_card = $(this).parents('.card').first().index()+1;
+		$(this).find('.card').attr('tabindex','-1');
+		$(this).find('.card, .card *').on('focus', function(e) {
+			
+			if ( $(this).hasClass('card') ) {
+				var this_card = $(this).index()+1;
+			}
+			else {
+				var this_card = $(this).parents('.card').first().index()+1;
+			}
 			var trigger_pip = Math.ceil(this_card / cards_per_screen);
 			$(viewer).find('.pip').eq(trigger_pip-1).trigger('click');
-		
+			
 		});
  		
 	});
