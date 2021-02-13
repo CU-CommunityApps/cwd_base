@@ -11,6 +11,11 @@
 {####### varrrriabllllles #######}
 
 {% set has_body, has_glitems, has_meta, has_svc, has_tags = false, false, false, false, false %}
+{% set galbod = {} %}
+{% set gallery_type_class = 'viewer' %}
+{% set glitems = [] %}
+{% set glervice = [] %}
+{% set glags = [] %}
 {% if node.field_service_term is defined and node.field_service_term is not empty %}
   {% set has_svc = true %}
   {% for key, value in node.field_service_term %}
