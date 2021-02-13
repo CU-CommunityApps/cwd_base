@@ -10,29 +10,10 @@
 
 {####### varrrriabllllles #######}
 
-{% set has_body, has_glitems, has_meta, has_svc, has_tags = false, false, false, false, false %}
+{% set has_body, has_glitems = false, false %}
 {% set galbod = {} %}
 {% set gallery_type_class = 'viewer' %}
 {% set glitems = [] %}
-{% set glervice = [] %}
-{% set glags = [] %}
-{% if node.field_service_term is defined and node.field_service_term is not empty %}
-  {% set has_svc = true %}
-  {% for key, value in node.field_service_term %}
-    {% set glervice = glervice|merge([node.field_service_term[key].entity.name.value]) %}
-  {% endfor %}
-{% endif %}
-
-{% if node.field_tags is defined and node.field_tags is not empty %}
-  {% set has_tags = true %}
-  {% for key, value in node.field_tags %}
-    {% set glags = glags|merge([node.field_tags[key].entity.name.value]) %}
-  {% endfor %}
-{% endif %}
-
-{% if has_svc or has_tags %}
-  {% set has_meta = true %}
-{% endif %}
 
 {% if node.field_gallery_type.value == 1 %}
   {% set gallery_type_class = 'grid' %}
@@ -83,29 +64,7 @@
       <a href="{{ url }}" rel="bookmark">{{- label -}}</a>
     </h2>
     {{ title_suffix }}
-
-  {% else -%} {# "if vm == full" #}
-
-    {% if has_meta == true -%}
-      <div class="group-meta field-group metadata-set">
-        {% if has_svc == true -%}
-          {% for key, value in glervice %}
-            <div class="field field-name-field-service-term">
-              <span class="deco">{{- value -}}</span>
-            </div>
-          {% endfor %}
-        {%- endif %}
-        {% if has_tags == true -%}
-          {% for key, value in glags %}
-            <div class="field field-name-field-tags">
-              <span class="deco">{{- value -}}</span>
-            </div>
-          {% endfor %}
-        {%- endif %}
-      </div>
-    {%- endif %}
-
-  {%- endif %} {# "if vm not full" != true #}
+  {%- endif %}
 
   {% if has_glitems == true -%}
     <div class="cwd-gallery strips {{ gallery_type_class }}" role="region" aria-label="Image Gallery">
