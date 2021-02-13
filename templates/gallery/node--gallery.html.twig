@@ -78,9 +78,9 @@
             {%- endif %}
             <div class="col">
               <a role="img" href="{{ file_url(glitems[key].gurl) }}" data-title="{{ glitems[key].gitle }}" data-alt="{{ glitems[key].galt }}" aria-label="{{ glitems[key].galt }}{{ title_aria_bridge }}{{ glitems[key].gitle }}">
-              {% if glitems[key].gitle %}
+              {% if glitems[key].gitle -%}
                 <h3 class="sr-only">{{- glitems[key].gitle -}}</h3>
-              {% endif %}
+              {%- endif %}
               <img src="{{ glitems[key].glimg_uri | image_style('gallery_thumbnail') }}" alt="{{ glitems[key].galt }}">
               </a>
             </div>
