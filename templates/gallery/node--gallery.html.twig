@@ -150,9 +150,7 @@
     </h2>
   {{ title_suffix }}
 
-  {{ content }}
-
-  {% else %} {# "if vm not full" != true #}
+  {% else %} {# "if vm == full" #}
 
   {% if has_meta == true %}
     <div class="group-meta field-group metadata-set">
@@ -172,6 +170,8 @@
       {% endif %}
     </div>
   {% endif %}
+
+  {% endif %} {# "if vm == full" #}
 
   {% if has_glitems == true %}
     <div class="cwd-gallery strips {{ gallery_type_class }}" role="region" aria-label="Image Gallery">
@@ -197,10 +197,11 @@
     </div>
   {% endif %}
 
-  {% if has_body == true %}
-    <hr class="section-break">
-    {{ content.body }}
+  {% if view_mode == 'full' %}
+    {% if has_body == true %}
+      <hr class="section-break">
+      {{ content.body }}
+    {% endif %}
   {% endif %}
 
-  {% endif %} {# "if vm not full" != true #}
 </article>
