@@ -58,7 +58,7 @@
 
 <article{{ attributes }}>
 
-  {% if view_mode != 'full' -%}
+  {% if view_mode != 'full' and view_mode != 'default' -%}
     {{ title_prefix }}
     <h2{{ title_attributes }}>
       <a href="{{ url }}" rel="bookmark">{{- label -}}</a>
