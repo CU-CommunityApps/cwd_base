@@ -640,6 +640,12 @@ ol.custom.inline, .flex-grid {
 .double-margin {
   margin-bottom: 2em !important; }
 
+.triple-margin {
+  margin-bottom: 3em !important; }
+
+.quadrupal-margin {
+  margin-bottom: 4em !important; }
+
 .nobr {
   white-space: nowrap; }
 
@@ -1187,8 +1193,8 @@ main .row > .secondary:empty, main .row > .secondary.empty {
 
 #main-content {
   background: #fff;
-  overflow-y: visible;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  overflow-y: visible; }
 
 .content-block {
   float: left;

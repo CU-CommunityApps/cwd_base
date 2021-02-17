@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 11/13/20)
+/* CWD Utilities (ama39, last update: 2/15/21)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -9,6 +9,7 @@
    - 8. Photo Credit/Information (div.photo-credit is turned into a small camera icon, revealing details on hover (or via keyboard/screen reader focus)
    
    Change Log
+   - 2/15/21 Small adjustment to code for detecting empty sidebar menus in Drupal
    - 11/13/20 Added support for links on Expander headings
    - 6/18/20 Bug fix for mobile section navigation + breadcrumb; the process will now be skipped when section navigation is not present
    - 6/17/20 WA fix for mobile section navigation + breadcrumb keyboard focus
@@ -321,13 +322,16 @@ var msie = document.documentMode;
 	
 	
 	// 2. Empty Sidebar Helper ------------------------------------------------
-	$('.secondary').each(function() {
-		if (msie != 8 && msie != 7) {
-			if ( !$(this).html().trim() ) {
-				$(this).empty().addClass('empty');
+	function emptySidebars() {
+		$('.secondary').each(function() {
+			if (msie != 8 && msie != 7) {
+				if ( !$(this).html().trim() ) {
+					$(this).empty().addClass('empty');
+				}
 			}
-		}
-	});
+		});
+	}
+	emptySidebars();
 	
 	
 	// 3. Mobile Table Helper -------------------------------------------------
@@ -450,7 +454,9 @@ var msie = document.documentMode;
 				has_items = true;
 			}
 			if (!has_items) {
-				$(this).remove();
+				$(this).parent('.mobile').prev('.mobile-expander-heading').remove();
+				$(this).parent('.mobile').remove();
+				emptySidebars();
 			}
 		}
 	});
