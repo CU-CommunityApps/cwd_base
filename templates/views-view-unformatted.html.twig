@@ -17,9 +17,11 @@
  * @ingroup themeable
  */
 #}
-{% if title %}
-  <h3>{{ title }}</h3>
-{% endif %}
+{% block title %}
+  {% if title %}
+    <h3>{{ title }}</h3>
+  {% endif %}
+{% endblock %}
 {% for row in rows %}
   {%
     set row_classes = [
