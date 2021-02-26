@@ -217,6 +217,9 @@ code {
 .intro code, .lead code {
 	font-size: 90%;
 }
+pre {
+	overflow: auto;
+}
 mark {
 	padding: 0.1em 0.2em;
 }
@@ -360,7 +363,7 @@ abbr {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-.icon-zmdi:before, .tutorial.tip:before, .tutorial.note:before, .breadcrumb li a:after, ul.custom.status > li:before {
+.icon-zmdi:before, .tutorial.tip:before, .tutorial.note:before, .breadcrumb li a:after, ul.custom.status > li:before, ul.custom.links > li:before {
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
@@ -2521,6 +2524,7 @@ ul.custom.failure > li, ul.custom.failure.recursive ul > li,
 ul.custom.warning > li, ul.custom.warning.recursive ul > li, 
 ul.custom.notifications > li, ul.custom.notifications.recursive ul > li, 
 ul.custom.status > li, ul.custom.status.recursive ul > li, 
+ul.custom.links > li, ul.custom.links.recursive ul > li, 
 ul.custom.on-off > li, ul.custom.on-off.recursive ul > li, 
 ul.custom.on-off-steps > li, ul.custom.on-off-steps.recursive ul > li {
 	padding-left: 1.7em;
@@ -2576,6 +2580,15 @@ ul.custom.notifications > li:before, ul.custom.notifications.recursive ul > li:b
 ul.custom.status > li:before, ul.custom.status.recursive ul > li:before {
 	content: '\f265';
 	color: #639fc0;
+	opacity: 1;
+	padding: 0 1px;
+	left: 1px;
+	font-size: 107.1%;
+	line-height: 1.6;
+}
+ul.custom.links > li:before, ul.custom.links.recursive ul > li:before {
+	content: '\f171';
+	color: #707070;
 	opacity: 1;
 	padding: 0 1px;
 	left: 1px;

@@ -1,4 +1,4 @@
-/* CWD Modal Popups (ama39, last update: 10/2/20)
+/* CWD Modal Popups (ama39, last update: 2/24/21)
 	- Displays content as a "popup" overlay, rather than leaving the current page or opening a new window.
 	- Activate on any link by applying a "popup" class (e.g., <a class="popup" href="bigredbear.jpg">Behold the Big Red Bear!</a>).
 	- Supports images, DOM elements by ID, and Iframes (auto-detected from the href attribute).
@@ -10,6 +10,7 @@
    - -- When running in Image Gallery mode, a loading animation is provided when transitioning between images.
    - -- Detects and corrects for oversized images (added 8/16/18)
    - -- Video Support (added 9/2/18)
+   - -- Custom Field Support added for Image/Video mode (added 2/23/21)
    
    - Accessibility Notes:
    - -- Popups have a "dialog" role along with visually-hidden titling, focus control, and tab indexing to smoothly transition to and from the dialog. The titling provides hints on key shortcuts and changes based on the type of content and whether it is the first time the user has launched the popup. See the popupControls() function below for more details.
@@ -112,6 +113,7 @@ jQuery(document).ready(function($) {
 			var popup_custom_height = $(this).attr('data-popup-height');
 			var popup_gallery = $(this).attr('data-gallery');
 			var popup_fullscreen = $(this).hasClass('popup-fullscreen');
+			var popup_fields = $(this).attr('data-fields');
 			
 			// Detect video data if present
 			if (filetype == '.mp4' || target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0 || target_href.indexOf('cornell.edu/video') >= 0) { 
@@ -166,12 +168,21 @@ jQuery(document).ready(function($) {
 					}
 					
 					// IMAGE (and VIDEO) Mode
-					if ($(this).hasClass('video') || filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
+					if ($(this).hasClass('video') || filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png' || filetype == '.svg') {
 						popup_type = 'image';
-						$('#popup').removeClass('fullscreen');
+						//$('#popup').removeClass('fullscreen');
 						$('#popup, #popup-background').addClass('image');
 						if (popup_gallery) {
 							$('#popup').addClass('image-gallery');
+						}
+						if (popup_fields) {
+							$('#popup').attr('data-fields',popup_fields).addClass('fullscreen');
+						}
+						else {
+							$('#popup').removeAttr('data-fields');
+							if (!popup_fullscreen) {
+								$('#popup').removeClass('fullscreen');
+							}
 						}
 						
 						// VIDEO Mode
@@ -193,13 +204,13 @@ jQuery(document).ready(function($) {
 							}
 							$('#popup-wrapper').fadeOut(video_transition, function() {
 								var videoElement;
-								$('#popup').addClass('video').html('<div class="relative popup-video"></div>');
+								$('#popup').addClass('video').html('<div class="content"><div class="relative popup-video"></div></div>');
 							
 								var slide = $('#popup .popup-video').first();
 								
 								$('#popup, #popup-background').removeClass('error swipe-left swipe-right custom-width custom-height');
 								if (popup_caption) {
-									$('#popup').append('<p class="caption">'+popup_caption+'</p>')
+									$('#popup > .content').append('<p class="caption">'+popup_caption+'</p>')
 								}
 								if (videotype == 'youtube') {
 									$(slide).prepend('<iframe class="video-container" width="560" height="315" src="https://www.youtube.com/embed/'+vid+'?rel=0&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="YouTube video"></iframe>');
@@ -250,10 +261,10 @@ jQuery(document).ready(function($) {
 								if (popup_custom_width) {
 									this_width = popup_custom_width;
 								}
-								$('#popup').removeClass('scroll').width(this_width).html('<div class="relative"><img id="popup-image" tabindex="-1" class="aria-target" width="'+img.width+'" height="'+img.height+'" src="'+popup_content+'" alt="'+popup_alt+'"></div>');
+								$('#popup').removeClass('scroll').width(this_width).html('<div class="content"><div class="relative"><img id="popup-image" tabindex="-1" class="aria-target" width="'+img.width+'" height="'+img.height+'" src="'+popup_content+'" alt="'+popup_alt+'"></div></div>');
 						
 								if (popup_caption != '' && popup_caption != undefined) {
-									$('#popup').append('<p class="caption">'+popup_caption+'</p>');
+									$('#popup > .content').append('<p class="caption">'+popup_caption+'</p>');
 								}
 																		
 								// Detect scaled images
@@ -298,7 +309,7 @@ jQuery(document).ready(function($) {
 						
 								// Oh no! Error loading image!
 								$('#popup-wrapper').show();
-								$('#popup').addClass('error').removeClass('scroll').width(300).html('<div class="relative clearfix"><div id="popup-panel" class="panel dialog no-border" role="alert"><h3 id="popup-error" class="aria-target" tabindex="-1">Error</h3><p><span class="fa fa-image fa-3x fa-pull-left fade" aria-hidden="true"></span> The requested image could not be loaded.</p></div></div>');
+								$('#popup').addClass('error').removeClass('scroll').width(300).html('<div class="content"><div class="relative clearfix"><div id="popup-panel" class="panel dialog no-border" role="alert"><h3 id="popup-error" class="aria-target" tabindex="-1">Error</h3><p><span class="fa fa-image fa-3x fa-pull-left fade" aria-hidden="true"></span> The requested image could not be loaded.</p></div></div></div>');
 								$('#popup-background .spinner').addClass('off');
 								popupControls();
 								$('#popup-wrapper').hide().fadeIn(popup_fadein_speed, function() {
@@ -429,6 +440,16 @@ jQuery(document).ready(function($) {
 			else if (popup_type == 'image') {
 				$('#popup-image').css('max-height','none');
 				$('#popup').css('width','auto');
+				
+				if ( $('#popup').attr('data-fields') ) {
+					$('#popup').find('.popup-fields').remove();
+					$('#popup > .content').append('<div class="popup-fields">' + $('#'+$('#popup').attr('data-fields')).html() + '</div>' );
+					
+					if ( $('#popup').hasClass('video') && $('#'+$('#popup').attr('data-fields')).hasClass('dark') ) {
+						$('#popup').find('.popup-fields').addClass('dark');
+					}
+				}
+				
 				if ($(window).width() > 767 && !$('#popup').hasClass('video') ) {
 					/* Calculate and Resize to Accommodate Tall Images
 						 -- Todo: This code works for most reasonable combinations of image dimensions, screen proportions and caption lengths, but could still use some work. Basing image size on height is always tricky in CSS (perhaps a flexbox-based layout would be more reliable?) 
@@ -498,7 +519,7 @@ jQuery(document).ready(function($) {
 	
 		// Add image gallery buttons if applicable (Next and Previous)
 		if ($('#popup').hasClass('image-gallery')) {
-			$('#popup > .relative').append('<div class="gallery-nav"><div class="next-prev"><a class="prev" href="#"><span class="hidden">Previous Item</span></a><a class="next" href="#"><span class="hidden">Next Item</span></a></div></div>');
+			$('#popup > .relative, #popup > .content > .relative').first().append('<div class="gallery-nav"><div class="next-prev"><a class="prev" href="#"><span class="hidden">Previous Item</span></a><a class="next" href="#"><span class="hidden">Next Item</span></a></div></div>');
 		
 			// The calculations below determine which image in a gallery set is active and active the next or previous one
 			// (associated keycode events are defined in the popups() function above)
