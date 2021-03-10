@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 2/15/21)
+/* CWD Utilities (ama39, last update: 3/5/21)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -9,6 +9,7 @@
    - 8. Photo Credit/Information (div.photo-credit is turned into a small camera icon, revealing details on hover (or via keyboard/screen reader focus)
    
    Change Log
+   - 3/5/21 Mobile main navigation now auto-closes on loss of focus
    - 2/15/21 Small adjustment to code for detecting empty sidebar menus in Drupal
    - 11/13/20 Added support for links on Expander headings
    - 6/18/20 Bug fix for mobile section navigation + breadcrumb; the process will now be skipped when section navigation is not present
@@ -318,7 +319,20 @@ var msie = document.documentMode;
 				$('#mobile-close').trigger('click');
 			}
 		}
-	})
+	});
+	// auto-close on loss of focus
+	var focus_timeout;
+	$('#main-navigation a, #main-navigation button').focus(function() {
+		if ( $('body').hasClass('mobile') ) {
+			clearTimeout(focus_timeout);
+		}
+	}).blur(function() {
+		if ( $('body').hasClass('mobile') ) {
+			focus_timeout = setTimeout(function(){
+				$('#mobile-close').trigger('click');
+			}, 100);
+		}
+	});
 	
 	
 	// 2. Empty Sidebar Helper ------------------------------------------------

@@ -1,9 +1,10 @@
-/* CWD Modal Popups (ama39, last update: 2/24/21)
+/* CWD Modal Popups (ama39, last update: 3/10/21)
 	- Displays content as a "popup" overlay, rather than leaving the current page or opening a new window.
 	- Activate on any link by applying a "popup" class (e.g., <a class="popup" href="bigredbear.jpg">Behold the Big Red Bear!</a>).
 	- Supports images, DOM elements by ID, and Iframes (auto-detected from the href attribute).
    - Keyboard and Screen Reader accessible with ARIA dialog bounds, focus control, and key shortcuts.
    - At mobile sizes, DOM Element and Iframe popups will automatically become full-screen and scroll independently.
+   - Custom initial focus target support via the new data-focus attribute (added 3/10/21)
    
    - Image Gallery mode:
    - -- Gallery behavior (next/prev) is available for sets of images that share a "data-gallery" attribute.
@@ -16,6 +17,7 @@
    - -- Popups have a "dialog" role along with visually-hidden titling, focus control, and tab indexing to smoothly transition to and from the dialog. The titling provides hints on key shortcuts and changes based on the type of content and whether it is the first time the user has launched the popup. See the popupControls() function below for more details.
    - -- When running in Image Gallery mode, Next and Previous buttons (or their key shortcuts) will shift focus to an element with a "progressbar" role. No progress updates are provided dynamically, but it will announce "Loading, 0 percent" and then wait for the image to load (or an error) before shifting back to the popup. This is to prevent focus from being temporarily orphaned during a popup transition on slow connections. On fast connections, it is likely to only read "Loading..." between each image.
    - -- It is recommended that popup links include the ARIA attribute aria-haspopup="true" unless it is part of an interface that has its own accessibility strategy.
+   - -- Additional WA improvements: added support for launching from buttons, converted Close and Next/Prev links to buttons, popup contains focus for standard keyboard navigation (3/10/21)
    ------------------------------------------------------------------------- */
 
 /* Global Options -------------- */
@@ -35,6 +37,7 @@ var popup_source;
 var first_popup = true;
 var first_gallery = true;
 var gallery_running = false;
+var return_focus = true;
 
 popup_fadein_speed = popup_fadein_speed * 1000; // convert to milliseconds
 
@@ -53,20 +56,37 @@ popup_fadein_speed = popup_fadein_speed * 1000; // convert to milliseconds
 jQuery(document).ready(function($) {
 
 	function popups() {
+		
 		// Create #popup node and background dimmer 
-		$('body').append('<div id="popup-background" class="aria-target" tabindex="-1" aria-label="Loading..." role="progressbar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"><span class="spinner"></span></div><div id="popup-wrapper"><div class="vertical-align"><div id="popup" role="dialog"></div></div></div>');
+		$('body').append('<div id="popup-background" class="aria-target" tabindex="-1" aria-label="Loading..." role="progressbar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"><span class="spinner"></span></div><div id="popup-wrapper"><div class="vertical-align"><div class="aria-target sr-only popup-focus-helper" tabindex="0"></div><div id="popup" class="aria-target" role="dialog" tabindex="-1"></div><div class="aria-target sr-only popup-focus-helper" tabindex="0"></div></div></div>');
+		
 		// Background space is clickable to close the popup
 		$('#popup-wrapper').click(function(e) {
 			$('#popup-close').trigger('click');
 		});
+		
+		// Detect end of focus scope to cycle back to the beginning (to the close button)
+		$('.popup-focus-helper').focus(function() {
+			$('#popup-close').focus();
+		});
+		
 		// Close key shortcut
 		$(document).keyup(function(e) {
 			if (e.keyCode == 27) { // escape key
-				if ( $('#popup-wrapper:visible').length > 0 ) {
+				if ( $('#popup-wrapper:visible') ) {
 					$('#popup-close').trigger('click');
 				}
 			}
 		});
+		$('#popup').focusin(function(e) {
+			return_focus = true;
+		}).focusout(function(e) {
+			return_focus = false;
+		}).click(function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		});
+		
 		// Gallery functionality (next/prev key shortcuts)
 		$(document).keydown(function(e) {
 			if ( $('#popup').hasClass('image-gallery') ) {
@@ -80,6 +100,7 @@ jQuery(document).ready(function($) {
 				}
 			}
 		});
+		
 		// Gallery swipe left/right functionality (for touch devices, utilizes jquery.detectSwipe plugin)
 		$.detectSwipe.preventDefault = false; // it's important to allow default touchmove events, so that scrolling continues to work when needed
 		$('#popup').on('swipeleft', function() {
@@ -104,8 +125,13 @@ jQuery(document).ready(function($) {
 		$('.popup').each(function(n) {
 			popup_count++;
 			$(this).data('popupID',popup_count);
-		
-			var popup_content = target_href = $(this).attr('href');
+			
+			if ( $(this).attr('href') ) {
+				var popup_content = target_href = $(this).attr('href');
+			}
+			else {
+				var popup_content = target_href = $(this).attr('data-href');
+			}
 			var filetype = popup_content.substr(popup_content.lastIndexOf('.')).toLowerCase();
 			var popup_caption = $(this).attr('data-title');
 			var popup_alt = $(this).attr('data-alt');
@@ -114,6 +140,7 @@ jQuery(document).ready(function($) {
 			var popup_gallery = $(this).attr('data-gallery');
 			var popup_fullscreen = $(this).hasClass('popup-fullscreen');
 			var popup_fields = $(this).attr('data-fields');
+			var popup_focus = $(this).attr('data-focus') || '#popup-anchor';
 			
 			// Detect video data if present
 			if (filetype == '.mp4' || target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0 || target_href.indexOf('cornell.edu/video') >= 0) { 
@@ -144,6 +171,7 @@ jQuery(document).ready(function($) {
 			
 				e.preventDefault();
 			
+				return_focus = true;
 				$('.popup-active').removeClass('popup-active');
 				$(this).addClass('popup-active');
 				popup_source = $(this);
@@ -373,7 +401,10 @@ jQuery(document).ready(function($) {
 							}
 							$('#popup').click(function(e){e.stopPropagation()}).append($(popup_content).show());
 							$('#popup-wrapper').fadeIn(popup_fadein_speed, function() {
-								$('#popup-anchor').focus();
+								if ( $(popup_focus).first().length != 1 ) {
+									popup_focus = '#popup-anchor'; // fallback to default if an invalid selector is supplied
+								}
+								$(popup_focus).first().focus();
 							});
 							$('#popup-background').show();
 						
@@ -515,15 +546,15 @@ jQuery(document).ready(function($) {
 		}
 	
 		// Add title and a Close button with all the necessary attributes for focus control
-		$('#popup').prepend('<h2 id="popup-anchor" class="hidden" tabindex="-1">'+popup_window_message+'</h2><a href="#" id="popup-close" tabindex="0" aria-label="Close Button"></a>');
+		$('#popup').prepend('<h2 id="popup-anchor" class="hidden" tabindex="-1">'+popup_window_message+'</h2><button id="popup-close" tabindex="0" aria-label="Close Button"></button>');
 	
 		// Add image gallery buttons if applicable (Next and Previous)
 		if ($('#popup').hasClass('image-gallery')) {
-			$('#popup > .relative, #popup > .content > .relative').first().append('<div class="gallery-nav"><div class="next-prev"><a class="prev" href="#"><span class="hidden">Previous Item</span></a><a class="next" href="#"><span class="hidden">Next Item</span></a></div></div>');
+			$('#popup > .relative, #popup > .content > .relative').first().append('<div class="gallery-nav"><div class="next-prev"><button class="prev"><span class="hidden">Previous Item</span></button><button class="next"><span class="hidden">Next Item</span></button></div></div>');
 		
 			// The calculations below determine which image in a gallery set is active and active the next or previous one
 			// (associated keycode events are defined in the popups() function above)
-			$('#popup .next-prev a').click(function(e) {
+			$('#popup .next-prev button').click(function(e) {
 				e.preventDefault();
 				e.stopPropagation();
 				var gallery_id = $('.popup-active').attr('data-gallery');
@@ -560,10 +591,13 @@ jQuery(document).ready(function($) {
 					$(popup_content).hide();
 				}
 			}
-			$(popup_source).focus(); // return focus to the original source of the popup
+			if (return_focus) {
+				$(popup_source).focus(); // return focus to the original source of the popup
+			}
 			$('.popup-active').removeClass('popup-active');
 			$('#popup').removeClass('image image-gallery error swipe-left swipe-right').removeAttr('aria-labelledby');
 			gallery_running = false;
+			return_focus = true;
 			$('#popup .video-container').remove();
 		});
 	}

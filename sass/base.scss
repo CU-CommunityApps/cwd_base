@@ -1267,20 +1267,25 @@ table.sectioned tbody:before {
 }
 
 /* Forms */
-#main form p, #main form ul, #main form ol {
+#main form p, #main form ul, #main form ol, 
+form.form p, form.form ul, form.form ol {
 	margin-bottom: 1.25em;
 }
-#main form .description p, #main form .description ul, #main form .description ol {
+#main form .description p, #main form .description ul, #main form .description ol, 
+#form.form .description p, form.form .description ul, form.form .description ol {
 	margin-bottom: 0.5em;
 }
-#main form .description :last-child {
+#main form .description :last-child, 
+form.form .description :last-child {
 	margin-bottom: 0;
 }
-#main form .form-item, #main form .form-actions {
+#main form .form-item, #main form .form-actions, 
+form.form .form-item, form.form .form-actions {
 	margin-bottom: 1.5em;
 	line-height: 1.4;
 }
-#main form label {
+#main form label, 
+form.form label {
 	font-family: $cwd-font-family-sans-alt-semibold;
 	font-size: 15px;
 	font-weight: 600;
@@ -1289,24 +1294,26 @@ table.sectioned tbody:before {
 	color: #333;
 	max-width: 600px;
 }
-#main form .option-label, #main form label.option-label {
+#main form .option-label, #main form label.option-label, 
+form.form .option-label, form.form label.option-label {
 	color: #222;
 }
 form.compact label, form.compact .option-label {
 	font-size: 85.7142857142857% !important;
 }
-#main form input, #main form textarea {
+#main form input, #main form textarea, 
+form.form input, form.form textarea {
 	font-size: 16px;
 	margin: 0 0 0.25em;
 	max-width: 600px;
 	font-family: $cwd-font-family-sans-ui;
 }
-#main form input[type='text'], 
-#main form input[type='password'], 
-#main form input[type='email'], 
-#main form input[type='url'], 
-#main form input[type='search'], 
-#main form input[type='tel'] {
+#main form input[type='text'], form.form input[type='text'], 
+#main form input[type='password'], form.form input[type='password'], 
+#main form input[type='email'], form.form input[type='email'], 
+#main form input[type='url'], form.form input[type='url'], 
+#main form input[type='search'], form.form input[type='search'], 
+#main form input[type='tel'], form.form input[type='tel'] {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 100%;
@@ -1314,6 +1321,7 @@ form.compact label, form.compact .option-label {
 	border: 1px solid #bcbcbc;
 	border-radius: 0;
 }
+#main form textarea, 
 #main form textarea {
 	width: 100%;
 	padding: 0.5em 0.7em;
@@ -1323,13 +1331,13 @@ form.compact label, form.compact .option-label {
 	appearance: none;
 	border: 1px solid #bcbcbc;
 }
-#main form input[type='datetime'], 
-#main form input[type='datetime-local'], 
-#main form input[type='date'], 
-#main form input[type='month'], 
-#main form input[type='time'], 
-#main form input[type='week'], 
-#main form input[type='number'] {
+#main form input[type='datetime'], form.form input[type='datetime'], 
+#main form input[type='datetime-local'], form.form input[type='datetime-local'], 
+#main form input[type='date'], form.form input[type='date'], 
+#main form input[type='month'], form.form input[type='month'], 
+#main form input[type='time'], form.form input[type='time'], 
+#main form input[type='week'], form.form input[type='week'], 
+#main form input[type='number'], form.form input[type='number'] {
 	//-webkit-appearance: none;
 	//appearance: none;
 	width: 100%;
@@ -1338,13 +1346,13 @@ form.compact label, form.compact .option-label {
 	border-radius: 0;
 	min-height: 30px;
 }
-#main form input[type='text']:focus, 
-#main form input[type='password']:focus, 
-#main form input[type='email']:focus, 
-#main form input[type='url']:focus, 
-#main form input[type='search']:focus, 
-#main form input[type='tel']:focus, 
-#main form textarea:focus {
+#main form input[type='text']:focus, form.form input[type='text']:focus, 
+#main form input[type='password']:focus, form.form input[type='password']:focus, 
+#main form input[type='email']:focus, form.form input[type='email']:focus, 
+#main form input[type='url']:focus, form.form input[type='url']:focus, 
+#main form input[type='search']:focus, form.form input[type='search']:focus, 
+#main form input[type='tel']:focus, form.form input[type='tel']:focus, 
+#main form textarea:focus, form.form textarea:focus {
 	border-color: #555;
 }
 input.icon {
@@ -1387,7 +1395,8 @@ input.icon:focus {
 	background-position: 0.7em center !important;
 }
 
-#main form select {
+#main form select, 
+form.form select {
 	font-size: 16px;
 	margin: 0.1em 0 0.2em;
 	max-width: 600px;
@@ -1402,21 +1411,25 @@ input.icon:focus {
 	background-position: 100% 50.5%;
 	font-family: $cwd-font-family-sans-ui;
 }
-#main form select:not([multiple]):not([size])::-ms-expand, #main form select:not([multiple])[size='1']::-ms-expand {
+#main form select:not([multiple]):not([size])::-ms-expand, #main form select:not([multiple])[size='1']::-ms-expand, 
+form.form select:not([multiple]):not([size])::-ms-expand, form.form select:not([multiple])[size='1']::-ms-expand {
 	display: none;
 }
-#main form select:not([multiple]):not([size]), #main form select:not([multiple])[size='1'] {
+#main form select:not([multiple]):not([size]), #main form select:not([multiple])[size='1'], 
+form.form select:not([multiple]):not([size]), form.form select:not([multiple])[size='1'] {
 	border-radius: 5px;
 	background-image: url('../images/layout/unfold-band-defaultblue.svg');
 	background-image: url('../images/layout/unfold-band-defaultblue.svg'), linear-gradient(to bottom, #fcfcfc 0%,#eeeeee 100%);
 	padding: 0.35em 0.9em 0.35em 0.7em;
 	padding: 0.35em calc(0.7em + 27px) 0.35em 0.7em;
 }
-#main form .use-size-attr, #main .use-size-attr input, #main .use-size-attr select, #main .use-size-attr textarea {
+#main form .use-size-attr, #main .use-size-attr input, #main .use-size-attr select, #main .use-size-attr textarea, 
+form.form .use-size-attr, form.form.use-size-attr input, form.form.use-size-attr select, form.form.use-size-attr textarea {
 	width: auto !important;
 	max-width: 100%;
 }
-#main form .description {
+#main form .description, 
+form.form .description {
 	font-size: 13px;
 	color: #666;
 	max-width: 600px;
@@ -1424,13 +1437,14 @@ input.icon:focus {
 form.compact .description, form.compact legend {
 	font-size: 78.5714285714286% !important;
 }
-#main form .panel, #main form .messages {
+#main form .panel, #main form .messages, 
+form.form .panel, form.form .messages {
 	max-width: 600px;
 }
-#main form input[type='submit'], 
-#main form input[type='reset'], 
-#main form input[type='button'], 
-#main form input#edit-reset[type='submit'] {
+#main form input[type='submit'], form.form input[type='submit'], 
+#main form input[type='reset'], form.form input[type='reset'], 
+#main form input[type='button'], form.form input[type='button'], 
+#main form input#edit-reset[type='submit'], form.form input#edit-reset[type='submit'] {
 	-webkit-appearance: none;
 	appearance: none;
 	background: #767676;
@@ -1443,24 +1457,35 @@ form.compact .description, form.compact legend {
 }
 #main form input[type='reset']:hover, #main form input[type='reset']:focus, 
 #main form input[type='button']:hover, #main form input[type='button']:focus, 
-#main form input#edit-reset[type='submit']:hover, #main form input#edit-reset[type='submit']:focus {
+#main form input#edit-reset[type='submit']:hover, #main form input#edit-reset[type='submit']:focus, 
+form.form input[type='reset']:hover, form.form input[type='reset']:focus, 
+form.form input[type='button']:hover, form.form input[type='button']:focus, 
+form.form input#edit-reset[type='submit']:hover, form.form input#edit-reset[type='submit']:focus {
 	background: #888;
 }
-#main form input[type='reset']:active, 
-#main form input[type='button']:active, 
-#main form input#edit-reset[type='submit']:active {
+
+
+
+
+#main form input[type='reset']:active, form.form input[type='reset']:active, 
+#main form input[type='button']:active, form.form input[type='button']:active, 
+#main form input#edit-reset[type='submit']:active, form.form input#edit-reset[type='submit']:active {
 	background: #666;
 }
-#main form input[type='submit'] {
+#main form input[type='submit'], 
+form.form input[type='submit'] {
 	background: $cwd-color-button;
 }
-#main form input[type='submit']:hover, #main form input[type='submit']:focus {
+#main form input[type='submit']:hover, #main form input[type='submit']:focus, 
+form.form input[type='submit']:hover, form.form input[type='submit']:focus {
 	background: $cwd-color-button-hover;
 }
-#main form input[type='submit']:active {
+#main form input[type='submit']:active, 
+form.form input[type='submit']:active {
 	background: $cwd-color-button-active;
 }
-#main form input[type='checkbox'], #main form input[type='radio'] {
+#main form input[type='checkbox'], #main form input[type='radio'], 
+form.form input[type='checkbox'], form.form input[type='radio'] {
 	vertical-align: middle;
 	width: 20px !important;
 	height: 20px !important;
@@ -1476,38 +1501,48 @@ form.compact .description, form.compact legend {
 	background-position: 50% 51%;
 	clear: left;
 }
-#main form input[type='radio'] {
+#main form input[type='radio'], 
+form.form input[type='radio'] {
 	background-position: 50% 50%;
 }
-#main form input[type='checkbox']:active, #main form input[type='radio']:active {
+#main form input[type='checkbox']:active, #main form input[type='radio']:active, 
+form.form input[type='checkbox']:active, form.form input[type='radio']:active {
 	background-color: #ccc;
 }
-#main form input[type='checkbox']::-ms-check {
+#main form input[type='checkbox']::-ms-check, 
+form.form input[type='checkbox']::-ms-check {
 	border-radius: 3px;
 }
-#main form input[type='radio'] {
+#main form input[type='radio'], 
+form.form input[type='radio'] {
 	border-radius: 100%;
 }
-#main form input[type='radio']::-ms-check {
+#main form input[type='radio']::-ms-check, 
+form.form input[type='radio']::-ms-check {
 	border-radius: 100%;
 }
-#main form input[type='checkbox']:checked {
+#main form input[type='checkbox']:checked, 
+form.form input[type='checkbox']:checked {
 	background-color: #45729f;
 	border-color: #333; 
 	background-image: url('../images/layout/checked.svg');
 }
-#main form input[type='radio']:checked {
+#main form input[type='radio']:checked, 
+form.form input[type='radio']:checked {
 	background-color: #45729f;
 	border-color: #333; 
 	background-image: url('../images/layout/checked-radio.svg');
 }
-#main form input[type='checkbox']:checked::-ms-check, #main form input[type='radio']:checked::-ms-check {
+#main form input[type='checkbox']:checked::-ms-check, #main form input[type='radio']:checked::-ms-check, 
+form.form input[type='checkbox']:checked::-ms-check, form.form input[type='radio']:checked::-ms-check {
 	display: none;
 }
-#main form input[type='checkbox']:checked:active {
+#main form input[type='checkbox']:checked:active, 
+form.form input[type='checkbox']:checked:active {
 	background-color: #222;
 }
-#main form input[type='checkbox'] + label, #main form input[type='radio'] + label {
+#main form input[type='checkbox'] + label, #main form input[type='radio'] + label, 
+form.form input[type='checkbox'] + label, form.form input[type='radio'] + label {
 	display: inline;
 	font-weight: normal;
 	font-family: inherit;
@@ -1519,16 +1554,19 @@ form.compact .description, form.compact legend {
 // #main form label + input[type='checkbox'], #main form label + input[type='radio'] {
 // 	clear: right;
 // }
-#main form input[type='checkbox'] + .option-label, #main form input[type='radio'] + .option-label {
+#main form input[type='checkbox'] + .option-label, #main form input[type='radio'] + .option-label, 
+form.form input[type='checkbox'] + .option-label, form.form input[type='radio'] + .option-label {
 	margin-left: 0;
 	padding-left: 0.25em;
 }
-#main fieldset {
+#main fieldset, 
+form.form fieldset {
 	border: 1px solid #e5e5e5;
 	margin-left: 0;
 	margin-right: 0;
 }
-#main fieldset legend {
+#main fieldset legend, 
+form.form fieldset legend {
 	padding-left: 6px;
 	padding-right: 6px;
 	margin: 0 0 1em -6px;
@@ -1583,10 +1621,15 @@ fieldset.semantic * + fieldset {
 #main form .description + label, #main form label + input + label, #main form label + select + label, 
 #main form .description + [type='hidden'] + label, #main form label + input + [type='hidden'] + label, #main form label + select + [type='hidden'] + label, 
 #main form .option-label + label, #main form .option-label + [type='hidden'] + label, 
-#main form .description + input[type='submit'], #main form .option-label + input[type='submit'], #main form input + input[type='submit'], #main form textarea + input[type='submit'], #main form select + input[type='submit'] {
+#main form .description + input[type='submit'], #main form .option-label + input[type='submit'], #main form input + input[type='submit'], #main form textarea + input[type='submit'], #main form select + input[type='submit'], 
+form.form .description + label, form.form label + input + label, form.form label + select + label, 
+form.form .description + [type='hidden'] + label, form.form label + input + [type='hidden'] + label, form.form label + select + [type='hidden'] + label, 
+form.form .option-label + label, form.form .option-label + [type='hidden'] + label, 
+form.form .description + input[type='submit'], form.form .option-label + input[type='submit'], form.form input + input[type='submit'], form.form textarea + input[type='submit'], form.form select + input[type='submit'] {
 	margin-top: 1.5em;
 }
-#main form .description + * {
+#main form .description + *, 
+form.form .description + * {
 	margin-top: 0.5em;
 }
 .form-item input[type='checkbox'] + .option-label {
@@ -1606,22 +1649,30 @@ fieldset.semantic * + fieldset {
 form.no-constrain label, form.no-constrain input, form.no-constrain textarea, form.no-constrain .description, form.no-constrain .panel, form.no-constrain .messages {
 	max-width: 100% !important;
 }
-#main form input:focus, #main form textarea:focus, #main form select:focus, #main form button:focus {
+
+
+
+
+#main form input:focus, #main form textarea:focus, #main form select:focus, #main form button:focus, 
+form.form input:focus, form.form textarea:focus, form.form select:focus, form.form button:focus {
 	outline: 0;
 	box-shadow: 0 0 0 4px rgba(45,135,184,0.5);
 	box-shadow: 0 0 0 2px rgba(255,255,255,1), 0 0 0 5px rgba(43,163,227,0.4);
 }
 
-#main form ::-moz-placeholder {
+#main form ::-moz-placeholder, 
+form.form ::-moz-placeholder {
 	font-size: 14px;
 	line-height: 1.3;
 	opacity: 1;
 }
-#main form ::-ms-input-placeholder {
+#main form ::-ms-input-placeholder, 
+form.form ::-ms-input-placeholder {
 	font-size: 14px;
 	line-height: 1.3;
 }
-#main form ::-webkit-input-placeholder {
+#main form ::-webkit-input-placeholder, 
+form.form ::-webkit-input-placeholder {
 	font-size: 14px;
 	line-height: 1.3;
 }
@@ -3903,7 +3954,7 @@ body > footer .social img, #body-footer .social img {
 .flex-grid > .flex-1-8 {
 	width: 12.5%;
 }
-form .flex-grid > *, #main form .flex-grid > * {
+form .flex-grid > *, #main form .flex-grid > *, form.form .flex-grid > * {
 	// form grids retain single-column mobile layout until a later breakpoint below
 	width: 100%;
 	margin-bottom: 1.5em;
@@ -4178,7 +4229,7 @@ form .flex-grid {
 	// inherits display:flex above
 	margin: 0 #{-$grid-gutter-width/3};
 }
-form .flex-grid > *, #main form .flex-grid > * {
+form .flex-grid > *, #main form .flex-grid > *, form.form .flex-grid > * {
 	padding: 0 #{$grid-gutter-width/3};
 	margin-bottom: 2em;
 }
@@ -4188,52 +4239,52 @@ form .flex-grid > *, #main form .flex-grid > * {
 .flex-grid.compact-rows > * {
 	margin-bottom: 0.35em !important;
 }
-form .flex-grid > hr, #main form .flex-grid > hr {
+form .flex-grid > hr, #main form .flex-grid > hr, form.form .flex-grid > hr {
 	margin: 0 #{$grid-gutter-width/3} 2em;
 }
-form.compact .flex-grid > *, #main form.compact .flex-grid > * {
+form.compact .flex-grid > *, #main form.compact .flex-grid > *, form.form.compact .flex-grid > * {
 	margin-bottom: 1em;
 }
-form.compact .flex-grid > hr, #main form.compact .flex-grid > hr {
+form.compact .flex-grid > hr, #main form.compact .flex-grid > hr, form.form.compact .flex-grid > hr {
 	margin: 0.5em #{$grid-gutter-width/3} 1.5em;
 }
-form .flex-grid > .flex-1, #main form .flex-grid > .flex-1 {
+form .flex-grid > .flex-1, #main form .flex-grid > .flex-1, form.form .flex-grid > .flex-1 {
 	width: 8.333333333333333%;
 }
-form .flex-grid > .flex-2, #main form .flex-grid > .flex-2 {
+form .flex-grid > .flex-2, #main form .flex-grid > .flex-2, form.form .flex-grid > .flex-2 {
 	width: 16.666666666666667%;
 }
-form .flex-grid > .flex-3, #main form .flex-grid > .flex-3 {
+form .flex-grid > .flex-3, #main form .flex-grid > .flex-3, form.form .flex-grid > .flex-3 {
 	width: 25%;
 }
-form .flex-grid > .flex-4, #main form .flex-grid > .flex-4 {
+form .flex-grid > .flex-4, #main form .flex-grid > .flex-4, form.form .flex-grid > .flex-4 {
 	width: 33.333333333333333%;
 }
-form .flex-grid > .flex-5, #main form .flex-grid > .flex-5 {
+form .flex-grid > .flex-5, #main form .flex-grid > .flex-5, form.form .flex-grid > .flex-5 {
 	width: 41.666666666666667%;
 }
-form .flex-grid > .flex-6, #main form .flex-grid > .flex-6 {
+form .flex-grid > .flex-6, #main form .flex-grid > .flex-6, form.form .flex-grid > .flex-6 {
 	width: 50%;
 }
-form .flex-grid > .flex-7, #main form .flex-grid > .flex-7 {
+form .flex-grid > .flex-7, #main form .flex-grid > .flex-7, form.form .flex-grid > .flex-7 {
 	width: 58.333333333333333%;
 }
-form .flex-grid > .flex-8, #main form .flex-grid > .flex-8 {
+form .flex-grid > .flex-8, #main form .flex-grid > .flex-8, form.form .flex-grid > .flex-8 {
 	width: 66.666666666666667%;
 }
-form .flex-grid > .flex-9, #main form .flex-grid > .flex-9 {
+form .flex-grid > .flex-9, #main form .flex-grid > .flex-9, form.form .flex-grid > .flex-9 {
 	width: 75%;
 }
-form .flex-grid > .flex-10, #main form .flex-grid > .flex-10 {
+form .flex-grid > .flex-10, #main form .flex-grid > .flex-10, form.form .flex-grid > .flex-10 {
 	width: 83.333333333333333%;
 }
-form .flex-grid > .flex-11, #main form .flex-grid > .flex-11 {
+form .flex-grid > .flex-11, #main form .flex-grid > .flex-11, form.form .flex-grid > .flex-11 {
 	width: 91.666666666666667%;
 }
-form .flex-grid > .flex-1-5, #main form .flex-grid > .flex-1-5 {
+form .flex-grid > .flex-1-5, #main form .flex-grid > .flex-1-5, form.form .flex-grid > .flex-1-5 {
 	width: 20%;
 }
-form .flex-grid > .flex-1-8, #main form .flex-grid > .flex-1-8 {
+form .flex-grid > .flex-1-8, #main form .flex-grid > .flex-1-8, form.form .flex-grid > .flex-1-8 {
 	width: 12.5%;
 }
 
@@ -4381,5 +4432,3 @@ table td, table th {
 
 
 } // ************** //
-
-

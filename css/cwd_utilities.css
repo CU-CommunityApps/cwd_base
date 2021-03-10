@@ -144,7 +144,7 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
   background: #fff;
   border: 1px solid #666;
   border-bottom-color: #333;
-  padding: 8px;
+  padding: 10px;
   position: relative;
   left: auto !important;
   margin: 0 auto;
@@ -453,7 +453,12 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
   padding-left: 0.4em; }
 
 /* Gallery Navigation */
-.gallery-nav .next-prev a {
+.gallery-nav .next-prev a, .gallery-nav .next-prev button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  cursor: pointer;
   position: absolute;
   color: #fff;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -473,7 +478,8 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
   background: url("../images/cwd_utilities/chevron-left-rect.svg") 25% 50% no-repeat, -o-radial-gradient(left center ellipse, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
   background: url("../images/cwd_utilities/chevron-left-rect.svg") 25% 50% no-repeat, radial-gradient(ellipse at left center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%); }
 
-#popup.video .gallery-nav .next-prev a {
+#popup.video .gallery-nav .next-prev a,
+#popup.video .gallery-nav .next-prev button {
   background: url("../images/cwd_utilities/chevron-left-rect.svg") 40% 50% no-repeat, radial-gradient(ellipse at left center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 50%); }
 
 .gallery-nav .next-prev .prev {
@@ -489,11 +495,14 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
 #popup.video .gallery-nav .next-prev .next {
   background: url("../images/cwd_utilities/chevron-right-rect.svg") 65% 50% no-repeat, radial-gradient(ellipse at right center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 50%); }
 
-#popup:hover .gallery-nav .next-prev a, .cwd-gallery.viewer .slide:hover .gallery-nav .next-prev a, #popup.video .next-prev a {
+#popup:hover .gallery-nav .next-prev a, .cwd-gallery.viewer .slide:hover .gallery-nav .next-prev a, #popup.video .next-prev a,
+#popup:hover .gallery-nav .next-prev button, .cwd-gallery.viewer .slide:hover .gallery-nav .next-prev button, #popup.video .next-prev button {
   opacity: 0.7; }
 
 #popup:hover .gallery-nav .next-prev a:hover, .gallery-nav .next-prev a:hover, .gallery-nav .next-prev a:focus,
-.cwd-gallery.viewer:hover .gallery-nav .next-prev a:hover, .cwd-gallery.viewer .gallery-nav .next-prev a:hover, .cwd-gallery.viewer .gallery-nav .next-prev a:focus {
+.cwd-gallery.viewer:hover .gallery-nav .next-prev a:hover, .cwd-gallery.viewer .gallery-nav .next-prev a:hover, .cwd-gallery.viewer .gallery-nav .next-prev a:focus,
+#popup:hover .gallery-nav .next-prev button:hover, .gallery-nav .next-prev button:hover, .gallery-nav .next-prev button:focus,
+.cwd-gallery.viewer:hover .gallery-nav .next-prev button:hover, .cwd-gallery.viewer .gallery-nav .next-prev button:hover, .cwd-gallery.viewer .gallery-nav .next-prev button:focus {
   opacity: 1; }
 
 #popup.error .gallery-nav .next-prev .prev {
@@ -502,16 +511,20 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
 #popup.error .gallery-nav .next-prev .next {
   background-position: 87% 100%; }
 
-#popup.error:hover .gallery-nav .next-prev a {
+#popup.error:hover .gallery-nav .next-prev a,
+#popup.error:hover .gallery-nav .next-prev button {
   opacity: 0.2; }
 
-#popup.error:hover .gallery-nav .next-prev a:hover, #popup.error .gallery-nav .next-prev a:hover, #popup.error .gallery-nav .next-prev a:focus {
+#popup.error:hover .gallery-nav .next-prev a:hover, #popup.error .gallery-nav .next-prev a:hover, #popup.error .gallery-nav .next-prev a:focus,
+#popup.error:hover .gallery-nav .next-prev button:hover, #popup.error .gallery-nav .next-prev button:hover, #popup.error .gallery-nav .next-prev button:focus {
   opacity: 0.8; }
 
-.gallery-nav .next-prev a:active {
+.gallery-nav .next-prev a:active,
+.gallery-nav .next-prev button:active {
   filter: contrast(200%); }
 
-.touch #popup .gallery-nav .next-prev a, .touch .cwd-gallery.viewer .slide .gallery-nav .next-prev a {
+.touch #popup .gallery-nav .next-prev a, .touch .cwd-gallery.viewer .slide .gallery-nav .next-prev a,
+.touch #popup .gallery-nav .next-prev button, .touch .cwd-gallery.viewer .slide .gallery-nav .next-prev button {
   opacity: 0 !important; }
 
 .touch #popup {
