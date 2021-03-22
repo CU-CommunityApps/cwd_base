@@ -2,7 +2,6 @@
 /**
  * @file
  * Theme override for main view template.
- * Includes some elements from classy/templates/views/views-view.html.twig #teamD7
  *
  * Available variables:
  * - attributes: Remaining HTML attributes for the element.
@@ -61,6 +60,8 @@
 
 
   {% if rows %}
+    {% block view_sr_heading %}
+    {% endblock %}
     <div class="view-content cards">
       {{ rows }}
     </div>
