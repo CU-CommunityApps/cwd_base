@@ -1,7 +1,10 @@
 {#
 /**
  * @file
- * Theme override to display a menu.
+ * Theme override to display any instance of "main" menu.
+ * Based on @classy/navigation/menu.html.twig.
+ * IRL: Only meant for cwd_*_main_menu block. (See block--system-menu-block--main.html.twig for additional commentary.)
+ * ~ Add .list-menu.links classes to <ul>.
  *
  * Available variables:
  * - menu_name: The machine name of the menu.
@@ -30,6 +33,7 @@
 {% macro menu_links(items, attributes, menu_level) %}
   {% import _self as menus %}
   {% if items %}
+    {# TO DO: why even have this conditional if the markup is the same either way?... #}
     {% if menu_level == 0 %}
       <ul class="menu list-menu links">
     {% else %}

@@ -1,21 +1,14 @@
 {#
 /**
  * @file
- * Theme override to display a menu.
+ * Theme override for "Section navigation" instance of "main" menu (usually
+ * placed in sidebar_primary region) (named based on theme hook suggestion in
+ * block config).
  *
- * Available variables:
- * - menu_name: The machine name of the menu.
- * - items: A nested list of menu items. Each menu item contains:
- *   - attributes: HTML attributes for the menu item.
- *   - below: The menu item child items.
- *   - title: The menu link title.
- *   - url: The menu link url, instance of \Drupal\Core\Url
- *   - localized_options: Menu link localized options.
- *   - is_expanded: TRUE if the link has visible children within the current
- *     menu tree.
- *   - is_collapsed: TRUE if the link has children within the current menu tree
- *     that are not currently visible.
- *   - in_active_trail: TRUE if the link is in the active trail.
+ * ~ (ALMOST) A direct copy of @classy/navigation/menu.html.twig.
+ *   See code comments below for related wonderings... (and maybe resolve the differences and update this code comment!)
+ *
+ * See @cwd_base/menu--main for available variables.
  */
 #}
 {% import _self as menus %}
@@ -24,6 +17,7 @@
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
+{# TO DO: what is this line is for? 👇 git says it's been here since the initial repo commit, so, idk, but it looks like an accident to me #}
 {% set content_attributes = content_attributes.addClass(list_classes) %}
 {{ menus.menu_links(items, attributes, 0) }}
 
@@ -32,6 +26,9 @@
   {% if items %}
     {% if menu_level == 0 %}
       <ul class="menu">
+        {# TO DO: why even have this conditional if the markup is the same either way?...
+        ...FWIW, in @classy, the "if menu_level == 0" version looks like this, which also seems silly, right? --
+        <ul{{ attributes.addClass('menu') }}> #}
     {% else %}
       <ul class="menu">
     {% endif %}
