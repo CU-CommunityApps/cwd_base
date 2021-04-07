@@ -12,6 +12,9 @@ function cwd_base_is_front(&$variables) {
   $variables['#cache']['contexts'][] = 'url.path.is_front'; // Ensure the cache varies correctly. https://www.drupal.org/node/2830442
 }
 
+/**
+ * Implements hook_preprocess_HOOK() for HTML document templates.
+ */
 function cwd_base_preprocess_html(&$variables) {
 
   $variables['base_path'] = base_path();
@@ -65,21 +68,22 @@ function cwd_base_preprocess_html(&$variables) {
   $variables['section_title'] = $section_title;
   $variables['section_path'] = $section_path;
 
-
 }
 
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ */
 function cwd_base_preprocess_node(&$variables) {
   cwd_base_is_front($variables); // make 'is_front' available to the node.html template
-}
-
-function cwd_base_preprocess_paragraph(&$variables) {
-  cwd_base_is_front($variables); // make 'is_front' available to the paragraph.html template
 }
 
 /**
  * The following functions are adding twig suggestions that are already provided
  * by core but not presented in twig debug.
    -------------------------------------------------------------------------- */
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
 function cwd_base_theme_suggestions_block_alter(array &$suggestions, array $variables)
 {
   if (isset($variables['elements']['content']['#block_content'])) {
@@ -88,8 +92,9 @@ function cwd_base_theme_suggestions_block_alter(array &$suggestions, array $vari
     array_splice($suggestions, 2, 0, 'block__bundle__' . $block->getRegion() . "__" . $variables['elements']['content']['#block_content']->bundle());
   }
 }
+
 /**
- * Implements hook_theme_suggestions_html().
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
 function cwd_base_theme_suggestions_views_view_fields_alter(array &$suggestions, array $variables)
 {
@@ -98,8 +103,9 @@ function cwd_base_theme_suggestions_views_view_fields_alter(array &$suggestions,
     array_splice($suggestions, 1, 0, 'views_view_fields__row__' . $variables['view']->id() . '__'. $variables['view']->current_display);
   }
 }
+
 /**
- * Implements hook_theme_suggestions_html().
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
 function cwd_base_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables)
 {
@@ -110,8 +116,10 @@ function cwd_base_theme_suggestions_views_view_unformatted_alter(array &$suggest
 }
 
 /**
- * Implements hook_theme_suggestions_taxonomy_term_alter().
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
  * Not just adding to twig debug -- these template names aren't available OOTB.
+ * TO DO: I'm not really sure my statement in the previous line is true... why would this function add template support but the previous functions somehow don't...?
  */
 function cwd_base_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
   /** @var \Drupal\taxonomy\TermInterface $term */
