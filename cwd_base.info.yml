@@ -1,5 +1,6 @@
-core: 8.x
+core_version_requirement: ^8.8 || ^9
 type: theme
+base theme: false
 
 name: 'CWD Cornell Base'
 description: 'A lightweight theme, implementing Cornell Branding and standard CWD components.'
