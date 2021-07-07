@@ -47,7 +47,7 @@ function cwd_base_preprocess_html(&$variables) {
   $section_title = $section_path = NULL;
 
   $path_items = explode('/',\Drupal::request()->getRequestUri()); // generate an array of path items
-  $section_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/'. $path_items[1]); // array index 1 will always return the top level under root
+  $section_alias = \Drupal::service('path_alias.manager')->getAliasByPath('/'. $path_items[1]); // array index 1 will always return the top level under root
   $request = \Symfony\Component\HttpFoundation\Request::create($section_alias);
   $router = \Drupal::service('router.no_access_checks'); // router.matcher won't work for nodes below, since the values object is protected
   try {
