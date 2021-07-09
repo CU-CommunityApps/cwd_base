@@ -283,7 +283,7 @@ var msie = document.documentMode;
 	});
 	
 	// Mobile Navigation
-	$('.dropdown-menu li.parent > a .fa').click(function(e) {
+	$('.dropdown-menu li.parent > a .fa').addClass('aria-target').attr('tabindex','-1').click(function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 	}).mousedown(function(e) {
@@ -322,7 +322,7 @@ var msie = document.documentMode;
 	});
 	// auto-close on loss of focus
 	var focus_timeout;
-	$('#main-navigation a, #main-navigation button').focus(function() {
+	$('#main-navigation a, #main-navigation button, #main-navigation .fa').focus(function() {
 		if ( $('body').hasClass('mobile') ) {
 			clearTimeout(focus_timeout);
 		}
