@@ -179,7 +179,7 @@ h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:la
 }
 .icon-fa, .list-menu.nav a:after, .cwd-component .link.link-button-icon a:before, .header-emblem:before, .back-to-toc:before {
 	font: normal normal normal 14px/1 FontAwesome;
-	speak: none;
+	speak: never;
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
@@ -189,7 +189,7 @@ h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:la
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
-	speak: none;
+	speak: never;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -1125,7 +1125,7 @@ div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
-	speak: none;
+	speak: never;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -1155,7 +1155,7 @@ div:not(.cke_widget_wrapper):not(.cke_panel_block) div div div {
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
-	speak: none;
+	speak: never;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

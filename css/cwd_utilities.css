@@ -2,7 +2,7 @@
    ************************************ */
 .icon-fa:before {
   font: normal normal normal 14px/1 FontAwesome;
-  speak: none;
+  speak: never;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -12,7 +12,7 @@
   display: inline-block;
   font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
   font-size: inherit;
-  speak: none;
+  speak: never;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -445,7 +445,7 @@ h4 + .back-to-toc, .h4 + .back-to-toc {
   display: inline-block;
   font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
   font-size: inherit;
-  speak: none;
+  speak: never;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -697,7 +697,7 @@ table.scrolling > thead > tr > th {
 
 .expander .expand-all:before {
   font: normal normal normal 14px/1 FontAwesome;
-  speak: none;
+  speak: never;
   font-size: 14px;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;

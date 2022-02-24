@@ -6,7 +6,7 @@
 
 .icon-fa {
 	font: normal normal normal 14px/1 FontAwesome;
-	speak: none;
+	speak: never;
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
@@ -16,7 +16,7 @@
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
-	speak: none;
+	speak: never;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -125,7 +125,7 @@ button .glyphicon-log-in, button .glyphicon-eye-open {
 // 	display: inline-block;
 // 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 // 	font-size: inherit;
-// 	speak: none;
+// 	speak: never;
 // 	text-rendering: auto;
 // 	-webkit-font-smoothing: antialiased;
 // 	-moz-osx-font-smoothing: grayscale;
@@ -293,7 +293,7 @@ form.search-form:before {
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
-	speak: none;
+	speak: never;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

@@ -357,7 +357,7 @@ abbr {
 }
 .icon-fa:before, .list-menu.nav a:after, .cwd-component .link.link-button-icon a:before, .header-emblem:before, .back-to-toc:before, ul.custom > li:before, ul.custom.recursive ul > li:before, .footer-accessibility:before {
 	font: normal normal normal 14px/1 FontAwesome;
-	speak: none;
+	speak: never;
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
@@ -367,7 +367,7 @@ abbr {
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
-	speak: none;
+	speak: never;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -499,7 +499,7 @@ article aside .smallprint {
 	opacity: 0.4;
 }
 .fade-bw, .fade-bw code {
-	color: #9a9a9a !important;
+	color: #767676 !important;
 }
 .invisible {
 	visibility: hidden;
@@ -821,6 +821,34 @@ body > footer .sub-footer .list-menu li, #body-footer .sub-footer .list-menu li 
 	padding: 0;
 	margin: 0.2em 0.6em;
 }
+.sub-footer .two-col, .sub-footer .two-col li {
+	margin-bottom: 0;
+}
+.sub-footer .two-col > * {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.sub-footer .two-col ul.custom {
+	justify-content: center;
+}
+.sub-footer ul.custom .fa-universal-access {
+	font-size: 17px;
+	margin-right: 0.3em;
+	position: relative;
+	top: 1px;
+}
+@media (min-width: 768px) {
+	.sub-footer .two-col > * {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.sub-footer .two-col > :first-child ul.custom {
+		justify-content: flex-start;
+	}
+	.sub-footer .two-col > :last-child ul.custom {
+		justify-content: flex-end;
+	}
+}
 
 /* Footer Social Media */
 
@@ -1139,7 +1167,7 @@ table th {
 	background: #fafafa;
 	text-align: left;
 }
-table thead th {
+table thead th, table thead td {
 	background: #efefef;
 	border-bottom-width: 1px;
 }
@@ -1161,7 +1189,7 @@ table.flat td, table.flat th {
 table.flat th {
 	background: #f2f2f2;
 }
-table.flat th[scope='col'], table.flat thead th {
+table.flat th[scope='col'], table.flat thead th, table.flat thead td {
 	background: #e6e6e6;
 }
 
@@ -1185,8 +1213,8 @@ table.colored td {
 table.colored.striped tr:nth-child(even) > td {
 	background: #ebf3f8;
 }
-table.colored th[scope='col'], table.colored thead th, 
-table.flat.colored th[scope='col'], table.flat.colored thead th {
+table.colored th[scope='col'], table.colored thead th, table.colored thead td, 
+table.flat.colored th[scope='col'], table.flat.colored thead th, table.flat.colored thead td {
 	background: #cfe3ef;
 	border-color: #afbfc9;
 }
@@ -1251,7 +1279,7 @@ table.rainbow.striped tr:nth-child(even) > th[scope='row'], table.flat.rainbow .
 	background: #f0f0f0 !important;
 }
 
-table.flat.sectioned thead th {
+table.flat.sectioned thead th, table.flat.sectioned thead td {
 	border-bottom-width: 1px;
 }
 table.flat.sectioned tbody > tr:first-child > td {
@@ -1318,7 +1346,7 @@ form.form input, form.form textarea {
 	appearance: none;
 	width: 100%;
 	padding: 0.4em 0.5em;
-	border: 1px solid #bcbcbc;
+	border: 1px solid #949494;
 	border-radius: 0;
 }
 #main form textarea, 
@@ -1329,7 +1357,7 @@ form.form input, form.form textarea {
 	display: block;
 	-webkit-appearance: none;
 	appearance: none;
-	border: 1px solid #bcbcbc;
+	border: 1px solid #949494;
 }
 #main form input[type='datetime'], form.form input[type='datetime'], 
 #main form input[type='datetime-local'], form.form input[type='datetime-local'], 
@@ -1342,7 +1370,7 @@ form.form input, form.form textarea {
 	//appearance: none;
 	width: 100%;
 	padding: 0.4em 0.5em;
-	//border: 1px solid #bcbcbc;
+	//border: 1px solid #949494;
 	border-radius: 0;
 	min-height: 30px;
 }
@@ -1353,7 +1381,7 @@ form.form input, form.form textarea {
 #main form input[type='search']:focus, form.form input[type='search']:focus, 
 #main form input[type='tel']:focus, form.form input[type='tel']:focus, 
 #main form textarea:focus, form.form textarea:focus {
-	border-color: #555;
+	border-color: #444;
 }
 input.icon {
 	padding-left: 35px !important;
@@ -1463,10 +1491,6 @@ form.form input[type='button']:hover, form.form input[type='button']:focus,
 form.form input#edit-reset[type='submit']:hover, form.form input#edit-reset[type='submit']:focus {
 	background: #888;
 }
-
-
-
-
 #main form input[type='reset']:active, form.form input[type='reset']:active, 
 #main form input[type='button']:active, form.form input[type='button']:active, 
 #main form input#edit-reset[type='submit']:active, form.form input#edit-reset[type='submit']:active {
@@ -1494,7 +1518,7 @@ form.form input[type='checkbox'], form.form input[type='radio'] {
 	font-size: 16px;
 	margin: 0.1em 0 0.25em;
 	padding: 0;
-	border: 1px solid #999;
+	border: 1px solid #808080;
 	border-radius: 3px;
 	background: #f9f9f9;
 	background-repeat: no-repeat;
@@ -1561,7 +1585,7 @@ form.form input[type='checkbox'] + .option-label, form.form input[type='radio'] 
 }
 #main fieldset, 
 form.form fieldset {
-	border: 1px solid #e5e5e5;
+	border: 1px solid #e0e0e0;
 	margin-left: 0;
 	margin-right: 0;
 }
@@ -1588,7 +1612,7 @@ form.webform-submission-form fieldset legend, #main form.webform-submission-form
 	margin: 0 0 2em;
 	font-family: $cwd-font-family-serif-alt;
 	font-size: 18px;
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e0e0e0;
 	color: #444;
 	border-left: 4px solid $cwd-color-accent-heading-h2;
 }
@@ -1649,10 +1673,6 @@ form.form .description + * {
 form.no-constrain label, form.no-constrain input, form.no-constrain textarea, form.no-constrain .description, form.no-constrain .panel, form.no-constrain .messages {
 	max-width: 100% !important;
 }
-
-
-
-
 #main form input:focus, #main form textarea:focus, #main form select:focus, #main form button:focus, 
 form.form input:focus, form.form textarea:focus, form.form select:focus, form.form button:focus {
 	outline: 0;
@@ -1665,16 +1685,19 @@ form.form ::-moz-placeholder {
 	font-size: 14px;
 	line-height: 1.3;
 	opacity: 1;
+	//color: #767676;
 }
 #main form ::-ms-input-placeholder, 
 form.form ::-ms-input-placeholder {
 	font-size: 14px;
 	line-height: 1.3;
+	//color: #767676;
 }
 #main form ::-webkit-input-placeholder, 
 form.form ::-webkit-input-placeholder {
 	font-size: 14px;
 	line-height: 1.3;
+	//color: #767676;
 }
 
 /* Styled Lists */
@@ -1949,7 +1972,7 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
 	display: inline-block;
 	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
 	font-size: inherit;
-	speak: none;
+	speak: never;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -2544,6 +2567,7 @@ ol.custom, ol.custom.recursive ol {
 ul.custom.inline, 
 ol.custom.inline {
 	@extend .flex;
+	justify-content: flex-start;
 	margin-right: -15px;
 	
 	@media (min-width: 768px) {
@@ -3823,7 +3847,8 @@ body > footer .main-footer .container-fluid:after, #body-footer .main-footer .co
 body > footer .primary, body > footer .secondary, #body-footer .primary, #body-footer .secondary {
 	margin: 0 !important;
 }
-body > footer .sub-footer .primary, #body-footer .sub-footer .primary {
+body > footer .sub-footer .primary, #body-footer .sub-footer .primary, 
+body > footer .sub-footer .two-col > :last-child, #body-footer .sub-footer .two-col > :last-child {
 	text-align: right;
 }
 body > footer .list-menu.vertical li, #body-footer .list-menu.vertical li {
