@@ -130,3 +130,15 @@ function cwd_base_theme_suggestions_taxonomy_term_alter(array &$suggestions, arr
   $suggestions[] = 'taxonomy_term__' . $term->bundle() . '__' . $sanitized_view_mode;
   $suggestions[] = 'taxonomy_term__' . $term->id() . '__' . $sanitized_view_mode;
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * (Again) Not just adding to twig debug -- these template names aren't available OOTB.
+ * TO DO: (Again) I'm not really sure my statement in the previous line is true... why would this function add template support but the previous functions somehow don't...? -- but I _am_ sure that without this function, page--node--CTYPE templates don't get picked up.
+ */
+function cwd_base_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  if (($node = \Drupal::routeMatch()->getParameter('node')) && $node instanceof \Drupal\node\NodeInterface) {
+    $suggestions[] = 'page__node__' . $node->bundle();
+  }
+}
