@@ -1043,7 +1043,7 @@ button.button-copy {
   font-size: 16px;
   line-height: 1; }
   button.button-copy:before {
-    content: '\f109'; }
+    content: '\f237'; }
   button.button-copy:hover, button.button-copy:focus {
     background: #f7f7f7;
     border-color: #777;

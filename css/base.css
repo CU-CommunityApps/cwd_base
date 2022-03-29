@@ -3879,7 +3879,7 @@ h2 + .back-to-toc + .cwd-component-rows:not(.blocked):not(.striped):not(.card-sl
     width: 35%; }
   article aside.sidebar,
   article aside.column {
-    width: 30%;
+    width: 35%;
     float: right;
     margin: 0 0 15px 40px; }
   article aside.column {
