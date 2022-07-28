@@ -1,4 +1,4 @@
-/* CWD Card Slider (ama39, last update: 10/8/20)
+/* CWD Card Slider (ama39, last update: 4/19/22)
    - 
    
    - Accessibility Notes:
@@ -44,15 +44,28 @@ jQuery(document).ready(function($) {
 		var viewer_width = $(viewer_band).width();
 		var viewer_scroll_limit = $(viewer_band)[0].scrollWidth - viewer_width;
 		var cards_per_screen = Math.round(viewer_width / card_width);
+		var full_card_sets = Math.floor(card_count / cards_per_screen);
+		var even_sets = true;
+		if (full_card_sets * cards_per_screen < card_count) {
+			even_sets = false;
+		}
 		
 		var scroll_target = 0;
 		var active_pip = 0;
+		var active_pip_raw = 0;
+		var previous_pip = 0;
+		var previous_pip_raw = 0;
 		
 		$(window).resize(function() {
 			viewer_width = $(viewer_band).width();
 			viewer_scroll_limit = $(viewer_band)[0].scrollWidth - viewer_width;
 			card_width = $(viewer_band).find('.card').first().outerWidth();
 			cards_per_screen = Math.round(viewer_width / card_width);
+			full_card_sets = card_count % cards_per_screen;
+			even_sets = true;
+			if (full_card_sets * cards_per_screen < card_count) {
+				even_sets = false;
+			}
 			
 			// recalibrate
 			var current_first_card = Math.round($(viewer_band).scrollLeft() / card_width);
@@ -134,8 +147,13 @@ jQuery(document).ready(function($) {
 			}
 			$(viewer).find('.pips').html(pips_html);
 		
+			
+			previous_pip_raw = active_pip_raw;
+			previous_pip = active_pip;
 			active_pip = 0;
 			if (scroll_target > 0) {
+				
+				/* previous version of pip calculation ---
 				active_pip = ((scroll_target / viewer_scroll_limit) * pip_count).toFixed(1);
 				if (pip_count - active_pip <= 1 ) {
 					active_pip = Math.floor(active_pip) - 1;
@@ -143,6 +161,22 @@ jQuery(document).ready(function($) {
 				else {
 					active_pip = Math.ceil(active_pip) - 1;
 				}
+				--- */
+				
+				/* new, more reliable pip calculation (Apr 2022) */
+				var new_first_card = Math.round(scroll_target / card_width);
+				if (cards_per_screen != 1) {
+					new_first_card = new_first_card + 1;
+				}
+				active_pip_raw = new_first_card / cards_per_screen;
+				if ( !even_sets && active_pip_raw > previous_pip_raw && pip_count - (Math.floor(previous_pip_raw)+1) == 1 ) {
+					active_pip = Math.ceil(active_pip_raw);
+				} 
+				else {
+					active_pip = Math.floor(active_pip_raw);
+				}
+				/* --- */
+				
 			}
 			$(viewer).find('.pip').eq(active_pip).addClass('active');
 		

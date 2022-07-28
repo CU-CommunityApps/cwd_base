@@ -103,7 +103,7 @@ select,
 textarea {
   font-family: sans-serif;
   font-size: 100%;
-  line-height: 1.15;
+  line-height: 1.2;
   margin: 0; }
 
 button,
@@ -1903,6 +1903,13 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
   background: #444;
   background: rgba(0, 0, 0, 0.3);
   /* outline-color: #fff; */ }
+
+#main-navigation abbr {
+  font-family: Courier, monospace;
+  color: #de604c;
+  background: rgba(0, 0, 0, 0.8);
+  font-size: 86.6666666666667%;
+  padding: 2px 4px; }
 
 /* Dropdown Navigation
    ************************************ */

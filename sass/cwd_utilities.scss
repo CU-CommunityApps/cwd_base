@@ -1168,16 +1168,16 @@ button.button-copy {
 	appearance: none;
 	background: #f3f3f3;
 	color: #444;
-	border: 2px solid #aaa;
-	border-radius: 3px;
+	border: 1px solid #666;
+	border-radius: 2px;
 	padding: 0;
-	margin: -0.2em 0.1em;
-	width: 29px;
-	height: 26px;
+	margin: -0.1em 0.1em;
+	width: 24px;
+	height: 22px;
 	font-family: $cwd-font-family-sans-ui;
 	cursor: pointer;
 	transition: background .1s;
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 1;
 	
 	@extend .icon-zmdi;
@@ -1187,13 +1187,44 @@ button.button-copy {
 	}
 	&:hover, &:focus {
 		background: #f7f7f7;
-		border-color: #777;
+		border-color: #000;
 		color: #000;
 	}
 	&:active {
-		background: #ccc;
-		border-color: #999;
+		background: #ddd;
+		border-color: #888;
 		color: #666;
+	}
+	
+	&.enabled {
+		position: absolute;
+		transform: translate(-20px, -9px);
+		box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+		
+		@media (max-width: 767px) {
+			display: none;
+		}
+		
+		& + .code-copy {
+			outline: 3px double rgba(0,0,0,0);
+			outline-offset: 5px;
+			transition: outline-color 0.15s;
+		}
+		&:hover + .code-copy, &:focus + .code-copy {
+			outline: 3px double rgba(0,0,0,0.35);
+			outline-offset: 5px
+		}
+		&:active + .code-copy {
+			outline: 3px double rgba(0,0,0,0.9);
+			outline-offset: 5px
+		}
+		
+		&.right {
+			position: relative;
+			float: right;
+			transform: translate(-10px, -9px);
+			margin-right: -24px;
+		}
 	}
 	
 }

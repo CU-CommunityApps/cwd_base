@@ -1806,6 +1806,13 @@ ul.list-menu.links.vertical ul, .list-menu.links.vertical ul ul {
 	background: rgba(0,0,0,0.3);
 	/* outline-color: #fff; */
 }
+#main-navigation abbr {
+	font-family: $cwd-font-family-monospace;
+	color: #de604c;
+	background: rgba(0,0,0,0.8);
+	font-size: 86.6666666666667%;
+	padding: 2px 4px;
+}
 
 /* Dropdown Navigation
    ************************************ */

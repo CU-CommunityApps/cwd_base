@@ -1,6 +1,7 @@
-/* CWD Experimental Functionality (ama39, last update: 8/24/18)
+/* CWD Experimental Functionality (ama39, last update: 6/10/22)
 	Experimental/non-production scripting to help with demonstration and documentation. Some of this may eventually graduate to CWD Utilities.
    - 1. Automated Table of Contents
+   - 2. Code Copy
    ------------------------------------------------------------------------- */
 
 		
@@ -104,6 +105,36 @@ function autoTOC(origin_target,toc_target) {
 		}
 	});
 	
+}
+
+// 2. Code Copy -----------------------------------------------------------
+	
+function codeCopySetup(selectors) {
+	
+	jQuery(document).ready(function($) {
+	
+		$(selectors).addClass('code-copy');
+		$('.code-copy').before('<button class="button-copy enabled"><span class="sr-only">Copy Code</span></button>');
+		
+		// button code here
+		$('.button-copy.enabled').each(function() {
+			var copy_target = $(this).next('.code-copy');
+			if ( $(copy_target).hasClass('align-right') || $(copy_target).hasClass('column') || $(copy_target).hasClass('sidebar') ) {
+				$(this).addClass('right');
+			}
+			$(this).click(function() {
+				$(copy_target).removeClass('code-copy');
+				var markup = $(copy_target).prop('outerHTML').toString();
+				try {
+					navigator.clipboard.writeText(markup);
+				}
+				catch (err) {
+					console.log('Error while copying to clipboard: ' + err);
+				}
+				$(copy_target).addClass('code-copy');
+			});
+		});
+	});
 }
 
 

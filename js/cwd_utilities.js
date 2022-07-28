@@ -1,4 +1,4 @@
-/* CWD Utilities (ama39, last update: 7/12/21)
+/* CWD Utilities (ama39, last update: 5/12/22)
    - 1. Main Navigation (script support for dropdown menus and mobile)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -10,6 +10,7 @@
    - 9. Responsive Table (table.table-responsive: generates headings for use in a mobile-friendly table design)
    
    Change Log
+   - 5/12/22 Mobile nav timing adjustment to avoid focus conflicts when transitioning back and forth to desktop design
    - 7/12/21 Responsive Table option added
    - 3/5/21 Mobile main navigation now auto-closes on loss of focus
    - 2/15/21 Small adjustment to code for detecting empty sidebar menus in Drupal
@@ -332,7 +333,7 @@ var msie = document.documentMode;
 		if ( $('body').hasClass('mobile') ) {
 			focus_timeout = setTimeout(function(){
 				$('#mobile-close').trigger('click');
-			}, 100);
+			}, 50);
 		}
 	});
 	
