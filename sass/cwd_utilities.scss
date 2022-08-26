@@ -1191,7 +1191,7 @@ button.button-copy {
 		color: #000;
 	}
 	&:active {
-		background: #ddd;
+		background: #fff;
 		border-color: #888;
 		color: #666;
 	}
@@ -1208,15 +1208,17 @@ button.button-copy {
 		& + .code-copy {
 			outline: 3px double rgba(0,0,0,0);
 			outline-offset: 5px;
-			transition: outline-color 0.15s;
+			transition: none;
 		}
-		&:hover + .code-copy, &:focus + .code-copy {
+		&:hover + .code-copy {
 			outline: 3px double rgba(0,0,0,0.35);
-			outline-offset: 5px
+			outline-offset: 5px;
+			transition: outline-color 0.15s;
 		}
 		&:active + .code-copy {
 			outline: 3px double rgba(0,0,0,0.9);
-			outline-offset: 5px
+			outline-offset: 5px;
+			transition: outline-color 0.15s;
 		}
 		
 		&.right {
@@ -1225,6 +1227,41 @@ button.button-copy {
 			transform: translate(-10px, -9px);
 			margin-right: -24px;
 		}
+	}
+	
+	&:after {
+		font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+		font-size: inherit;
+		speak: never;
+		text-rendering: auto;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		content: '';
+		color: #fff;
+		background: #222222;
+		font-size: 16px;
+		width: 1.5em;
+		height: 1.5em;
+		line-height: 1.5;
+		text-align: center;
+		border-radius: 100%;
+		position: absolute;
+		transform: translate(-3px, -20px);
+		opacity: 0;
+		display: none;
+		
+	}
+	&.success:after {
+		background: #008800;
+		content: '\f108';
+		opacity: 1;
+		display: inline-block;
+	}
+	&.failure:after {
+		background: #cc0000;
+		content: '\f1f2';
+		opacity: 1;
+		display: inline-block;
 	}
 	
 }

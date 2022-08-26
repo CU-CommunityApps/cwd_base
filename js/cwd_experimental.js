@@ -112,7 +112,7 @@ function autoTOC(origin_target,toc_target) {
 function codeCopySetup(selectors) {
 	
 	jQuery(document).ready(function($) {
-	
+		
 		$(selectors).addClass('code-copy');
 		$('.code-copy').before('<button class="button-copy enabled"><span class="sr-only">Copy Code</span></button>');
 		
@@ -127,11 +127,17 @@ function codeCopySetup(selectors) {
 				var markup = $(copy_target).prop('outerHTML').toString();
 				try {
 					navigator.clipboard.writeText(markup);
+					$(this).addClass('success');
 				}
 				catch (err) {
 					console.log('Error while copying to clipboard: ' + err);
+					$(this).addClass('failure');
 				}
 				$(copy_target).addClass('code-copy');
+				var this_button = $(this);
+				setTimeout(function() {
+					$(this_button).removeClass('success failure');
+				},1000);
 			});
 		});
 	});
