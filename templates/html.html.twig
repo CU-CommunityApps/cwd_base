@@ -111,15 +111,20 @@
   {{ page }}
   {{ page_bottom }}
 
-  <footer>
+  <footer id="body-footer" aria-label="Site footer">
     <div class="main-footer">
       <div class="container-fluid sidebar-left">
         <div class="row">
-          <div class="primary">
-            {{ page.footer_primary }}
-          </div>
-          <div class="secondary">
-            {{ page.footer_secondary }}
+          <div class="flex-grid">
+            <div class="flex-4">
+              {{ page.footer_primary }}
+            </div>
+            <div class="flex-4">
+              {{ page.footer_secondary }}
+            </div>
+            <div class="flex-4">
+              {{ page.footer_tertiary }}
+            </div>
           </div>
         </div>
       </div>
