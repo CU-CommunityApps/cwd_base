@@ -264,14 +264,15 @@ main .slider-caption h2, #main .slider-caption h2 {
 }
 .slider-container .campaign-nav .next-prev {
 	float: left;
+	font-size: 12px;
 }
 .slider-container .campaign-nav .next-prev a {
 	float: left;
 	display: block;
 	color: #fff;
 	background: #b31b1b;
-	width: 36px;
-	height: 36px;
+	width: 3em;
+	height: 3em;
 	text-align: center;
 }
 .slider-container .campaign-nav .next-prev a:hover, .slider-container .campaign-nav .next-prev a:focus {
@@ -284,12 +285,17 @@ main .slider-caption h2, #main .slider-caption h2 {
 	color: #fff;
 	font-size: 26px;
 	line-height: 36px;
+	
+	&.fa-angle-right {
+		padding-left: 0.038461538461538em;
+	}
 }
 .slider-container .campaign-nav .next-prev .prev {
 	margin-right: 2px;
 }
 .slider-container .campaign-nav .next-prev .next {
 	margin-right: 16px;
+	
 }
 
 /* options */
@@ -313,11 +319,12 @@ main .slider-caption h2, #main .slider-caption h2 {
 .slider-container .campaign-nav.no-numbers li a {
 	padding: 6px 4px;
 	margin: 6px 0;
+	font-size: 14px;
 }
 .slider-container .campaign-nav.no-numbers .dot {
-	width: 14px;
-	height: 14px;
-	line-height: 14px;
+	width: 1em;
+	height: 1em;
+	line-height: 1em;
 	background: #000;
 	background: rgba(0,0,0,0.4);
 	box-shadow: 0 0 2px rgba(255,255,255,0.3);

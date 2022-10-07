@@ -1,4 +1,5 @@
 /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
+//  -- modified by Custom Development (last update: 5/9/22)
 
 // Document
 // ==========================================================================
@@ -244,7 +245,7 @@ select,
 textarea {
   font-family: sans-serif; // 1
   font-size: 100%; // 1
-  line-height: 1.15; // 1
+  line-height: 1.2; // 1 // increased from normalize's 1.15, to correct text being cut off in Windows browsers (ama39, 5/9/22) 
   margin: 0; // 2
 }
 

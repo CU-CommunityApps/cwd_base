@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 		}).focusout(function(e) {
 			return_focus = false;
 		}).click(function(e) {
-			e.preventDefault();
+			//e.preventDefault();
 			e.stopPropagation();
 		});
 		
