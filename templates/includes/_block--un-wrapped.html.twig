@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Theme override to remove div wrapper from blocks.
+ * See cwd_base/block.html.twig for available variables and other info.
+ *
+ * @see template_preprocess_block()
+ */
+#}
+{{ title_prefix }}
+{% if label %}
+  <h2{{ title_attributes }}>{{ label }}</h2>
+{% endif %}
+{{ title_suffix }}
+{% block content %}
+  {{ content }}
+{% endblock %}
