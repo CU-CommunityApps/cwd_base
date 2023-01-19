@@ -604,8 +604,8 @@ var msie = document.documentMode;
 				e.preventDefault();
 				$(tabs).children('li').removeClass('active').hide();
 				$(tabs).children('li').eq( $(this).index() ).show().addClass('active');
-				$(tabs).prev(nav_tag).find(tab_tag).removeClass('active').attr('aria-selected','false');
-				$(this).addClass('active').attr('aria-selected','true');
+				$(tabs).prev(nav_tag).find(tab_tag).removeClass('active').attr('aria-selected','false').attr('tabindex', '-1');
+				$(this).addClass('active').attr('aria-selected','true').attr('tabindex', '0');
 				if (!aria_mode) {
 					$($(this).attr('href')).focus();
 				}
