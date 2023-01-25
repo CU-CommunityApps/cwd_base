@@ -401,7 +401,7 @@ var msie = document.documentMode;
 		}
 	});
 	$('.expander-heading').each(function() {
-		
+		$(this).attr('role','button');
 		/*
 		var this_heading = $(this);
 		$(this).next('div').focus(function() {
