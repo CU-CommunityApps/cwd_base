@@ -59,7 +59,23 @@ var msie = document.documentMode;
 	$(window).resize(resizeChecks);
 	resizeChecks();
 
-
+	//handleManNavKeyUp function for keyboard and mouse navigation on main menu WCAG 2.1
+	function handleManNavKeyUp(e) {
+		// console.log("keyup");
+		if (e.keyCode == 27) { // escape key
+			let hovered = document.querySelector("li.menu-item.parent :hover");
+			// console.log("escape key!");
+			//if we have child ul element already just hide it
+			if (hovered.classList.contains("children")) {
+				hovered.style.display = "none";
+			}
+			//if we are on on the parent element meaning we have childern items then hide those 
+			else if (hovered.nextElementSibling && hovered.nextElementSibling.classList.contains("children")) {
+				hovered.nextElementSibling.style.display = "none";
+			}
+			window.removeEventListener('keyup',handleManNavKeyUp);
+		}
+	}
 
 
 	// 1. Main Navigation -----------------------------------------------------
@@ -143,6 +159,23 @@ var msie = document.documentMode;
 		$(this).find('ul').first().children('li').addClass('top-level-li').children('a').addClass('top-level-link');
 	});
 	
+	// Keyboard and Mouse hover functionality WCAG 2.1
+	let partentmenuitems = document.querySelectorAll("#main-navigation li.menu-item.parent");
+    partentmenuitems.forEach((parent) => {
+      parent.addEventListener('mouseenter', function() {
+        // console.log("mouseenter");
+        let childul = this.querySelector(".children");
+        childul.style.display = "inherit";
+        window.addEventListener('keyup',handleManNavKeyUp);
+      })
+      parent.addEventListener('mouseleave', function() {
+        // console.log("mouseleave");
+        let childul = this.querySelector(".children");
+        childul.style.display = "inherit";
+        window.removeEventListener('keyup',handleManNavKeyUp);
+      });
+    });
+
 	$('.dropdown-menu-on-demand').find('ul').find('a').each(function() { // on-demand mode only
 		
 		$(this).attr('data-label',$(this).children('span:first-child').text()); // -> generate initial label text
