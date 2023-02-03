@@ -21,6 +21,7 @@ global-styling:
     js/cwd_gallery.js: {}
     js/cwd_popups.js: {}
     js/cwd_card_slider.js: {}
+    js/cwd_main_nav_wcag.js: {}
 
 header-scripts:
   header: true
