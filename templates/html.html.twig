@@ -111,6 +111,48 @@
   {{ page }}
   {{ page_bottom }}
 
+  <footer id="body-footer" aria-label="Site footer">
+    <div class="main-footer">
+      <div class="container-fluid sidebar-left">
+        <div class="row">
+          <div class="flex-grid">
+            <div class="flex-4">
+              {{ page.footer_primary }}
+            </div>
+            <div class="flex-4">
+              {{ page.footer_secondary }}
+            </div>
+            <div class="flex-4">
+              {{ page.footer_tertiary }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-footer">
+      <div class="container-fluid sidebar-left">
+        <div class="row">
+          <div class="content">
+            <div class="two-col">
+              <div>
+                <ul class="custom inline no-bullet">
+                  {#<li><a href="https://www.cornell.edu">Cornell University</a> ©{{ "now"|date("Y") }}</li>#}
+                  <li><a href="https://privacy.cornell.edu/">University Privacy</a></li>
+                </ul>
+              </div>
+              <div>
+                <ul class="custom inline no-bullet">
+                  <li><a href="mailto:web-accessibility@cornell.edu">Web Accessibility Assistance</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ page.subfooter }}
+      </div>
+    </div>
+  </footer>
+
   <js-bottom-placeholder token="{{ placeholder_token|raw }}">
   <!-- Emergency banner removed March 2021 -->
   <!-- script src="https://embanner.univcomm.cornell.edu/OWC-emergency-banner.js" type="text/javascript" async></script -->
