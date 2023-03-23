@@ -204,13 +204,13 @@ jQuery(document).ready(function($) {
 				var target_href = $(this).attr('href');
 				var filetype = target_href.substr(target_href.lastIndexOf('.')).toLowerCase();
 				//console.log(filetype);
+				var button = $(this);
 				
 				// Image Content
 				if (filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
 					// preload images
 					// TODO: some kind of smarter, asynchronous preloading?
 					var img = new Image();
-					var button = $(this);
 					img.onload = function() {
 						$(button).attr('data-native-width',this.width);
 						$(button).attr('data-native-height',this.height);
