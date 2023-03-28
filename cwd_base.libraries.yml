@@ -21,10 +21,6 @@ global-styling:
     js/cwd_gallery.js: {}
     js/cwd_popups.js: {}
     js/cwd_card_slider.js: {}
-  dependencies:
-    - core/drupal
-    - core/jquery
-    - core/once
 
 header-scripts:
   header: true
