@@ -190,79 +190,70 @@ jQuery(document).ready(function($) {
 				$(thumbnails).find('.col a').eq(next_image).trigger('click');
 			}
 		});
-		
-	});
-	
-	
-	// Window Load ------------------------------------------------------------
-	$(window).on('load', function(e) {
-	
-		$('.cwd-gallery.viewer').each(function() {
-		
-			$(this).find('.thumbnails a').each(function(i) {
-			
-				var target_href = $(this).attr('href');
-				var filetype = target_href.substr(target_href.lastIndexOf('.')).toLowerCase();
-				//console.log(filetype);
-				var button = $(this);
-				
-				// Image Content
-				if (filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
-					// preload images
-					// TODO: some kind of smarter, asynchronous preloading?
-					var img = new Image();
-					img.onload = function() {
-						$(button).attr('data-native-width',this.width);
-						$(button).attr('data-native-height',this.height);
-				
-						// activate first slide
-						if (i == 0) {
-							$(button).trigger('click');
-						}
-					};
-					img.src = $(this).attr('href');
-				}
-				// Video Content
-				else {
-					var videotype = false;
-					var vid = 0;
-					if (target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0) {
-						videotype = 'youtube';
-						var url_process = target_href.replace(/\/$/,'').replace('watch?v=','').split('/');
-						vid = url_process[url_process.length-1];
-						// Examples:
-						// www.youtube.com/watch?v=-SwWL5xCzhM
-						// youtu.be/-SwWL5xCzhM
-						// www.youtube.com/embed/-SwWL5xCzhM
-					}
-					else if (target_href.indexOf('cornell.edu/video') >= 0) {
-						videotype = 'cornellcast';
-						var url_process = target_href.replace(/\/$/,'').replace('/embed','').split('/');
-						vid = url_process[url_process.length-1];
-						// Examples:
-						// www.cornell.edu/video/glorious-to-view
-						// www.cornell.edu/video/glorious-to-view/
-						// www.cornell.edu/video/glorious-to-view/embed
-					}
-					else if (filetype == '.mp4') {
-						videotype = 'html5';
-						vid = target_href;
-					}
-					//console.log(videotype + ' --> ' + vid)
-					if (videotype != false && vid != 0) {
-						$(this).addClass('video').addClass(videotype).attr('data-video-id',vid);
-					}
-					
+
+		$(this).find('.thumbnails a').each(function(i) {
+
+			var target_href = $(this).attr('href');
+			var filetype = target_href.substr(target_href.lastIndexOf('.')).toLowerCase();
+			//console.log(filetype);
+			var button = $(this);
+
+			// Image Content
+			if (filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
+				// preload images
+				// TODO: some kind of smarter, asynchronous preloading?
+				var img = new Image();
+				img.onload = function() {
+					$(button).attr('data-native-width',this.width);
+					$(button).attr('data-native-height',this.height);
+
 					// activate first slide
 					if (i == 0) {
 						$(button).trigger('click');
 					}
-					
+				};
+				img.src = $(this).attr('href');
+			}
+			// Video Content
+			else {
+				var videotype = false;
+				var vid = 0;
+				if (target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0) {
+					videotype = 'youtube';
+					var url_process = target_href.replace(/\/$/,'').replace('watch?v=','').split('/');
+					vid = url_process[url_process.length-1];
+					// Examples:
+					// www.youtube.com/watch?v=-SwWL5xCzhM
+					// youtu.be/-SwWL5xCzhM
+					// www.youtube.com/embed/-SwWL5xCzhM
 				}
-			
-			});
-		});
+				else if (target_href.indexOf('cornell.edu/video') >= 0) {
+					videotype = 'cornellcast';
+					var url_process = target_href.replace(/\/$/,'').replace('/embed','').split('/');
+					vid = url_process[url_process.length-1];
+					// Examples:
+					// www.cornell.edu/video/glorious-to-view
+					// www.cornell.edu/video/glorious-to-view/
+					// www.cornell.edu/video/glorious-to-view/embed
+				}
+				else if (filetype == '.mp4') {
+					videotype = 'html5';
+					vid = target_href;
+				}
+				//console.log(videotype + ' --> ' + vid)
+				if (videotype != false && vid != 0) {
+					$(this).addClass('video').addClass(videotype).attr('data-video-id',vid);
+				}
 
+				// activate first slide
+				if (i == 0) {
+					$(button).trigger('click');
+				}
+
+			}
+
+		});	
+		
 	});
 	
 });
