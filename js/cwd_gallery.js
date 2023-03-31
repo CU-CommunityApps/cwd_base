@@ -1,4 +1,4 @@
-/* CWD Image Gallery (ama39, last update: 10/14/18)
+/* CWD Image Gallery (ama39, last update: 3/31/23)
    - Supports two interface modes:
    - 1. Thumbnail Grid with Modal ("Grid mode") - a collection of clickable thumbnails which launch full-sized images in a modal popup (requires cwd_popups.js)
    - -- Grid mode doesn't technically require this JavaScript file (all functionality is handled by the "gallery" scripting in cwd_popups.js).
@@ -22,16 +22,16 @@
    - -- Smarter preloading (maybe asynchronous preloading that loads images when their thumbnail is visible on screen instead of all images at once?)
    - -- Better video accessibility (it is greatly limited by YouTube and CornellCast being in iframes, which cannot be controlled with JavaScript, cross-domain)
    ------------------------------------------------------------------------- */
-	
+
 // defaults
 var slide_ratio = 0.667; // ratio of height to width (height is ~67% of width)
 
 // globals
 var gallery_count = 0;
 
-		
-jQuery(document).ready(function($) {	
-	
+
+(function ($) {
+
 	// Thumbnail Grid with Modal
 	$('.cwd-gallery.grid').each(function() {
 		gallery_count++;
@@ -44,33 +44,36 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
-	
+
 	// Viewer with Thumbnails
 	$('.cwd-gallery.viewer').each(function() {
-		
+
 		var gallery = $(this);
 		var slide = $(this).find('.slide');
 		var thumbnails = $(this).find('.thumbnails');
 		var image_count = $(this).find('.thumbnails .col').length;
 		$(slide).append('<p class="caption"></p><div class="gallery-nav"><div class="next-prev"><a class="prev" href="#"><span class="hidden">Previous Item</span></a><a class="next" href="#"><span class="hidden">Next Item</span></a></div></div>');
-		
+
 		// configure thumbnail buttons
 		var videoElement;
 		$(this).find('.thumbnails a').click(function(e) {
 			e.preventDefault();
-			
+
 			// Video Content
 			if ($(this).hasClass('video')) {
 				if ($(this).hasClass('active')) {
-					$(slide).find('.video-container').focus(function() {
+					$(slide).find('.video-container').on('focus',function() {
 						$(slide).find('.caption').addClass('fadeout');
-					}).focus();
+					});
+					var focus_helper = setTimeout(function() {
+						$(slide).find('.video-container').focus();
+					}, 50);
 					//videoElement[0].play; // this currently won't work for YouTube and CornellCast, due to cross-domain iframe restrictions
 				}
 				else {
 					$(slide).find('.video-container').remove();
 					$(slide).find('.caption').show().removeClass('fadeout');
-					
+
 					$(slide).addClass('video');
 					if ($(this).hasClass('youtube')) {
 						$(slide).prepend('<iframe class="video-container" width="560" height="315" src="https://www.youtube.com/embed/'+$(this).attr('data-video-id')+'?rel=0&iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="YouTube video"></iframe>');
@@ -114,7 +117,7 @@ jQuery(document).ready(function($) {
 				$(slide).find('.caption').show().removeClass('fadeout');
 				var native_width = parseInt($(this).attr('data-native-width'));
 				var native_height = parseInt($(this).attr('data-native-height'));
-			
+
 				// detect images that are too tall for the viewer's ratio (e.g., square images, portrait images)
 				if (native_height / native_width > slide_ratio) {
 					$(slide).addClass('portrait');
@@ -122,23 +125,23 @@ jQuery(document).ready(function($) {
 				else {
 					$(slide).removeClass('portrait');
 				}
-			
+
 				// display image and caption
 				$(slide).removeClass('video').attr('style','background-image:url('+$(this).attr('href')+');');
 				$(slide).find('.caption').text($(this).attr('data-title'));
 			}
-			
+
 			// thumbnail states
 			$(gallery).find('.thumbnails a').removeClass('active');
 			$(this).addClass('active');
-			
+
 			// autoscroll the thumbnail band if needed to make the active thumbnail fully visible
 			var thumb_position = parseInt($(this).parent().position().left);
 			var thumb_width = $(this).width();
 			var band_width = $(thumbnails).width();
 			var band_scroll = $(thumbnails).scrollLeft();
 			var grid_size = $(this).width() + parseInt($(this).parent().css('padding-left')) + parseInt($(this).parent().css('padding-right'));
-			
+
 			if ( thumb_position - (grid_size/2) < 0 ) {
 				// needs a scroll on the left
 				$(thumbnails).stop().animate({
@@ -151,7 +154,7 @@ jQuery(document).ready(function($) {
 					scrollLeft: thumb_position + band_scroll + (grid_size*1.5) - band_width
 				}, 300, 'easeOutQuad');
 			}
-			
+
 			// hide the faded edge effect when the first or last thumbnail is active
 			if ( $(this).parent(':first-child').length > 0 ) {
 				$(gallery).find('.thumbnails-band').addClass('hide-before');
@@ -164,11 +167,16 @@ jQuery(document).ready(function($) {
 			else {
 				$(gallery).find('.thumbnails-band').removeClass('hide-after hide-before');
 			}
-			
+
 		}).focus(function() {
 			$(this).trigger('click');
+		}).keydown(function(e) {
+			if (e.keyCode == 13 || e.keyCode == 32) { // enter or space key
+				e.preventDefault();
+				$(this).trigger('click');
+			}
 		});
-		
+
 		// nav buttons (Next and Previous)
 		$(slide).find('.next-prev a').click(function(e) {
 			e.preventDefault();
@@ -189,72 +197,86 @@ jQuery(document).ready(function($) {
 				}
 				$(thumbnails).find('.col a').eq(next_image).trigger('click');
 			}
+		}).keydown(function(e) {
+			if (e.keyCode == 13 || e.keyCode == 32) { // enter or space key
+				e.preventDefault();
+				$(this).trigger('click');
+			}
 		});
 
-		$(this).find('.thumbnails a').each(function(i) {
+	});
 
-			var target_href = $(this).attr('href');
-			var filetype = target_href.substr(target_href.lastIndexOf('.')).toLowerCase();
-			//console.log(filetype);
-			var button = $(this);
 
-			// Image Content
-			if (filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
-				// preload images
-				// TODO: some kind of smarter, asynchronous preloading?
-				var img = new Image();
-				img.onload = function() {
-					$(button).attr('data-native-width',this.width);
-					$(button).attr('data-native-height',this.height);
+	// Window Load ------------------------------------------------------------
+	$(window).on('load', function(e) {
+
+		$('.cwd-gallery.viewer').each(function() {
+
+			$(this).find('.thumbnails a').each(function(i) {
+
+				var target_href = $(this).attr('href');
+				var filetype = target_href.substr(target_href.lastIndexOf('.')).toLowerCase();
+				var button = $(this);
+				//console.log(filetype);
+
+				// Image Content
+				if (filetype == '.jpg' || filetype == '.jpeg' || filetype == '.gif' || filetype == '.png') {
+					// preload images
+					// TODO: some kind of smarter, asynchronous preloading?
+					var img = new Image();
+					img.onload = function() {
+						$(button).attr('data-native-width',this.width);
+						$(button).attr('data-native-height',this.height);
+
+						// activate first slide
+						if (i == 0) {
+							$(button).trigger('click');
+						}
+					};
+					img.src = $(this).attr('href');
+				}
+				// Video Content
+				else {
+					var videotype = false;
+					var vid = 0;
+					if (target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0) {
+						videotype = 'youtube';
+						var url_process = target_href.replace(/\/$/,'').replace('watch?v=','').split('/');
+						vid = url_process[url_process.length-1];
+						// Examples:
+						// www.youtube.com/watch?v=-SwWL5xCzhM
+						// youtu.be/-SwWL5xCzhM
+						// www.youtube.com/embed/-SwWL5xCzhM
+					}
+					else if (target_href.indexOf('cornell.edu/video') >= 0) {
+						videotype = 'cornellcast';
+						var url_process = target_href.replace(/\/$/,'').replace('/embed','').split('/');
+						vid = url_process[url_process.length-1];
+						// Examples:
+						// www.cornell.edu/video/glorious-to-view
+						// www.cornell.edu/video/glorious-to-view/
+						// www.cornell.edu/video/glorious-to-view/embed
+					}
+					else if (filetype == '.mp4') {
+						videotype = 'html5';
+						vid = target_href;
+					}
+					//console.log(videotype + ' --> ' + vid)
+					if (videotype != false && vid != 0) {
+						$(this).addClass('video').addClass(videotype).attr('data-video-id',vid);
+					}
 
 					// activate first slide
 					if (i == 0) {
 						$(button).trigger('click');
 					}
-				};
-				img.src = $(this).attr('href');
-			}
-			// Video Content
-			else {
-				var videotype = false;
-				var vid = 0;
-				if (target_href.indexOf('youtube.com') >= 0 || target_href.indexOf('youtu.be') >= 0) {
-					videotype = 'youtube';
-					var url_process = target_href.replace(/\/$/,'').replace('watch?v=','').split('/');
-					vid = url_process[url_process.length-1];
-					// Examples:
-					// www.youtube.com/watch?v=-SwWL5xCzhM
-					// youtu.be/-SwWL5xCzhM
-					// www.youtube.com/embed/-SwWL5xCzhM
-				}
-				else if (target_href.indexOf('cornell.edu/video') >= 0) {
-					videotype = 'cornellcast';
-					var url_process = target_href.replace(/\/$/,'').replace('/embed','').split('/');
-					vid = url_process[url_process.length-1];
-					// Examples:
-					// www.cornell.edu/video/glorious-to-view
-					// www.cornell.edu/video/glorious-to-view/
-					// www.cornell.edu/video/glorious-to-view/embed
-				}
-				else if (filetype == '.mp4') {
-					videotype = 'html5';
-					vid = target_href;
-				}
-				//console.log(videotype + ' --> ' + vid)
-				if (videotype != false && vid != 0) {
-					$(this).addClass('video').addClass(videotype).attr('data-video-id',vid);
+
 				}
 
-				// activate first slide
-				if (i == 0) {
-					$(button).trigger('click');
-				}
+			});
+		});
 
-			}
-
-		});	
-		
 	});
-	
-});
+
+})(jQuery);
 
