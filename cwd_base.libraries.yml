@@ -15,7 +15,6 @@ global-styling:
   js:
     js/contrib/jquery.detect_swipe.js: {}
     js/contrib/pep.js: {}
-    js/contrib/modernizr.js: {}
     js/cwd.js: {}
     js/cwd_utilities.js: {}
     js/cwd_gallery.js: {}
