@@ -26,3 +26,5 @@ libraries:
   - 'cwd_base/header-scripts'
 ckeditor_stylesheets:
   - 'css/ckeditor/ckeditor.css'
+ckeditor5-stylesheets:
+  - 'css/ckeditor/ckeditor5.css'
