@@ -1,4 +1,4 @@
-/* CWD Image Slider (ama39, last update: 1/29/19)
+/* CWD Image Slider (ama39, last update: 12/1/22)
    - ...
    - >> TODO: more introduction and documentation will be added here soon (in the meantime, please see the "Scripted Components" documentation for more information) <<
    - preloads images and creates "buffer" layers to allow cover placement and ensure smooth transitions
@@ -22,6 +22,7 @@ var default_caption_div = '#site-headline'; // default caption container
 var default_heading2 = ''; // default second heading container (unused by default) *Target a heading tag (not a div) with a inner span. e.g., "#slider-extra-headline" to target <h1 id="slider-extra-headline"><span>Placeholder Heading Text</span></h1>
 var default_slide_time = 8; // time between transitions (in seconds)
 var default_transition_speed = 1; // speed of image cross-fade (in seconds) *Note: This only affects image transitions. Caption transition timing is controlled by CSS [cwd_slider.css]
+var default_quickslide = true; // transition more quickly between slides on initial load, and when manually-requested by user click/focus)
 var default_autoplay = true; // if true, the slider will cycle through images on load (but will stop after user interaction)
 var default_random_start = true; // if true, the slider will start on a random slide (instead of always starting at 1)
 var default_caption_height = '8em'; // must be enough height to accommodate the tallest caption text (only for top-aligned captions) (NYI)
@@ -47,7 +48,7 @@ var nextprev = true; // provide Next and Previous buttons
    - All arguments are described above in "default settings"
    - Arguments are optional (they override the default settings) though 'div' and 'caption' will typically be included 
 -------------------------------------------------------------------------------------------- */
-function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2) {
+function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,quickslide) {
 	
 	// instanced variables
 	slider_count++;
@@ -75,6 +76,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2) 
 		var bg_color = bg || default_bg_color;
 		if (auto == true || auto == false) { var autoplay = auto; } else { var autoplay = default_autoplay; }
 		if (random == true || random == false) { var random_start = random; } else { var random_start = default_random_start; }
+		if (quickslide == true || quickslide == false) { var quickslide_on = quickslide; } else { var quickslide_on = default_quickslide; }
 		
 		// additional variables
 		//$(caption_div).attr('tabindex','-1').addClass('aria-target'); // set focus target for accessibility
@@ -167,7 +169,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2) 
 			}
 			current_slide = starting_slide;
 		}
-		$(caption_div_inner + '.caption'+starting_slide).addClass('active');
+		$(caption_div_inner + '.caption'+starting_slide).addClass('active').trigger('newSlideActive');
 		changeSlide(starting_slide,false);
 		if (slide_count > 1) {
 			startSlider();
@@ -286,7 +288,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2) 
 			var c_speed = transition_speed * 1000; // convert transition to milliseconds
 			
 			// quick image transition when requested by button click or caption focus
-			if (!include_transition) {
+			if (!include_transition && quickslide_on) {
 				c_speed = 300;
 				$(caption_div).addClass('quick');
 				if ( heading2_h != '' ) {
@@ -325,7 +327,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2) 
 			
 			// transition caption
 			$(caption_div_inner).removeClass('active');
-			$(caption_div_inner + '.caption'+slide).addClass('active');
+			$(caption_div_inner + '.caption'+slide).addClass('active').trigger('newSlideActive');
 			
 			// transition image
 			is_transitioning = true;

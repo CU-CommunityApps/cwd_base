@@ -1,5 +1,5 @@
-/* CWD Utilities (ama39, last update: 5/12/22)
-   - 1. Main Navigation (script support for dropdown menus and mobile)
+/* CWD Utilities (last update: 6/13/23)
+   - 1. Main Navigation (script support for dropdown menus and mobile as well as a "megamenu" option)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
    - 4. Expander (turns heading + div pairs into an expand/collapse system with nesting based on heading level)
@@ -10,6 +10,15 @@
    - 9. Responsive Table (table.table-responsive: generates headings for use in a mobile-friendly table design)
    
    Change Log
+   - 6/13/23 Megamenu masonry code overhauled for better accuracy and support for multiline menu items 
+   - 3/24/23 Bug fix related to menu focus 
+   - 3/17/23 Escape key behavior within a menu, as well as globally on the page, updated to close any other menus that are open by mouseover 
+   - 3/1/23 Megamenu "masonry" mode (in which items within the megamenu break the grid vertically to fill in empty space)
+   - 2/22/23 Dropdown menu code refactored for new hover handling and megamenu "nom-nom" mode (in which the megamenu panel envelops top-level links)
+   - 2/14/23 Dropdown menu code adjusted to better support applying to Utility Nav
+   - 2/13/23 Megamenu code refactored to allow multiple menus on the same page to have different settings
+   - 2/9/23 Megamenu converted to column-based tab order and keyboard navigation finalized
+   - 9/23/22 Megamenu option added to Main Navigation scripting
    - 5/12/22 Mobile nav timing adjustment to avoid focus conflicts when transitioning back and forth to desktop design
    - 7/12/21 Responsive Table option added
    - 3/5/21 Mobile main navigation now auto-closes on loss of focus
@@ -37,9 +46,11 @@ var msie = document.documentMode;
 		// Mobile Nav
 		if ($(window).width() <= mobile_breakpoint) {
 			$('body').addClass('mobile'); // mobile nav breakpoint
+			menuClearMasonry();
 		}
 		else {
 			$('body').removeClass('mobile');
+			$('.megamenu-top').removeClass('open'); // used by megamenu "nom nom" mode
 			$('#main-navigation li.parent').removeClass('open');
 			$('#main-navigation, #mobile-nav-dimmer').removeAttr('style');
 		}
@@ -65,12 +76,28 @@ var msie = document.documentMode;
 	// 1. Main Navigation -----------------------------------------------------
 
 	var mousedown = false; // extra control variable for precise click and focus event interaction
+	
+	// Megamenu settings saved to each menu
+	$('.dropdown-menu').each(function() {
+		$(this).attr('data-megamenu','false'); // "megamenu" mode
+		$(this).attr('data-megamenu-masonry','false'); // "megamenu" masonry mode
+		if ( $(this).hasClass('dropdown-megamenu') ) {
+			$(this).attr('data-megamenu','true'); // activate megamenu design and adjustments to keyboard navigation
+			$(this).addClass('dropdown-menu-on-demand'); // ensure on-demand mode is active as well
+			if ( $(this).hasClass('megamenu-masonry') ) {
+				$(this).attr('data-megamenu-masonry','true'); // activate megamenu masonry design
+			}
+		}
+	});
 
 	// Utility Navigation (appended for mobile)
 	if ($('#utility-navigation li').length > 0) {
 		if ($('#main-navigation').length > 0) {
 			$('#main-navigation ul').first().append('<li class="parent mobile-nav-only"><a class="more-links-button" href="#">More...</a><ul class="list-menu links vertical children more-links"></ul>');
 			$('#utility-navigation li').each(function() {
+				if ( $(this).parent('ul').parent('li').length > 0 ) {
+					$(this).addClass('utility-submenu');
+				}
 				$('#main-navigation .more-links').append($(this).clone().addClass('mobile-nav-only'));
 			});
 			$('.more-links-button').click(function(e) {
@@ -98,52 +125,163 @@ var msie = document.documentMode;
 	$('.dropdown-menu li.parent li.parent > a .fa').removeClass('fa-caret-down').addClass('fa-caret-right'); // change sub-dropdown caret icons
 	$('.dropdown-menu-on-demand li.parent ul a').attr('tabindex','-1'); // in on-demand mode, links in dropdowns are not initially accessible by tab order
 	$('.dropdown-menu-on-demand li.parent > ul').attr('aria-hidden','true'); // in on-demand mode, links in dropdowns are not initially accessible to screen reader (including rotor)
+	$('.dropdown-megamenu li.parent > ul > li:first-child > a').addClass('first-child'); // in megamenu mode, used to aid with keyboard navigation
+	$('.dropdown-megamenu li.parent > ul > li:last-child > a').addClass('last-child'); // in megamenu mode, used to aid with keyboard navigation
 	$('.dropdown-menu li.parent > ul').each(function() {
 		$(this).removeClass('menu').addClass('list-menu links vertical children');
 		if ( !$('body').hasClass('mobile') ) {
-			$(this).css('min-width',$(this).parent('li').width()+'px' ); // smart min-width to prevent dropdown from being narrower than its parent
+			var min_width = $(this).parent('li').width();
+			if (min_width < 150) {
+				min_width = 150;
+			}
+			$(this).css('min-width',min_width+'px' ); // smart min-width to prevent dropdown from being narrower than its parent (and no smaller than 150)
 		}
 	});
-	$('.dropdown-menu li.parent li.parent > ul').removeAttr('style'); // reset min-width to allow smaller submenus
-	$('.dropdown-menu li.parent').hover(function() {
-		if ( !$('body').hasClass('mobile') ) {
-			// horizontal edge-detection
-			var submenu_offset = $(this).children('ul').offset();
-			if ( submenu_offset.left + $(this).children('ul').width() > $(window).width() ) {
-				$(this).children('ul').addClass('flip');
+	
+	$('.dropdown-megamenu > .container-fluid > ul').addClass('megamenu-top'); // used by megamenu "nom nom" mode
+	$('.dropdown-megamenu > .container-fluid > ul > li.parent > ul').each(function(n) {
+		
+		// in megamenu mode, catalog the number of standard menu items to allow for column-based tab order
+		if ( $(this).parent().hasClass('mobile-nav-only') ) {
+			return; // skip mobile-only utility nav if present
+		}
+		
+		var row_ids = 'abcdefgh';
+		var menu_items = $(this).children(':not(.menu-feature)').length;
+		var max_cols = 3;
+		if ($(this).children('.menu-feature').length > 0) {
+			 max_cols = 2;
+		}
+		var max_rows = menu_items / max_cols;
+		$(this).attr('data-max-rows',max_rows).attr('data-max-cols',max_cols);
+		
+		var col1 = Math.ceil(max_rows);
+		var col2 = Math.round(max_rows);
+		for (let i=0; i<col1; i++) {
+			$(this).children(':not(.menu-feature)').eq(i).attr('data-row',i+1).attr('data-col','1').attr('data-position','col1'+row_ids.charAt(i)).addClass('col1'+row_ids.charAt(i));
+		}
+		for (let i=0; i<col2; i++) {
+			$(this).children(':not(.menu-feature)').eq(i+col1).attr('data-row',i+1).attr('data-col','2').attr('data-position','col2'+row_ids.charAt(i)).addClass('col2'+row_ids.charAt(i));
+		}
+		if (max_cols == 3) {
+			var col3 = Math.floor(max_rows);
+			for (let i=0; i<col3; i++) {
+				$(this).children(':not(.menu-feature)').eq(i+col1+col2).attr('data-row',i+1).attr('data-col','3').attr('data-position','col3'+row_ids.charAt(i)).addClass('col3'+row_ids.charAt(i));
 			}
 		}
-	}, function() {
-		if ( !$('body').hasClass('mobile') ) {
-			$(this).children('ul').removeClass('flip');
-		}
+		
+		// catalog the number of sub-items for masonry calculation
+		$(this).children(':not(.menu-feature)').each(function() {
+			var children = $(this).children('ul').children('li').length;
+			$(this).attr('data-children',children);
+		});
+		
+	});
+	
+	$('.dropdown-menu li.parent li.parent > ul').removeAttr('style'); // reset min-width to allow smaller submenus
+	$('.dropdown-menu').each(function() {
+		var this_menu = $(this);
+		var hover_intent_in; // will be a Timeout() below, used for nuanced hover detection
+		var hover_intent_out; // will be a Timeout() below, used for nuanced hover detection
+		
+		$(this).find('li.parent').hover(function() {
+			// Delay menu response on hover INTO a top level item (desktop only)
+			if ( $(this).hasClass('top-level-li') && !$('body').hasClass('mobile') ) {
+				clearTimeout(hover_intent_out); // cancel any hover OUT timer
+				$(this_menu).find('li.parent').removeClass('open');
+				$(this_menu).find('li.focused').addClass('open').parent('ul').addClass('open'); // leave the menu visible if it contains current focus
+				$(this_menu).find('a:not(.top-level-link):focus').closest('.parent').addClass('open'); // account for sub-submenus as well
+				menuUpdateMasonry( $(this).children('ul').first() );
+				var this_link = $(this);
+				if ( !$(this_link).parent().hasClass('open') ) { // if the menu is not already open
+					hover_intent_in = setTimeout(function() { // start new timer
+						$(this_link).addClass('open');
+						$(this_link).parent().addClass('open');
+					},200); // 200ms delay in hover response, to reduce unintentional trigger
+				}
+				else { // if the menu is already open, skip the timer and respond immediately
+					$(this_link).addClass('open');
+					$(this_link).parent().addClass('open');
+				}
+			}
+			else if ( !$('body').hasClass('mobile') ) {
+				$(this).addClass('open');
+			}
+			if ( !$('body').hasClass('mobile') ) {
+				// horizontal edge-detection
+				var submenu_offset = $(this).children('ul').offset();
+				try {
+					if ( submenu_offset.left + $(this).children('ul').width() > $(window).width() ) {
+						$(this).children('ul').addClass('flip');
+					}
+				} catch {}
+			}
+		}, function() {
+			// Delay menu response on hover OUT of a top level item (desktop only)
+			if ( $(this).hasClass('top-level-li') && !$('body').hasClass('mobile') ) {
+				clearTimeout(hover_intent_in); // cancel any hover IN timer
+				var this_link = $(this);
+				hover_intent_out = setTimeout(function() { // start new timer
+					$(this_link).removeClass('open');
+					$(this_link).parent().removeClass('open');
+					$(this_menu).find('li.focused').addClass('open').parent('ul').addClass('open'); // leave the menu visible if it contains current focus
+					$(this_menu).find('a:not(.top-level-link):focus').closest('.parent').addClass('open'); // account for sub-submenus as well
+					if ( !$('body').hasClass('mobile') ) {
+						$(this).children('ul').removeClass('flip');
+					}
+				},400); // 400ms delay in hover response, to reduce unintentional loss of menu
+			}
+			else if ( !$('body').hasClass('mobile') ) {
+				$(this).removeClass('open');
+				$(this).children('ul').removeClass('flip');
+			}
+		});
 	});
 	$('.dropdown-menu li.parent a').focus(function() {
+		$(this).closest('.dropdown-menu').find('.focused').removeClass('focused').find('.focused-top-level').removeClass('focused-top-level');
+		if ( $(this).hasClass('top-level-link') ) {
+			$(this).closest('.top-level-li').addClass('focused-top-level');
+		}
+		else {
+			$(this).closest('.top-level-li').addClass('focused');
+		}
+		
 		if ( !$('body').hasClass('mobile') ) {
 			// horizontal edge-detection
 			var submenu_offset = $(this).closest('.parent').children('ul').offset();
-			if ( submenu_offset.left + $(this).closest('.parent').children('ul').width() > $(window).width() ) {
-				$(this).closest('.parent').children('ul').addClass('flip');
-			}
+			try {
+				if ( submenu_offset.left + $(this).closest('.parent').children('ul').width() > $(window).width() ) {
+					$(this).closest('.parent').children('ul').addClass('flip');
+				}
+			} catch {}
 		}
 		if (!mousedown) {
+			menuUpdateMasonry( $(this).next('ul') );
 			$(this).parents('.parent').addClass('open');
+			$(this).closest('.megamenu-top').addClass('open'); // used by megamenu "nom nom" mode
 			$(this).closest('.mobile-expander').children('.mobile-expander-heading').addClass('open');
 		}
 		mousedown = false;
 	}).blur(function() {
 		if ( !$('body').hasClass('mobile') ) {
 			$(this).parents('.parent').removeClass('open');
+			$(this).closest('.megamenu-top').removeClass('open'); // used by megamenu "nom nom" mode
 			$(this).closest('.mobile-expander').children('.mobile-expander-heading').removeClass('open');
 		}
 	});
 	
 	// Keyboard Navigation
 	$('.dropdown-menu').each(function() {
+		var megamenu = eval( $(this).attr('data-megamenu') ); // get megamenu setting
+		
 		$(this).find('ul').first().children('li').addClass('top-level-li').children('a').addClass('top-level-link');
+		if ( megamenu ) {
+			$(this).find('.top-level-link').next('ul').children('li').children('a').addClass('megamenu-top-level-link');
+		}
 	});
 	
-	$('.dropdown-menu-on-demand').find('ul').find('a').each(function() { // on-demand mode only
+	$('.dropdown-menu-on-demand').find('ul').find('a').each(function() { // on-demand mode only (includes megamenu mode)
+		var megamenu = eval( $(this).closest('.dropdown-menu').attr('data-megamenu') ); // get megamenu setting
 		
 		$(this).attr('data-label',$(this).children('span:first-child').text()); // -> generate initial label text
 		$(this).attr('aria-label',$(this).attr('data-label')); // -> apply initial label
@@ -157,9 +295,14 @@ var msie = document.documentMode;
 					}
 				}
 				else {
-					$(this).next('ul').attr('aria-hidden','true').find('a').attr('tabindex','-1'); // -> lock children
+					if ( !megamenu ) {
+						$(this).next('ul').attr('aria-hidden','true').find('a').attr('tabindex','-1'); // -> lock children
+					}
 					if ( $(this).attr('aria-haspopup') == 'true' ) {
-						if ( $(this).next('ul').hasClass('flip') ) {
+						if ( megamenu ) {
+							$(this).attr('aria-haspopup','false'); // megamenu submenus are always visible
+						}
+						else if ( $(this).next('ul').hasClass('flip') ) {
 							$(this).attr('aria-label', $(this).attr('data-label') + ': To enter this sub menu, press Left Arrow.'); // -> append help text
 						}
 						else {
@@ -182,6 +325,7 @@ var msie = document.documentMode;
 	});
 	
 	$('.dropdown-menu li a').keydown(function(e) {
+		var megamenu = eval( $(this).closest('.dropdown-menu').attr('data-megamenu') ); // get megamenu setting
 		
 		// Only accept arrow key input without modifier keys, to avoid interfering with system commands
 		if (!$('body').hasClass('mobile') && e.ctrlKey == false && e.altKey == false && e.shiftKey == false && e.metaKey == false) {
@@ -201,12 +345,49 @@ var msie = document.documentMode;
 						$(this).next('ul').find('a').first().focus(); // -> enter sub-submenu
 					}
 				}
-				else { // basic dropdown item
+				else { // basic dropdown item (or megamenu)
 					if ( $(this).closest('ul').closest('li').hasClass('top-level-li') ) { // 1 level down
-						$(this).closest('.top-level-li').next().children('a').first().focus(); // -> next top level item
+						if ( megamenu ) {
+							// jump over one column to the right
+							var position_current = $(this).parent().attr('data-position');
+							if ( position_current.charAt(3) == '1' ) {
+								var position_target = position_current.replace('1','2');
+							}
+							else {
+								var position_target = position_current.replace('2','3');
+							}
+							// if this row doesn't exist in the new column, target the previous row
+							if ( $(this).closest('.children').find('.'+position_target).length == 0 ) {
+								var alternate_target = position_target.substring(0,4) + String.fromCharCode(position_target.substring(4).charCodeAt(0) - 1);
+								position_target = alternate_target;
+							}
+							$(this).closest('.children').find('.'+position_target).children('a').focus(); // -> same row, next column
+						}
+						else {
+							$(this).closest('.top-level-li').next().children('a').first().focus(); // -> next top level item
+						}
 					}
 					else { // 2+ levels down
-						if ( $(this).closest('ul').hasClass('flip') ) { // current menu positioned left
+						if ( megamenu ) {
+							// jump over one column to the right
+							var position_current = $(this).closest('ul').closest('li').attr('data-position');
+							if ( position_current.charAt(3) == '3' ) {
+								// no action in 3rd column
+							}
+							else if ( position_current.charAt(3) == '1' ) {
+								var position_target = position_current.replace('1','2');
+							}
+							else {
+								var position_target = position_current.replace('2','3');
+							}
+							// if this row doesn't exist in the new column, target the previous row
+							if ( position_current.charAt(3) != '3' && $(this).closest('ul').closest('li').closest('.children').find('.'+position_target).length == 0 ) {
+								var alternate_target = position_target.substring(0,4) + String.fromCharCode(position_target.substring(4).charCodeAt(0) - 1);
+								position_target = alternate_target;
+							}
+							$(this).closest('ul').closest('li').closest('.children').find('.'+position_target).children('a').focus(); // -> same row, next column
+						}
+						else if ( $(this).closest('ul').hasClass('flip') ) { // current menu positioned left
 							$(this).closest('ul').prev('a').focus(); // -> return to parent
 						}
 						else {
@@ -219,12 +400,26 @@ var msie = document.documentMode;
 			// DOWN arrow key --------------------------------------------------------
 			else if (e.keyCode == 40) {
 				e.preventDefault();
-				if ( $(this).hasClass('top-level-link') ) { // top level
-					$(this).next('ul').attr('aria-hidden','false').children().children('a').attr('tabindex','0'); // -> unlock submenu
-					$(this).next('ul').find('a').first().focus(); // -> enter submenu
+				if ( $(this).hasClass('top-level-link') && megamenu ) {
+					$(this).next('ul').children().children('ul').attr('aria-hidden','false').children().children('a').attr('tabindex','0'); // -> unlock all submenus for megamenu
+					$(this).next('ul').find('.menu-feature *[tabindex=-1]').removeAttr('tabindex'); // safeguard arbitrary elements within menu feature
+				}
+				if ( $(this).hasClass('top-level-link') || $(this).hasClass('megamenu-top-level-link') ) { // top level (or top level item within megamenu)
+					if ( $(this).hasClass('megamenu-top-level-link') && $(this).next('ul').children('li').length <= 0 ) { // -> top level megamenu item with no submenu
+						$(this).parent().next().children('a').focus(); // -> next top-level megamenu item
+					}
+					else {
+						$(this).next('ul').attr('aria-hidden','false').children().children('a').attr('tabindex','0'); // -> unlock submenu
+						$(this).next('ul').find('a').first().focus(); // -> enter submenu
+					}
 				}
 				else {
-					$(this).parent().next().children('a').focus(); // -> next menu item
+					if ( $(this).hasClass('last-child') ) {
+						$(this).closest('ul').closest('li').next().children('a').first().focus(); // -> next top level item within megamenu
+					}
+					else {
+						$(this).parent().next().children('a').focus(); // -> next menu item
+					}
 				}
 			}
 			
@@ -243,12 +438,39 @@ var msie = document.documentMode;
 						$(this).next('ul').find('a').first().focus(); // -> enter sub-submenu
 					}
 				}
-				else { // basic dropdown item
+				else { // basic dropdown item (or megamenu)
 					if ( $(this).closest('ul').closest('li').hasClass('top-level-li') ) { // 1 level down
-						$(this).closest('.top-level-li').prev().children('a').first().focus(); // -> previous top level item
+						if ( megamenu ) {
+							// jump back one column to the left
+							var position_current = $(this).parent().attr('data-position');
+							if ( position_current.charAt(3) == '2' ) {
+								var position_target = position_current.replace('2','1');
+							}
+							else {
+								var position_target = position_current.replace('3','2');
+							}
+							$(this).closest('.children').find('.'+position_target).children('a').focus(); // -> same row, previous column
+						}
+						else {
+							$(this).closest('.top-level-li').prev().children('a').first().focus(); // -> previous top level item
+						}
 					}
 					else { // 2+ levels down
-						if ( !$(this).closest('ul').hasClass('flip') ) { // current menu positioned right
+						if ( megamenu ) {
+							// jump back one column to the left
+							var position_current = $(this).closest('ul').closest('li').attr('data-position');
+							if ( position_current.charAt(3) == '1' ) {
+								// no action in 1st column
+							}
+							else if ( position_current.charAt(3) == '2' ) {
+								var position_target = position_current.replace('2','1');
+							}
+							else {
+								var position_target = position_current.replace('3','2');
+							}
+							$(this).closest('ul').closest('li').closest('.children').find('.'+position_target).children('a').focus(); // -> same row, previous column
+						}
+						else if ( !$(this).closest('ul').hasClass('flip') ) { // current menu positioned right
 							$(this).closest('ul').prev('a').focus(); // -> return to parent
 						}
 						else {
@@ -264,6 +486,22 @@ var msie = document.documentMode;
 				if ( $(this).hasClass('top-level-link') ) { // top level
 					$(this).parent().removeClass('open'); // -> visually hide submenu
 				}
+				else if ( $(this).hasClass('megamenu-top-level-link') ) { // top level within a megamenu
+					if ( $(this).hasClass('first-child') ) { // also first link within megamenu
+						$(this).closest('ul').prev('.top-level-link').focus(); // -> return to top level
+					}
+					else {
+						if ( $(this).parent().prev('li').children('ul').first().children('li').length <= 0 ) {
+							 $(this).parent().prev().children('a').focus(); // -> previous top-level item in megamenu has no submenu, move to that item
+						}
+						else {
+							$(this).closest('li').prev().find('.last-child').first().focus(); // -> back to end of previous submenu within megamenu
+						}
+					}
+				}
+				else if ( $(this).hasClass('first-child') ) { // first submenu item in megamenu
+					$(this).closest('ul').prev('a').focus(); // -> return to parent within megamenu
+				}
 				else if ( $(this).parent().prev('li').length <= 0 ) { // first submenu item
 					$(this).closest('ul').prev('.top-level-link').focus(); // -> return to top level
 				}
@@ -274,15 +512,43 @@ var msie = document.documentMode;
 			
 			// ESCAPE key ------------------------------------------------------------
 			else if (e.keyCode == 27) {
+				// Hide any open menus that are outside of current focus
+				$(this).closest('.dropdown-menu').find('.open').removeClass('open');
+				$(this).closest('.dropdown-menu').find('.focused').addClass('open').parent('ul').addClass('open');
+				
+				// Back out of current menu or close menu when at the top level
 				if ( $(this).hasClass('top-level-link') ) { // top level
 					$(this).parent().removeClass('open'); // -> visually hide submenu
+					$(this).parent().parent().removeClass('open'); // -> hide top fill in nom-nom megamenu
 				}
 				else {
 					$(this).closest('ul').prev('a').focus(); // -> return to parent
 				}
 			}
 		}
-		
+	});
+	
+	// Escape key outside of menu scope (when a menu does not currently contain focus, but may be open by mousover) 
+	$('body').keydown(function(e) {
+		// ESCAPE key ------------------------------------------------------------
+		if (e.keyCode == 27) {
+			$('.dropdown-menu').each(function() {
+				if ( $(this).find('.focused').length == 0 && $(this).find('.focused-top-level').length == 0 ) {
+					$(this).find('.open').removeClass('open');
+				}
+			});
+		}
+	});
+	
+	// Additional focus handling (remove errant "focus" classes if needed)
+	var focus_cleanup;
+	$('.dropdown-menu').focusout(function() {
+		var this_menu = $(this);
+		focus_cleanup = setTimeout(function(){
+			$(this_menu).find('.focused, .focused-top-level').removeClass('focused focused-top-level');
+		}, 50);
+	}).focusin(function() {
+		clearTimeout(focus_cleanup);
 	});
 	
 	// Mobile Navigation
@@ -337,6 +603,91 @@ var msie = document.documentMode;
 		}
 	});
 	
+	// Recalculate Megamenu Masonry
+	function menuUpdateMasonry(menu) {
+		
+		// if this is the mobile menu...
+		if ( $('body').hasClass('mobile') ) {
+			menuClearMasonry(); // reset
+			return; // and take no further action
+		}
+		// if this is not a masonry menu...
+		if ( !$(menu).parent().hasClass('mobile-nav-only') && $(menu).closest('.megamenu-masonry').length == 0 ) {
+			return; // take no action
+		}
+		
+		// otherwise, now entering a hardhat area...
+		
+		var masonry = [0,0,0]; // a running tally of masonry offset for each column
+		var cols = $(menu).attr('data-max-cols');
+		var rows = $(menu).attr('data-max-rows');
+
+		$(menu).each(function() {
+			var this_menu = $(this);
+			var this_menu_feature = $(this).find('.menu-feature').last();
+			var this_menu_feature_extraspace = 0;
+			if ( $(this_menu_feature).length > 0 ) {
+				this_menu_feature_extraspace = parseInt( $(this_menu_feature).css('height','').height() - $(this_menu_feature).find('.feature-content').height() );
+			}
+			
+			$(this).children(':not(.menu-feature)').each(function() {
+				$(this).removeAttr('style');
+				var this_row = parseInt( $(this).attr('data-row') );
+				var this_col = parseInt( $(this).attr('data-col') );
+			
+				if ( this_row > 1 ) {
+					var prev_row = this_row - 1;
+					var masonry_offset = 0;
+					var max_height = 0;
+					var prev_height = 0;
+					var row_query = $(this).parent().find('[data-row='+prev_row+']');
+					
+					// calculate height of previous menu item and any children
+					for (let i=0; i<$(this).prev().children().length; i++) {
+						prev_height += $(this).prev().children().eq(i).height();
+					}
+					prev_height = parseInt(prev_height);
+				
+					// determine the the tallest menu item of the previous row
+					for (let i=0; i<$(row_query).length; i++) {
+						let this_height = 0;
+						for (let j=0; j<$(row_query).eq(i).children().length; j++) {
+							this_height += $(row_query).eq(i).children().eq(j).height();
+						}
+						this_height = parseInt(this_height);
+						if ( this_height > max_height ) {
+							max_height = this_height;
+						}
+					}
+				
+					masonry_offset = max_height - prev_height;
+					masonry[this_col-1] += masonry_offset;
+				
+					if (masonry[this_col-1] > 0) {
+						$(this).css('top','-' + masonry[this_col-1] + 'px'); // offset by the amount the previous item is smaller than the max for that row
+						$(this).prev().height( $(this).prev().height() - masonry_offset ); // reduce the height of the previous item by the amount that was added to masonry, so the overall height of the megamenu can be collapsed
+					}
+				}
+			});
+			
+			// collapse menu to account for masonry offset (but only if the menu-feature is shorter than the height of the menu items)
+			var menu_collapse = masonry[0];
+			if (masonry[1] < masonry[0]) {
+				menu_collapse = masonry[1];
+			}
+			if (menu_collapse > this_menu_feature_extraspace) {
+				menu_collapse = this_menu_feature_extraspace;
+			}
+			
+			$(this_menu_feature).css('height','').height( $(this_menu_feature).height() - menu_collapse );
+			$(this_menu).css('height','auto').css('max-height','').css('max-height', ($(this_menu).height() - menu_collapse) + 'px' ).css('height','');
+		});
+	}
+	// Clear Megamenu Masonry
+	function menuClearMasonry() {
+		$('.megamenu-masonry .top-level-li > .children').removeAttr('style');
+		$('.megamenu-masonry .children > li').removeAttr('style');
+	}
 	
 	// 2. Empty Sidebar Helper ------------------------------------------------
 	function emptySidebars() {
@@ -603,8 +954,8 @@ var msie = document.documentMode;
 			$(this).children(tab_tag).click(function(e) {
 				e.preventDefault();
 				$(tabs).children('li').removeClass('active').hide();
-				$(tabs).children('li').eq( $(this).index() ).show().addClass('active');
-				$(tabs).prev(nav_tag).find(tab_tag).removeClass('active').attr('aria-selected','false');
+				$(tabs).children('li').eq( $(this).index() ).show().addClass('active').attr('tabindex', '-1');
+				$(tabs).prev(nav_tag).find(tab_tag).removeClass('active').attr('aria-selected','false').attr('tabindex', '0');
 				$(this).addClass('active').attr('aria-selected','true');
 				if (!aria_mode) {
 					$($(this).attr('href')).focus();

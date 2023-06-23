@@ -1,4 +1,4 @@
-/* CWD Image Gallery (ama39, last update: 10/14/18)
+/* CWD Image Gallery (ama39, last update: 3/31/23)
    - Supports two interface modes:
    - 1. Thumbnail Grid with Modal ("Grid mode") - a collection of clickable thumbnails which launch full-sized images in a modal popup (requires cwd_popups.js)
    - -- Grid mode doesn't technically require this JavaScript file (all functionality is handled by the "gallery" scripting in cwd_popups.js).
@@ -30,7 +30,7 @@ var slide_ratio = 0.667; // ratio of height to width (height is ~67% of width)
 var gallery_count = 0;
 
 		
-jQuery(document).ready(function($) {	
+(function ($) {
 	
 	// Thumbnail Grid with Modal
 	$('.cwd-gallery.grid').each(function() {
@@ -62,9 +62,12 @@ jQuery(document).ready(function($) {
 			// Video Content
 			if ($(this).hasClass('video')) {
 				if ($(this).hasClass('active')) {
-					$(slide).find('.video-container').focus(function() {
+					$(slide).find('.video-container').on('focus',function() {
 						$(slide).find('.caption').addClass('fadeout');
-					}).focus();
+					});
+					var focus_helper = setTimeout(function() {
+						$(slide).find('.video-container').focus();
+					}, 50);
 					//videoElement[0].play; // this currently won't work for YouTube and CornellCast, due to cross-domain iframe restrictions
 				}
 				else {
@@ -167,6 +170,11 @@ jQuery(document).ready(function($) {
 			
 		}).focus(function() {
 			$(this).trigger('click');
+		}).keydown(function(e) {
+			if (e.keyCode == 13 || e.keyCode == 32) { // enter or space key
+				e.preventDefault();
+				$(this).trigger('click');
+			}
 		});
 		
 		// nav buttons (Next and Previous)
@@ -189,6 +197,11 @@ jQuery(document).ready(function($) {
 				}
 				$(thumbnails).find('.col a').eq(next_image).trigger('click');
 			}
+		}).keydown(function(e) {
+			if (e.keyCode == 13 || e.keyCode == 32) { // enter or space key
+				e.preventDefault();
+				$(this).trigger('click');
+			}
 		});
 		
 	});
@@ -203,6 +216,7 @@ jQuery(document).ready(function($) {
 			
 				var target_href = $(this).attr('href');
 				var filetype = target_href.substr(target_href.lastIndexOf('.')).toLowerCase();
+				var button = $(this);
 				//console.log(filetype);
 				
 				// Image Content
@@ -210,7 +224,6 @@ jQuery(document).ready(function($) {
 					// preload images
 					// TODO: some kind of smarter, asynchronous preloading?
 					var img = new Image();
-					var button = $(this);
 					img.onload = function() {
 						$(button).attr('data-native-width',this.width);
 						$(button).attr('data-native-height',this.height);
@@ -265,5 +278,5 @@ jQuery(document).ready(function($) {
 
 	});
 	
-});
+})(jQuery);
 
