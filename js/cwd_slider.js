@@ -1,4 +1,4 @@
-/* CWD Image Slider (ama39, last update: 12/1/22)
+/* CWD Image Slider (ama39, last update: 6/26/23)
    - ...
    - >> TODO: more introduction and documentation will be added here soon (in the meantime, please see the "Scripted Components" documentation for more information) <<
    - preloads images and creates "buffer" layers to allow cover placement and ensure smooth transitions
@@ -137,11 +137,11 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 				// detect empty captions and supply alt text if available
 				$(caption_div_inner + '.caption'+i).addClass('empty');
 				if ( $('#'+sid+'-slide-buffer'+i).data('alt') != '' ) {
-					$(caption_div_inner + '.caption'+i+' .caption-focus').append('<p class="hidden"><span>'+$('#'+sid+'-slide-buffer'+i).data('alt')+'</span></p>');
+					$(caption_div_inner + '.caption'+i+' .caption-focus').append('<p class="sr-only"><span>'+$('#'+sid+'-slide-buffer'+i).data('alt')+'</span></p>');
 				}
 				else {
 					// captions are empty and no alt text was supplied :-( but we'll at least add a caption let the user know what slide they're on (benefits keyboard users too)
-					$(caption_div_inner + '.caption'+i+' .caption-focus').append('<p class="hidden"><span>Slide '+(i+1)+'</span></p>');
+					$(caption_div_inner + '.caption'+i+' .caption-focus').append('<p class="sr-only"><span>Slide '+(i+1)+'</span></p>');
 				}
 			}
 			
@@ -206,12 +206,12 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 			}
 			var nextprev_html = '';
 			if (nextprev && slide_count > 1) {
-				nextprev_html = '<div class="next-prev"><a class="prev" href="'+caption_div+'"><span class="hidden">Previous Slide</span><span class="fa fa-angle-left"></span></a><a class="next" href="'+caption_div+'"><span class="hidden">Next Slide</span><span class="fa fa-angle-right"></span></a></div>';
+				nextprev_html = '<div class="next-prev"><a role="button" class="prev" href="#"><span class="sr-only">Previous Slide</span><span class="fa fa-angle-left"></span></a><a role="button" class="next" href="#"><span class="sr-only">Next Slide</span><span class="fa fa-angle-right"></span></a></div>';
 			}
 			
-			$(caption_div_inner).last().after('<div class="campaign-nav '+align+numbers+'" aria-hidden="true"><h3 class="hidden">View Another Slide</h3>'+nextprev_html+'<ul class="list-menu sans"></ul></div>');
+			$(caption_div_inner).last().after('<div class="campaign-nav '+align+numbers+'" aria-hidden="false"><h3 class="sr-only">View Another Slide</h3>'+nextprev_html+'<ul class="list-menu sans"></ul></div>');
 			$(image_div + ' .slide-buffer').each(function(i){
-				$(caption_div + ' ul').append('<li><a href="'+caption_div+'"><span class="dot"><span class="num">'+(i+1)+'</span></span><span class="hidden">. '+$(this).data('heading')+'</span></a></li>');
+				$(caption_div + ' ul').append('<li><a role="button" href="#"><span class="dot"><span class="num">'+(i+1)+'</span></span><span class="sr-only">. '+$(this).data('heading')+'</span></a></li>');
 			});
 			$(caption_div + ' ul').children('li').eq(current_slide).children('a').addClass('active');
 			
@@ -223,6 +223,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 						if (i != current_slide) {
 							changeSlide(i,false);
 						}
+						$(caption_div).find('.caption-focus').eq(i).focus();
 					}
 					else if ($.isNumeric(queued_request) == false && i != current_slide) {
 						queued_request = i;
@@ -248,6 +249,16 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 						}
 					}
 					changeSlide(current_slide,false);
+				}
+			});
+			
+			$(caption_div + ' a[role="button"').keydown(function(e) {
+				if (e.keyCode == 13 || e.keyCode == 32) { // enter or space key
+					e.preventDefault();
+				}
+			}).keyup(function(e) {
+				if (e.keyCode == 13 || e.keyCode == 32) { // triggers on key up
+					$(this).trigger('click');
 				}
 			});
 			
@@ -350,6 +361,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 	// End jQuery(document).ready
 	});
 }	
+
 
 
 

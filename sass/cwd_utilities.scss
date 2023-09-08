@@ -782,6 +782,44 @@ table.scrolling > thead > tr > th {
 	margin-left: 0.5em;
 }
 
+// 2023 WA update
+.expander.scripted .expander-heading {
+	position: relative;
+}
+.expander .expander-button {
+	font: inherit;
+	color: inherit;
+	width: 100%;
+	width: calc(100% + 14px);
+	padding: 0.4em 7px;
+	margin: -0.4em -7px;
+	text-align: left;
+	-webkit-appearance: none;
+	appearance: none;
+	background: none;
+	border: 0;
+	cursor: pointer;
+	
+	&:active, &:focus {
+		color: inherit;
+	}
+	& + a {
+		position: absolute;
+		right: 8px;
+		line-height: 1.4;
+	}
+	&.has-link {
+		padding-right: 4.5em;
+	}
+}
+.expander.scripted .open > button + .expander-heading-link {
+	color: inherit;
+	
+	&:hover {
+		color: #000;
+	}
+}
+
 
 /* Mobile Table Helper */
 .table-fader {

@@ -1,4 +1,4 @@
-/* CWD Utilities (last update: 6/13/23)
+/* CWD Utilities (last update: 8/25/23)
    - 1. Main Navigation (script support for dropdown menus and mobile as well as a "megamenu" option)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -10,6 +10,7 @@
    - 9. Responsive Table (table.table-responsive: generates headings for use in a mobile-friendly table design)
    
    Change Log
+   - 8/25/23 Expander accessibility update to add buttons inside of expander headings for better standards compliance
    - 6/13/23 Megamenu masonry code overhauled for better accuracy and support for multiline menu items 
    - 3/24/23 Bug fix related to menu focus 
    - 3/17/23 Escape key behavior within a menu, as well as globally on the page, updated to close any other menus that are open by mouseover 
@@ -717,11 +718,10 @@ var msie = document.documentMode;
 	// 4. Expander ------------------------------------------------------------
 	$('.expander').addClass('scripted').find('h2, h3, h4, h5, h6').each(function(i) {
 		if ($(this).next('div').length > 0) {
-			//$(this).next('div').addClass('expander-div aria-target').attr('tabindex','0');
-			$(this).addClass('sans expander-heading').attr('tabindex','0').attr('aria-expanded','false').prepend('<span class="fa fa-plus-square-o" aria-hidden="true"></span>');
-			$(this).click(function(e) {
-				$(this).toggleClass('open');
-				if ($(this).hasClass('open')) {
+			$(this).addClass('sans expander-heading').wrapInner('<button class="expander-button">');
+			$(this).children('.expander-button').attr('aria-expanded','false').prepend('<span class="fa fa-plus-square-o" aria-hidden="true"></span>').click(function(e) {
+				$(this).parent().toggleClass('open');
+				if ($(this).parent().hasClass('open')) {
 					$(this).attr('aria-expanded','true');
 				}
 				else {
@@ -731,7 +731,7 @@ var msie = document.documentMode;
 		}
 	});
 	$('.expander').each(function() {
-		if ($(this).find('.expander-heading').length > 2) {
+		if ($(this).find('.expander-heading').length > 1) {
 			var all_expanded = false;
 			$(this).prepend('<button class="expand-all">Expand all</button>');
 			$(this).children('.expand-all').click(function(e) {
@@ -751,7 +751,7 @@ var msie = document.documentMode;
 			});
 		}
 	});
-	$('.expander-heading').each(function() {
+	$('.expander-button').each(function() {
 		
 		/*
 		var this_heading = $(this);
@@ -763,12 +763,20 @@ var msie = document.documentMode;
 		});
 		*/
 		
+		/* // No longer needed, since we have a native button tag
 		$(this).keydown(function(e) {
 			if (e.keyCode == 13 || e.keyCode == 32) { // enter or space key
 				e.preventDefault();
+				if (e.keyCode == 13) { // enter triggers on key down
+					$(this).trigger('click');
+				}
+			}
+		}).keyup(function(e) {
+			if (e.keyCode == 32) { // space triggers on key up
 				$(this).trigger('click');
 			}
 		});
+		*/
 		
 		// Handle links in the heading
 		$(this).find('a').each(function() {
@@ -777,6 +785,7 @@ var msie = document.documentMode;
 			});
 			var link_label = $(this).text();
 			$(this).addClass('expander-heading-link').wrapInner('<span class="sr-only"> </span>').prepend('more...').before(link_label + ' ');
+			$(this).parent('button').addClass('has-link').parent('.expander-heading').append($(this));
 		});
 	});
 	
