@@ -1,5 +1,4 @@
 [![Latest Stable Version](https://poser.pugx.org/cubear/cwd_base/v/stable)](https://packagist.org/packages/cubear/cwd_base)
-[![Latest Unstable Version](https://poser.pugx.org/cubear/cwd_base/v/unstable)](https://packagist.org/packages/cubear/cwd_base)
 
  # cwd_base
 
