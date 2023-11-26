@@ -1,6 +1,6 @@
 [![Latest Stable Version](https://poser.pugx.org/cubear/cwd_base/v/stable)](https://packagist.org/packages/cubear/cwd_base)
 
- # cwd_base
+# cwd_base
 
 Included with https://github.com/CU-CommunityApps/CD-demo
 ...along with https://github.com/CU-CommunityApps/cwd_project
