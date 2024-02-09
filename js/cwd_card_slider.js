@@ -91,8 +91,8 @@ jQuery(document).ready(function($) {
 		// build buttons
 		var nextprev_html = '';
 		if (card_count > 1) {
-			$(viewer_band).before('<div class="pips" aria-hidden="true"></div>').wrap('<div class="mask"></div>');
-			nextprev_html = '<div class="next-prev" aria-hidden="true"><button class="prev"><span class="sr-only">Previous Slide Set</span><span class="fa fa-angle-left"></span></button><button class="next"><span class="sr-only">Next Slide Set</span><span class="fa fa-angle-right"></span></button></div>';
+			$(viewer_band).before('<div class="pips"></div>').wrap('<div class="mask"></div>');
+			nextprev_html = '<div class="next-prev"><button class="prev"><span class="sr-only">Previous Slide Set</span><span class="fa fa-angle-left"></span></button><button class="next"><span class="sr-only">Next Slide Set</span><span class="fa fa-angle-right"></span></button></div>';
 			$(this).append(nextprev_html);
 			$(this).find('.next, .prev').click(function(e) {
 				if ($(this).hasClass('prev')) {
