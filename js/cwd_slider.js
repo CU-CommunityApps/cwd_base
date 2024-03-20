@@ -1,4 +1,4 @@
-/* CWD Image Slider (ama39, last update: 12/1/23)
+/* CWD Image Slider (ama39, last update: 3/20/24)
    - ...
    - >> TODO: more introduction and documentation will be added here soon (in the meantime, please see the "Scripted Components" documentation for more information) <<
    - preloads images and creates "buffer" layers to allow cover placement and ensure smooth transitions
@@ -32,6 +32,7 @@ var default_bg_color = '#363f47'; // basic fill color behind images (may be visi
 // Global Variables
 var slider_count = 0;
 var captionless = true; // switched to false when visible captions are detected on any slide (applies a body class for adjusting the design)
+var keyboard_nav = true; // used to track and distinguish between mouse clicks and keyboard or screen reader navigation
 
 // Navigation Options
 var align = 'left'; // alignment: 'left' or 'right' (NYI)
@@ -234,14 +235,20 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 			$(caption_div + ' ul').children('li').eq(current_slide).children('a').addClass('active');
 			
 			$(caption_div + ' ul').find('a').each(function(i){
-				$(this).click(function(e){
+				$(this).mouseenter(function(e){
+					keyboard_nav = false;
+				}).mouseleave(function(e){
+					keyboard_nav = true;
+				}).click(function(e){
 					e.preventDefault();
 					clearInterval(slide_interval);
 					if (!is_transitioning) {			
 						if (i != current_slide) {
 							changeSlide(i,false);
 						}
-						$(caption_div).find('.caption-focus').eq(i).focus();
+						if (keyboard_nav) {
+							$(caption_div).find('.caption-focus').eq(i).focus();
+						}
 					}
 					else if ($.isNumeric(queued_request) == false && i != current_slide) {
 						queued_request = i;
