@@ -1,4 +1,4 @@
-/* CWD Image Slider (ama39, last update: 6/26/23)
+/* CWD Image Slider (ama39, last update: 3/20/24)
    - ...
    - >> TODO: more introduction and documentation will be added here soon (in the meantime, please see the "Scripted Components" documentation for more information) <<
    - preloads images and creates "buffer" layers to allow cover placement and ensure smooth transitions
@@ -32,6 +32,7 @@ var default_bg_color = '#363f47'; // basic fill color behind images (may be visi
 // Global Variables
 var slider_count = 0;
 var captionless = true; // switched to false when visible captions are detected on any slide (applies a body class for adjusting the design)
+var keyboard_nav = true; // used to track and distinguish between mouse clicks and keyboard or screen reader navigation
 
 // Navigation Options
 var align = 'left'; // alignment: 'left' or 'right' (NYI)
@@ -77,7 +78,7 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 		if (auto == true || auto == false) { var autoplay = auto; } else { var autoplay = default_autoplay; }
 		if (random == true || random == false) { var random_start = random; } else { var random_start = default_random_start; }
 		if (quickslide == true || quickslide == false) { var quickslide_on = quickslide; } else { var quickslide_on = default_quickslide; }
-		
+				
 		// additional variables
 		//$(caption_div).attr('tabindex','-1').addClass('aria-target'); // set focus target for accessibility
 		var caption_div_inner = caption_div + ' .caption-inner';
@@ -108,6 +109,10 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 			$('#'+sid+'-slide-buffer'+i).data('link',image_array[i][3]); // <- link
 			$('#'+sid+'-slide-buffer'+i).data('alt',image_array[i][4]); // <- alt text
 			$('#'+sid+'-slide-buffer'+i).data('heading2',image_array[i][5]); // <- second heading
+			$('#'+sid+'-slide-buffer'+i).data('cta1',image_array[i][6]); // <- action button 1 label // @CTA
+			$('#'+sid+'-slide-buffer'+i).data('cta1_link',image_array[i][7]); // <- action button 1 href // @CTA
+			$('#'+sid+'-slide-buffer'+i).data('cta2',image_array[i][8]); // <- action button 2 label // @CTA
+			$('#'+sid+'-slide-buffer'+i).data('cta2_link',image_array[i][9]); // <- action button 2 href // @CTA
 			// load image
 			$('#'+sid+'-slide-buffer'+i).css('background-image','url('+image_array[i][0]+')');
 			
@@ -127,6 +132,20 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 			}
 			if ( $('#'+sid+'-slide-buffer'+i).data('caption') != '' ) {
 				$(caption_div_inner + '.caption'+i+' .caption-focus').append('<p><span>'+$('#'+sid+'-slide-buffer'+i).data('caption')+'</span></p>');
+			}
+			
+			// add action buttons // @CTA
+			if ( (($('#'+sid+'-slide-buffer'+i).data('cta1') != undefined && $('#'+sid+'-slide-buffer'+i).data('cta1_link') != undefined) || ($('#'+sid+'-slide-buffer'+i).data('cta2') != undefined && $('#'+sid+'-slide-buffer'+i).data('cta2_link') != undefined)) && $('#'+sid+'-slide-buffer'+i).data('link') == '') {
+				$(caption_div_inner + '.caption'+i+' .caption-focus').append('<div class="flex cta-buttons">');
+				
+				if ( $('#'+sid+'-slide-buffer'+i).data('cta1') != undefined && $('#'+sid+'-slide-buffer'+i).data('cta1_link') != undefined) {
+					$(caption_div_inner + '.caption'+i+' .caption-focus .cta-buttons').append('<div><a class="link-button space-right" href="'+$('#'+sid+'-slide-buffer'+i).data('cta1_link')+'">'+$('#'+sid+'-slide-buffer'+i).data('cta1')+'</a></div>');
+				}
+				if ( $('#'+sid+'-slide-buffer'+i).data('cta2') != undefined && $('#'+sid+'-slide-buffer'+i).data('cta2_link') != undefined) {
+					$(caption_div_inner + '.caption'+i+' .caption-focus .cta-buttons').append('<div><a class="link-button space-right" href="'+$('#'+sid+'-slide-buffer'+i).data('cta2_link')+'">'+$('#'+sid+'-slide-buffer'+i).data('cta2')+'</a></div>');
+				}
+				
+				$(caption_div_inner + '.caption'+i+' .caption-focus').append('</div>');
 			}
 			
 			// detect visible captions
@@ -216,14 +235,20 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 			$(caption_div + ' ul').children('li').eq(current_slide).children('a').addClass('active');
 			
 			$(caption_div + ' ul').find('a').each(function(i){
-				$(this).click(function(e){
+				$(this).mouseenter(function(e){
+					keyboard_nav = false;
+				}).mouseleave(function(e){
+					keyboard_nav = true;
+				}).click(function(e){
 					e.preventDefault();
 					clearInterval(slide_interval);
 					if (!is_transitioning) {			
 						if (i != current_slide) {
 							changeSlide(i,false);
 						}
-						$(caption_div).find('.caption-focus').eq(i).focus();
+						if (keyboard_nav) {
+							$(caption_div).find('.caption-focus').eq(i).focus();
+						}
 					}
 					else if ($.isNumeric(queued_request) == false && i != current_slide) {
 						queued_request = i;
@@ -265,8 +290,8 @@ function cwd_slider(div,caption,time,speed,auto,random,height,path,bg,heading2,q
 			$(image_div + ' a, ' + image_div + ' .caption-focus').focus(function() { // end autoplay when any UI element receives focus
 				clearInterval(slide_interval);
 			});
-			$(caption_div).find('.caption-inner .caption-focus').focus(function() { // activate appropriate slide when any caption receives focus
-				var target = $(this).parent().index();
+			$(caption_div).find('.caption-inner .caption-focus, .caption-inner a').focus(function() { // activate appropriate slide when any caption receives focus // @CTA
+				var target = $(this).closest('.caption-inner').index(); // @CTA
 				if (target != current_slide) {
 					if (!is_transitioning) {
 						changeSlide(target,false);
