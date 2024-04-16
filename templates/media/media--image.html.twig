@@ -2,6 +2,8 @@
 /**
  * @file
  * Theme override to display an image media item with WA-compliant description.
+ *
+ * In addition to mods in cwd_base/media/media.html.twig:
  * ~ When field_aria_description has value, this template:
  * ~~ Adds aria-describedby="description-[MID]" to field_media_image <img> tag.
  * ~~ Renders field_aria_description inside div#description-[MID].sr-only.
@@ -13,7 +15,7 @@
  */
 #}
 {{ title_suffix.contextual_links }}
-{% if content %}
+<div{{ attributes }}>
 
   {% if media.field_aria_description.0.value -%}
     {% if media.field_media_image.0.value -%}
@@ -38,4 +40,4 @@
     {{ content }}
   {%- endif %}
 
-{% endif %}
+</div>

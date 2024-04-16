@@ -2,7 +2,8 @@
 /**
  * @file
  * Theme override to display a media item.
- * ~ Removed <div{{ attributes }}> wrapper (ama39)
+ * ~ Add div with attributes back to this template (we removed it in the past).
+ * ~ Remove "if content" check.
  *
  * Available variables:
  * - media: The media item, with limited access to object properties and
@@ -32,7 +33,7 @@
  * @ingroup themeable
  */
 #}
-  {{ title_suffix.contextual_links }}
-  {% if content %}
-    {{ content }}
-  {% endif %}
+{{ title_suffix.contextual_links }}
+<div{{ attributes }}>
+  {{ content }}
+</div>
