@@ -1,4 +1,4 @@
-/* CWD Utilities (last update: 2/28/24)
+/* CWD Utilities (last update: 5/2/24)
    - 1. Main Navigation (script support for dropdown menus and mobile as well as a "megamenu" option)
    - 2. Empty Sidebar Helper (clears whitespace from empty sidebar regions to allow use of the :empty pseudo class in CSS)
    - 3. Mobile Table Helper (allows tables or other block elements to scroll horizontally on small devices, apply via .mobile-scroll class)
@@ -10,7 +10,8 @@
    - 9. Responsive Table (table.table-responsive: generates headings for use in a mobile-friendly table design)
    
    Change Log
-   - 2/28/24 Mobile Main Navigation fix to better reconcile mouse vs. keyboard/screen reader 
+   - 5/2/24 In Content Tabs, added role="none" to UL tag when rendered in aria mode
+   - 2/28/24 Mobile Main Navigation fix to better reconcile mouse vs. keyboard/screen reader
    - 8/25/23 Expander accessibility update to add buttons inside of expander headings for better standards compliance
    - 6/13/23 Megamenu masonry code overhauled for better accuracy and support for multiline menu items 
    - 3/24/23 Bug fix related to menu focus 
@@ -931,6 +932,7 @@ var msie = document.documentMode;
 			aria_mode = true;
 			nav_tag = 'div';
 			tab_tag = 'button';
+			$(this).attr('role','none');
 		}
 		if ( $(this).hasClass('tabs-mobile-accordion') ) {
 			tab_classes += ' tabs-mobile-accordion'; // NYI
